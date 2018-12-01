@@ -25,11 +25,12 @@ sap.ui.define([
 		
 		onSelectDataBaseline : function(oEvent){
 			var aData = oEvent.getParameter('data');
-
+			var oSelectedObject = aData[0].data;
+			
 			var oVizBaseline 	= oEvent.getSource(); 
 			var oDataset 		= oVizBaseline.getDataset();
 			var oBinding 		= oDataset.getBinding('data');
-			var oContext 		= oBinding.getContext(aData[0]._contextRow);
+			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
 			
 			oEvent.getSource().vizSelection(
