@@ -1,0 +1,9 @@
+<mvc:View 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m"
+	controllerName="com.arcelor.scm.ordertrack.controller.NotFound" 
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<MessagePage
+		showNavButton="true"
+		navButtonPress=".onNavBack"/>
+</mvc:View>
