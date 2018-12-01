@@ -4,6 +4,8 @@ sap.ui.define([
 	"use strict";
 
 	return {
-		
+		formatSegmentDisplay : function(fValue, fDocs) {
+			return String(fDocs) + ' - ' + String(fValue) + '%';
+		}
 	};
 }, true);

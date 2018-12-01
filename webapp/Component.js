@@ -24,6 +24,10 @@ sap.ui.define([
 			this.setModel(models.createDeviceModel(), "device");
 			
 			this.getRouter().initialize();
+			
+			
+			var oModel = new sap.ui.model.json.JSONModel("/webapp/model/DonutChart.json");
+			this.setModel(oModel, "donutChart");
 		}
 	});
 });

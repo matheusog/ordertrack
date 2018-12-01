@@ -1,0 +1,18 @@
+{
+	"d": [
+			{	
+				"id": "01",
+				"descricao": "Em Dia",
+				"value": 40.00, 
+				"documents": 200, 
+				"color": "Good"
+			},
+			{	
+				"id": "02",
+				"descricao": "Em Atraso",
+				"value": 60.00, 
+				"documents": 300, 
+				"color": "Error"
+			}
+		]
+}
