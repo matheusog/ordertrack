@@ -59,10 +59,6 @@ sap.ui.define([
 				oEvent.getParameter('data'), { clearSelection: true }
 			);
 		}, 
-
-		_pressChart: function() {
-
-		}, 
 		
 		_initializeVizChart: function() {
 			this.getRouter().getRoute("mainScreen").attachMatched(this._routeMatched, this);

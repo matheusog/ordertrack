@@ -21,14 +21,14 @@
 				"id": "01",
 				"descricao": "Em Dia",
 				"value": 90.00, 
-				"documents": 1800, 
+				"documents": 2800, 
 				"color": "Good"
 			},
 			{	
 				"id": "02",
 				"descricao": "Em Atraso",
 				"value": 10.00, 
-				"documents": 200, 
+				"documents": 1200, 
 				"color": "Error"
 			}
 		]
