@@ -1,11 +1,6 @@
 <mvc:View 
-	xmlns:chart="sap.suite.ui.microchart" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m"
-	xmlns:cms="sap.suite.ui.commons"
-	xmlns:viz="sap.viz.ui5.controls"
-	xmlns:viz.data="sap.viz.ui5.data"
-	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:fb="sap.ui.comp.filterbar"
 	xmlns:core="sap.ui.core"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" 
@@ -22,95 +17,10 @@
 				</fb:FilterItem>
 			</fb:filterItems>
 	    </fb:FilterBar>	
-	    
 		<content>
-			
-			<VBox width="50%">
-				
-				<cms:ChartContainer
-					id="chartContainer"
-					showFullScreen="true"
-					showPersonalization="false"
-					autoAdjustHeight="false"
-					enableScrolling="false"
-					showZoom="false"
-					title="{i18n>s1TitleBaseline}">
-					<cms:content>
-						<cms:ChartContainerContent>
-							<cms:content>
-								<viz:VizFrame 
-									id="idVizBaseline" 
-				                	vizType='donut'
-				                	selectData=".onSelectDataBaseline">
-					                <viz:dataset>
-					                    <viz.data:FlattenedDataset data="{donutChart>/d}">
-					                        <viz.data:dimensions>
-					                            <viz.data:DimensionDefinition name="Status"
-					                                value="{donutChart>descricao}" 
-					                                displayValue="{donutChart>descricao} - {donutChart>documents}"/>
-					                        </viz.data:dimensions>
-					                        <viz.data:measures>
-					                            <viz.data:MeasureDefinition name="Documentos"
-					                                value="{donutChart>documents}" />
-					                        </viz.data:measures>
-					                    </viz.data:FlattenedDataset>
-					                </viz:dataset>
-					
-					                <viz:feeds>
-					                    <viz.feeds:FeedItem uid="size" type="Measure"
-					                        values="Documentos" />
-					                    <viz.feeds:FeedItem uid="color" type="Dimension"
-					                        values="Status" />
-					                </viz:feeds>
-					            </viz:VizFrame>	
-							</cms:content>
-						</cms:ChartContainerContent>
-					</cms:content>
-				</cms:ChartContainer>
-				
-				<cms:ChartContainer
-					id="chartContainer2"
-					showFullScreen="true"
-					showPersonalization="false"
-					autoAdjustHeight="false"
-					enableScrolling="false"
-					showZoom="false"
-					title="{i18n>s1TitleReplanejado}">
-					<cms:content>
-						<cms:ChartContainerContent>
-							<cms:content>
-								<viz:VizFrame 
-									id="idVizReplanejado" 
-				                	vizType='donut'
-				                	selectData=".onSelectDataReplanejado">
-					                <viz:dataset>
-					                    <viz.data:FlattenedDataset data="{donutChart>/e}">
-					                        <viz.data:dimensions>
-					                            <viz.data:DimensionDefinition name="Status"
-					                                value="{donutChart>descricao}" 
-					                                displayValue="{donutChart>descricao} - {donutChart>documents}"/>
-					                        </viz.data:dimensions>
-					                        <viz.data:measures>
-					                            <viz.data:MeasureDefinition name="Documentos"
-					                                value="{donutChart>documents}" />
-					                        </viz.data:measures>
-					                    </viz.data:FlattenedDataset>
-					                </viz:dataset>
-					
-					                <viz:feeds>
-					                    <viz.feeds:FeedItem uid="size" type="Measure"
-					                        values="Documentos" />
-					                    <viz.feeds:FeedItem uid="color" type="Dimension"
-					                        values="Status" />
-					                </viz:feeds>
-					            </viz:VizFrame>	
-							</cms:content>
-						</cms:ChartContainerContent>
-					</cms:content>
-				</cms:ChartContainer>
-				
-			</VBox>
-			
+			<mvc:XMLView 
+				viewName="com.arcelor.scm.ordertrack.view.S1_DonutChart" 
+				displayBlock="true"/>
 		</content>
 	</Page>
 </mvc:View>
