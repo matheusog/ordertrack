@@ -4,7 +4,7 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
-		
+
 		_mVizDonutProperties: {
 			title: {
 				visible: false
