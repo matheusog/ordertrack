@@ -4,14 +4,31 @@
 				"id": "01",
 				"descricao": "Em Dia",
 				"value": 40.00, 
-				"documents": 200, 
+				"documents": 2000, 
 				"color": "Good"
 			},
 			{	
 				"id": "02",
 				"descricao": "Em Atraso",
 				"value": 60.00, 
-				"documents": 300, 
+				"documents": 3000, 
+				"color": "Error"
+			}
+		],
+
+	"e": [
+			{	
+				"id": "01",
+				"descricao": "Em Dia",
+				"value": 90.00, 
+				"documents": 1800, 
+				"color": "Good"
+			},
+			{	
+				"id": "02",
+				"descricao": "Em Atraso",
+				"value": 10.00, 
+				"documents": 200, 
 				"color": "Error"
 			}
 		]
