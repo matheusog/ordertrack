@@ -1,7 +1,6 @@
 sap.ui.define([
-	"com/arcelor/scm/ordertrack/controller/BaseController",
-	'sap/ui/model/json/JSONModel'
-], function(BaseController, JSONModel) {
+	"com/arcelor/scm/ordertrack/controller/BaseController"
+], function(BaseController) {
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
@@ -18,14 +17,6 @@ sap.ui.define([
 		}, 
 		
 		onInit: function() {
-
-			//Data de exibição no cabeçalho
-			var oModel = new JSONModel();
-			oModel.setData({
-				dateValue: new Date()
-			});
-			this.getView().setModel(oModel);
-
 			//Retira o titulo dos donuts
 			this._initializeVizChart();	
 		},
