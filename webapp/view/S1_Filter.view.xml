@@ -15,7 +15,9 @@
 					<fb:control>
 						<ComboBox	showSecondaryValues= "true" 
 									items="{path: 'filterCentro>/', sorter: { path: 'filterCentro>werks' }}">
-							<core:ListItem key="{filterCentro>werks}" text="{filterCentro>werks_txt}" additionalText = "{filterCentro>werks}" />
+							<core:ListItem	key="{filterCentro>werks}" 
+											text="{filterCentro>werks_txt}" 
+											additionalText = "{filterCentro>werks}" />
 						</ComboBox>
 					</fb:control>				
 				</fb:FilterItem>
@@ -24,7 +26,9 @@
 					<fb:control>
 						<ComboBox	showSecondaryValues= "true" 
 									items="{path: 'filterCliente>/', sorter: { path: 'filterCliente>kunnr' }}">
-							<core:ListItem key="{filterCliente>kunnr}" text="{filterCliente>kunnr_txt}" additionalText = "{filterCliente>kunnr}" />
+							<core:ListItem	key="{filterCliente>kunnr}" 
+											text="{filterCliente>kunnr_txt}" 
+											additionalText = "{filterCliente>kunnr}" />
 						</ComboBox>
 					</fb:control>				
 				</fb:FilterItem>

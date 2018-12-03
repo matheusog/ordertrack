@@ -8,8 +8,11 @@ sap.ui.define([
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_Filter", {
 
 		onInit: function () {
-			
-			
+			this.onSearch();	
+		},
+		
+		onSearch: function () {
+			//EXECUTA ODATA DE ACORDO COM OS FILTROS
 		}
 
 	});
