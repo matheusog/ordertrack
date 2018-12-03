@@ -25,9 +25,17 @@ sap.ui.define([
 			
 			this.getRouter().initialize();
 			
+			//Filtro Centro
+			var oModelCentro = new sap.ui.model.json.JSONModel("/webapp/model/FilterCentro.json");
+			this.setModel(oModelCentro, "filterCentro");
 			
-			var oModel = new sap.ui.model.json.JSONModel("/webapp/model/DonutChart.json");
-			this.setModel(oModel, "donutChart");
+			//Filtro Cliente
+			var oModelCliente = new sap.ui.model.json.JSONModel("/webapp/model/FilterCliente.json");
+			this.setModel(oModelCliente, "filterCliente");
+			
+			//Donut Baseline/Replanejado
+			var oModelDonut	= new sap.ui.model.json.JSONModel("/webapp/model/DonutChart.json");
+			this.setModel(oModelDonut, "donutChart");
 		}
 	});
 });

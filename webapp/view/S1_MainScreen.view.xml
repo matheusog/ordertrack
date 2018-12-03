@@ -1,26 +1,35 @@
 <mvc:View 
-	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m"
-	xmlns:fb="sap.ui.comp.filterbar"
-	xmlns:core="sap.ui.core"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" 
-	xmlns:html="http://www.w3.org/1999/xhtml">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout"
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 	
-	<Page title="{i18n>appTitle}">
+	<Page title="{i18n>appTitle} - {path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'long'}}">
 		
-		<fb:FilterBar reset="onReset" search="onSearch" showClearButton="true">
-			<fb:filterItems>
-				<fb:FilterItem name="A" label="Delivery Date">
-					<fb:control>
-						<DatePicker/>
-					</fb:control>				
-				</fb:FilterItem>
-			</fb:filterItems>
-	    </fb:FilterBar>	
+		<content>
+			<mvc:XMLView 
+				viewName="com.arcelor.scm.ordertrack.view.S1_Filter" 
+				displayBlock="true"/>
+		</content>
+		
 		<content>
 			<mvc:XMLView 
 				viewName="com.arcelor.scm.ordertrack.view.S1_DonutChart" 
 				displayBlock="true"/>
 		</content>
+		
+		<content>
+			<mvc:XMLView 
+				viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChart" 
+				displayBlock="true"/>
+		</content>
+
+		<content>
+			<mvc:XMLView 
+				viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChartStatus" 
+				displayBlock="true"/>
+		</content>
+		
 	</Page>
 </mvc:View>

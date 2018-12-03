@@ -1,0 +1,42 @@
+<mvc:View	
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns="sap.m"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_Filter">
+	
+	<VBox>
+		
+		<fb:FilterBar reset="onReset" search="onSearch" showClearButton="true">
+			<fb:filterItems>
+				
+				<fb:FilterItem name="WERKS" label="Centro">
+					<fb:control>
+						<ComboBox	showSecondaryValues= "true" 
+									items="{path: 'filterCentro>/', sorter: { path: 'filterCentro>werks' }}">
+							<core:ListItem key="{filterCentro>werks}" text="{filterCentro>werks_txt}" additionalText = "{filterCentro>werks}" />
+						</ComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+				
+				<fb:FilterItem name="KUNNR" label="Cliente">
+					<fb:control>
+						<ComboBox	showSecondaryValues= "true" 
+									items="{path: 'filterCliente>/', sorter: { path: 'filterCliente>kunnr' }}">
+							<core:ListItem key="{filterCliente>kunnr}" text="{filterCliente>kunnr_txt}" additionalText = "{filterCliente>kunnr}" />
+						</ComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+				
+				<fb:FilterItem name="DATA" label="Data">
+					<fb:control>
+						<DatePicker/>
+					</fb:control>				
+				</fb:FilterItem>
+				
+			</fb:filterItems>
+	    </fb:FilterBar>	
+		
+	</VBox>
+</mvc:View>

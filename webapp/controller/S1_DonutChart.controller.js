@@ -26,7 +26,6 @@ sap.ui.define([
 		onInit: function() {
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
-			
 			this._initializeVizChart();	
 		},
 		
@@ -49,8 +48,8 @@ sap.ui.define([
 			var aData = oEvent.getParameter('data');
 			var oSelectedObject = aData[0].data;
 			
-			var oVizBaseline 	= oEvent.getSource(); 
-			var oDataset 		= oVizBaseline.getDataset();
+			var oVizReplanejado	= oEvent.getSource(); 
+			var oDataset 		= oVizReplanejado.getDataset();
 			var oBinding 		= oDataset.getBinding('data');
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 

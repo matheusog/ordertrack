@@ -6,10 +6,10 @@
 	xmlns:viz="sap.viz.ui5.controls"
 	xmlns:viz.data="sap.viz.ui5.data"
 	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_DonutChart" 
-	xmlns:html="http://www.w3.org/1999/xhtml">
-	<VBox 
-		width="{= ${device>/system/phone} ? '100%' : '30%' }" >
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_DonutChart" >
+	
+	<VBox width="{= ${device>/system/phone} ? '100%' : '33%' }" >
 		<cms:ChartContainer
 			showFullScreen="true"
 			showPersonalization="false"
@@ -26,53 +26,49 @@
 							<viz:dataset>
 								<viz.data:FlattenedDataset data="{donutChart>/d}">
 									<viz.data:dimensions>
-										<viz.data:DimensionDefinition name="Status"
-											value="{donutChart>descricao}" 
-											displayValue="{donutChart>descricao} - {donutChart>documents}"/>
+										<viz.data:DimensionDefinition name="Status" 
+																	  value="{donutChart>descricao}" 
+																	  displayValue="{donutChart>descricao} - {donutChart>documents}"/>
 									</viz.data:dimensions>
-									<viz.data:measures>											<viz.data:MeasureDefinition name="Documentos"
-											value="{donutChart>documents}" />
+									<viz.data:measures>										
+										<viz.data:MeasureDefinition name="Documentos" value="{donutChart>documents}" />
 									</viz.data:measures>
 								</viz.data:FlattenedDataset>
 							</viz:dataset>
 							<viz:feeds>
-								<viz.feeds:FeedItem uid="size" type="Measure"
-									values="Documentos" />
-								<viz.feeds:FeedItem uid="color" type="Dimension"
-									values="Status" />
+								<viz.feeds:FeedItem uid="size"	type="Measure"	 values="Documentos" />
+								<viz.feeds:FeedItem uid="color" type="Dimension" values="Status" />
 							</viz:feeds>
 						</viz:VizFrame>	
 					</cms:content>
-					</cms:ChartContainerContent>
-					<cms:ChartContainerContent>
-							<cms:content>
-								<viz:VizFrame 
-									id="idVizReplanejado" 
-									vizType='donut'
-									selectData=".onSelectDataReplanejado">
-								<viz:dataset>
-									<viz.data:FlattenedDataset data="{donutChart>/e}">
-										<viz.data:dimensions>
-											<viz.data:DimensionDefinition name="Status"
-												value="{donutChart>descricao}" 
-												displayValue="{donutChart>descricao} - {donutChart>documents}"/>
-										</viz.data:dimensions>
-										<viz.data:measures>
-											<viz.data:MeasureDefinition name="Documentos"
-												value="{donutChart>documents}" />
-										</viz.data:measures>
-									</viz.data:FlattenedDataset>
-								</viz:dataset>
-								<viz:feeds>
-									<viz.feeds:FeedItem uid="size" type="Measure"
-										values="Documentos" />
-									<viz.feeds:FeedItem uid="color" type="Dimension"
-										values="Status" />
-								</viz:feeds>
-							</viz:VizFrame>	
-						</cms:content>
-					</cms:ChartContainerContent>
-				</cms:content>
-			</cms:ChartContainer>
+				</cms:ChartContainerContent>
+				<cms:ChartContainerContent>
+					<cms:content>
+						<viz:VizFrame 
+							id="idVizReplanejado" 
+							vizType='donut'
+							selectData=".onSelectDataReplanejado">
+							<viz:dataset>
+								<viz.data:FlattenedDataset data="{donutChart>/e}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Status"
+																	  value="{donutChart>descricao}" 
+																	  displayValue="{donutChart>descricao} - {donutChart>documents}"/>
+									</viz.data:dimensions>
+									<viz.data:measures>
+										<viz.data:MeasureDefinition name="Documentos" value="{donutChart>documents}" />
+									</viz.data:measures>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<viz.feeds:FeedItem uid="size"	type="Measure"	 values="Documentos" />
+								<viz.feeds:FeedItem uid="color" type="Dimension" values="Status" />
+							</viz:feeds>
+						</viz:VizFrame>	
+					</cms:content>
+				</cms:ChartContainerContent>
+			</cms:content>
+		</cms:ChartContainer>
 	</VBox>
+
 </mvc:View>

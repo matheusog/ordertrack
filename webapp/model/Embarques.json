@@ -1,0 +1,64 @@
+{
+	"embarques": [
+			{	
+				"id": "01",
+				"descricao": "Aguardando Produção",
+				"documents": 0
+			},
+			{	
+				"id": "02",
+				"descricao": "Aguardando Fornecimento",
+				"documents": 300
+			},
+			{	
+				"id": "03",
+				"descricao": "Aguardando Planejamento de Transporte",
+				"documents": 280
+			},
+			{	
+				"id": "04",
+				"descricao": "Aguardando aceite de carga",
+				"documents": 120
+			},
+			{	
+				"id": "05",
+				"descricao": "Aguardando agendamento",
+				"documents": 210
+			},
+			{	
+				"id": "06",
+				"descricao": "Aguardando entrada na usina",
+				"documents": 130
+			},
+			{	
+				"id": "07",
+				"descricao": "Aguardando inicio carregamento",
+				"documents": 230
+			},
+			{	
+				"id": "08",
+				"descricao": "Aguardando fim carregamento",
+				"documents": 1
+			},
+			{	
+				"id": "09",
+				"descricao": "Aguardando faturamento",
+				"documents": 2
+			},
+			{	
+				"id": "10",
+				"descricao": "Aguardando inicio de viagem",
+				"documents": 30
+			},
+			{	
+				"id": "11",
+				"descricao": "Em trânsito",
+				"documents": 20
+			},
+			{	
+				"id": "12",
+				"descricao": "Concluido",
+				"documents": 12
+			}
+		]
+}
