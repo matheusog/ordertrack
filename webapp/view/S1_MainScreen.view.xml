@@ -11,24 +11,37 @@
 			<mvc:XMLView 
 				viewName="com.arcelor.scm.ordertrack.view.S1_Filter" 
 				displayBlock="true"/>
-		</content>
-		
-		<content>
-			<mvc:XMLView 
-				viewName="com.arcelor.scm.ordertrack.view.S1_DonutChart" 
-				displayBlock="true"/>
-		</content>
-		
-		<content>
-			<mvc:XMLView 
-				viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChart" 
-				displayBlock="true"/>
-		</content>
-
-		<content>
-			<mvc:XMLView 
-				viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChartStatus" 
-				displayBlock="true"/>
+			
+			<FlexBox 
+				direction="{= ${device>/system/phone} ? 'Column' : 'Row'  }"
+				width="100%">
+				<mvc:XMLView 
+					viewName="com.arcelor.scm.ordertrack.view.S1_DonutChart" 
+					displayBlock="true"
+					class="sapUiSmallMargin">
+					<mvc:layoutData>
+						<FlexItemData growFactor="1" />
+					</mvc:layoutData>
+				</mvc:XMLView>
+			
+				<mvc:XMLView 
+					viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChart" 
+					displayBlock="true"
+					class="sapUiSmallMargin">
+					<mvc:layoutData>
+						<FlexItemData growFactor="1" />
+					</mvc:layoutData>
+				</mvc:XMLView>
+	
+				<mvc:XMLView 
+					viewName="com.arcelor.scm.ordertrack.view.S1_ComparisonChartStatus" 
+					displayBlock="true"
+					class="sapUiSmallMargin">
+					<mvc:layoutData>
+						<FlexItemData growFactor="2" />
+					</mvc:layoutData>
+				</mvc:XMLView>
+			</FlexBox>
 		</content>
 		
 	</Page>

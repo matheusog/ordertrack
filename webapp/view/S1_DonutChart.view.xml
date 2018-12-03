@@ -9,7 +9,8 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_DonutChart" >
 	
-	<VBox width="{= ${device>/system/phone} ? '100%' : '33%' }" >
+	<VBox>
+	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 		<cms:ChartContainer
 			showFullScreen="true"
 			showPersonalization="false"

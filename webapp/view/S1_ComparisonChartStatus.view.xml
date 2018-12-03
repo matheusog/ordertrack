@@ -8,7 +8,8 @@
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_ComparisonChartStatus" >
 	
-	<VBox width="{= ${device>/system/phone} ? '100%' : '33%' }" >
+	<VBox>
+	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 		<cms:ChartContainer
 			showFullScreen="true"
 			showPersonalization="false"

@@ -7,7 +7,8 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_ComparisonChart">
 
-	<VBox width="{= ${device>/system/phone} ? '100%' : '33%' }" >
+	<VBox>
+	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 		<cms:ChartContainer
 			showFullScreen="true"
 			showPersonalization="false"
@@ -18,27 +19,17 @@
 			<cms:content>
 				<cms:ChartContainerContent>
 					<cms:content>
-						
-						<mc:ComparisonMicroChart	height="500px"
-													scale="Kg"
-													colorPalette="#5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
-							
+						<mc:ComparisonMicroChart
+							data="{embarques>/embarques}"
+							scale="Kg"
+							colorPalette="#5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
 							<mc:data>
-								<mc:ComparisonMicroChartData id="01" title="Aguardando Produção"					value="10"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="02" title="Aguardando Fornecimento"				value="04"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="03" title="Aguardando Planejamento de Transporte"	value="06"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="04" title="Aguardando aceite de carga"				value="10"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="05" title="Aguardando agendamento"					value="07"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="06" title="Aguardando entrada na usina"			value="09"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="07" title="Aguardando inicio carregamento"			value="10"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="08" title="Aguardando fim carregamento"			value="08"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="09" title="Aguardando faturamento"					value="06"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="10" title="Aguardando inicio de viagem"			value="10"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="11" title="Em trânsito"							value="04"  press="comparisonPressBar"/>
-								<mc:ComparisonMicroChartData id="12" title="Concluido"								value="15"	press="comparisonPressBar"/>
+								<mc:ComparisonMicroChartData 
+									title="{embarques>descricao}"
+									value="{embarques>documents}"
+									press=".onComparisonPressBar"/>
 							</mc:data>
 						</mc:ComparisonMicroChart>	
-						
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
