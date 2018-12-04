@@ -61,8 +61,9 @@ sap.ui.define([
 		
 		_initializeVizChart: function() {
 			
-			//Donut BASELINE
 			var oProp = $.extend({}, this._mVizDonutProperties);
+			
+			//Donut BASELINE
 			oProp.title.text = this._oBundle.getText('s1TitleBaseline');
 			this.oVizBaseline = this.getView().byId('idVizBaseline');
 			this.oVizBaseline.setVizProperties(oProp);
@@ -72,6 +73,7 @@ sap.ui.define([
 			oProp.title.text = this._oBundle.getText('s1TitleReplanejado');
 			this.oVizReplanejado = this.getView().byId('idVizReplanejado');
 			this.oVizReplanejado.setVizProperties(oProp);
+			
 		}
 		
 	});

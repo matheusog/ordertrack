@@ -11,7 +11,9 @@
 	
 	<VBox>
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
+	
 		<cms:ChartContainer
+			id="chartContainer"
 			showFullScreen="true"
 			showPersonalization="false"
 			autoAdjustHeight="false"
@@ -70,6 +72,7 @@
 				</cms:ChartContainerContent>
 			</cms:content>
 		</cms:ChartContainer>
+
 	</VBox>
 
 </mvc:View>

@@ -9,31 +9,39 @@
 
 	<VBox>
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
-		<cms:ChartContainer
-			showFullScreen="true"
-			showPersonalization="false"
-			autoAdjustHeight="false"
-			enableScrolling="false"
-			title="Embarques de Hoje"
-			showZoom="false">
-			<cms:content>
-				<cms:ChartContainerContent>
-					<cms:content>
-						<mc:ComparisonMicroChart
-							data="{embarques>/embarques}"
-							scale="Kg"
-							colorPalette="#5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
-							<mc:data>
-								<mc:ComparisonMicroChartData 
-									title="{embarques>descricao}"
-									value="{embarques>documents}"
-									press=".onComparisonPressBar"/>
-							</mc:data>
-						</mc:ComparisonMicroChart>	
-					</cms:content>
-				</cms:ChartContainerContent>
-			</cms:content>
-		</cms:ChartContainer>
+	
+		<FlexBox
+		height="100px"
+		alignItems="Start"
+		justifyContent="Center">
+				
+			<cms:ChartContainer
+				showFullScreen="true"
+				showPersonalization="false"
+				autoAdjustHeight="false"
+				enableScrolling="false"
+				title="Embarques de Hoje"
+				showZoom="false">
+				<cms:content>
+					<cms:ChartContainerContent>
+						<cms:content>
+							<mc:ComparisonMicroChart
+								data="{embarques>/embarques}"
+								scale="Kg"
+								colorPalette="#5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
+								<mc:data>
+									<mc:ComparisonMicroChartData 
+										title="{embarques>descricao}"
+										value="{embarques>documents}"
+										press=".onComparisonPressBar"/>
+								</mc:data>
+							</mc:ComparisonMicroChart>	
+						</cms:content>
+					</cms:ChartContainerContent>
+				</cms:content>
+			</cms:ChartContainer>
+			
+		</FlexBox>
 	</VBox>
 	
 </mvc:View>

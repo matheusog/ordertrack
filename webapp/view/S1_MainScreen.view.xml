@@ -14,13 +14,17 @@
 			
 			<FlexBox 
 				direction="{= ${device>/system/phone} ? 'Column' : 'Row'  }"
-				width="100%">
+				width="100%"
+				renderType="Div"
+				alignItems="Start"
+				justifyContent="Center">
+
 				<mvc:XMLView 
 					viewName="com.arcelor.scm.ordertrack.view.S1_DonutChart" 
 					displayBlock="true"
 					class="sapUiSmallMargin">
 					<mvc:layoutData>
-						<FlexItemData growFactor="1" />
+						<FlexItemData growFactor="3" />
 					</mvc:layoutData>
 				</mvc:XMLView>
 			
@@ -29,7 +33,7 @@
 					displayBlock="true"
 					class="sapUiSmallMargin">
 					<mvc:layoutData>
-						<FlexItemData growFactor="1" />
+						<FlexItemData growFactor="2" />
 					</mvc:layoutData>
 				</mvc:XMLView>
 	
@@ -38,9 +42,10 @@
 					displayBlock="true"
 					class="sapUiSmallMargin">
 					<mvc:layoutData>
-						<FlexItemData growFactor="2" />
+						<FlexItemData growFactor="1" />
 					</mvc:layoutData>
 				</mvc:XMLView>
+				
 			</FlexBox>
 		</content>
 		

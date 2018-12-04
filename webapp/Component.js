@@ -37,7 +37,7 @@ sap.ui.define([
 			var oModelDonut	= new sap.ui.model.json.JSONModel("/webapp/model/DonutChart.json");
 			this.setModel(oModelDonut, "donutChart");
 			
-			//Donut Baseline/Replanejado
+			//ComparisonChart Embarques
 			var oModelEmbarques	= new sap.ui.model.json.JSONModel("/webapp/model/Embarques.json");
 			this.setModel(oModelEmbarques, "embarques");
 		}
