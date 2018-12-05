@@ -13,6 +13,10 @@ sap.ui.define([
 		
 		onSearch: function () {
 			//EXECUTA ODATA DE ACORDO COM OS FILTROS
+		},
+		
+		onReset: function () {
+			//Limpa todos os filtros
 		}
 
 	});
