@@ -102,7 +102,7 @@
 				"viewType": "XML",
 				"controlId": "appStart",
 				"controlAggregation": "pages",
-				"clearAggregation": false,
+				"clearAggregation": true,
 				"transition": "slide",
 				"async": true,
 				"bypassed": {
@@ -141,7 +141,6 @@
 				"s2ItensCarteira": {
 					"viewId": "s2ItensCarteira",
 					"viewType": "XML",
-					"viewPath": "com.arcelor.scm.ordertrack.view.S2_ItensCarteira",
 					"viewName": "S2_ItensCarteira",
 					"viewLevel" : 2
 				}

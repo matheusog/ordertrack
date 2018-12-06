@@ -5,10 +5,6 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_ComparisonChart", {
-
-		getRouter : function () {
-			return sap.ui.core.UIComponent.getRouterFor(this);
-		},
 		
 		onComparisonPressBar : function(oEvent) {
 			//var oBar		= oEvent.getSource(); 

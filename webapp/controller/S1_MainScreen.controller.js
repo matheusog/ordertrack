@@ -1,7 +1,7 @@
 sap.ui.define([
 	"com/arcelor/scm/ordertrack/controller/BaseController",
 	'sap/ui/model/json/JSONModel'
-], function(BaseController,JSONModel) {
+], function(BaseController, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
@@ -15,6 +15,11 @@ sap.ui.define([
 			var oModel = new JSONModel();
 			oModel.setData({ dateValue: new Date() });
 			this.getView().setModel(oModel);
+			
+		},
+		
+		onTestPress : function(oEvent) {
+			this.getRouter().navTo("itensCarteira");
 		},
 		
 		_routeMatched : function(oEvent) {
