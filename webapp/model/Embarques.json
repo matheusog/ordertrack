@@ -3,62 +3,98 @@
 			{	
 				"id": "01",
 				"descricao": "Aguardando Produção",
-				"documents": 0
+				"documents": 10,
+				"peso_bruto": 100,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "02",
 				"descricao": "Aguardando Fornecimento",
-				"documents": 300
+				"documents": 0,
+				"peso_bruto": 0,
+				"peso_liquido": 0,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "03",
 				"descricao": "Aguardando Planejamento de Transporte",
-				"documents": 280
+				"documents": 280,
+				"peso_bruto": 300,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "04",
 				"descricao": "Aguardando aceite de carga",
-				"documents": 120
+				"documents": 120,
+				"peso_bruto": 400,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "05",
 				"descricao": "Aguardando agendamento",
-				"documents": 210
+				"documents": 210,
+				"peso_bruto": 500,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "06",
 				"descricao": "Aguardando entrada na usina",
-				"documents": 130
+				"documents": 130,
+				"peso_bruto": 600,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "07",
 				"descricao": "Aguardando inicio carregamento",
-				"documents": 230
+				"documents": 230,
+				"peso_bruto": 700,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "08",
 				"descricao": "Aguardando fim carregamento",
-				"documents": 1
+				"documents": 1,
+				"peso_bruto": 800,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "09",
 				"descricao": "Aguardando faturamento",
-				"documents": 2
+				"documents": 2,
+				"peso_bruto": 900,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "10",
 				"descricao": "Aguardando inicio de viagem",
-				"documents": 30
+				"documents": 30,
+				"peso_bruto": 1000,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "11",
 				"descricao": "Em trânsito",
-				"documents": 20
+				"documents": 20,
+				"peso_bruto": 1100,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			},
 			{	
 				"id": "12",
 				"descricao": "Concluido",
-				"documents": 12
+				"documents": 12,
+				"peso_bruto": 1200,
+				"peso_liquido": 300,
+				"peso_um": "KG"
 			}
 		]
 }

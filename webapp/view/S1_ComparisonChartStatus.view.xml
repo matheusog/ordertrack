@@ -1,6 +1,6 @@
 <mvc:View 
 	xmlns:core="sap.ui.core" 
-	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
 	xmlns:cms="sap.suite.ui.commons"
 	xmlns:mc="sap.suite.ui.microchart"
@@ -28,20 +28,11 @@
 						<cms:ChartContainerContent>
 							<cms:content>
 								<l:HorizontalLayout class="sapUiContentPadding" >
-									<mc:ComparisonMicroChart>
+									<mc:ComparisonMicroChart data="{status>/credito}">
 										<mc:data>
-											<mc:ComparisonMicroChartData title="Aprovadas"
-												value="102" color="Good" />
-											<mc:ComparisonMicroChartData title="Bloqueadas"
-												value="50" color="Error" />
-										</mc:data>
-									</mc:ComparisonMicroChart>
-									<mc:ComparisonMicroChart>
-										<mc:data>
-											<mc:ComparisonMicroChartData title="Liberadas"
-												value="20" color="Critical" />
-											<mc:ComparisonMicroChartData title="Não Verificadas"
-												value="10" color="Neutral" />
+											<mc:ComparisonMicroChartData	title="{status>descricao}"
+																			value="{status>documents}" 
+																			color="{status>color}" />
 										</mc:data>
 									</mc:ComparisonMicroChart>
 								</l:HorizontalLayout>
@@ -62,20 +53,11 @@
 						<cms:ChartContainerContent>
 							<cms:content>
 								<l:HorizontalLayout class="sapUiContentPadding" >
-									<mc:ComparisonMicroChart>
+									<mc:ComparisonMicroChart data="{status>/bloqueio}">
 										<mc:data>
-											<mc:ComparisonMicroChartData title="Liberadas"
-												value="1" color="Good" />
-											<mc:ComparisonMicroChartData title="Bloqueadas"
-												value="11" color="Error" />
-										</mc:data>
-								    </mc:ComparisonMicroChart>
-									<mc:ComparisonMicroChart>
-										<mc:data>
-											<mc:ComparisonMicroChartData title="Liberadas"
-												value="10" color="Good" />
-											<mc:ComparisonMicroChartData title="Bloqueadas"
-												value="2" color="Error" />
+											<mc:ComparisonMicroChartData	title="{status>descricao}"
+																			value="{status>documents}" 
+																			color="{status>color}" />
 										</mc:data>
 									</mc:ComparisonMicroChart>
 								</l:HorizontalLayout>

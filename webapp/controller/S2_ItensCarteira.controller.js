@@ -1,6 +1,7 @@
 sap.ui.define([
-	"com/arcelor/scm/ordertrack/controller/BaseController"
-], function(BaseController) {
+	"com/arcelor/scm/ordertrack/controller/BaseController",
+	'sap/m/MessageToast'
+], function(BaseController, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S2_ItensCarteira", {
@@ -12,7 +13,8 @@ sap.ui.define([
 		}, 
 		
 		_routeMatched: function(oEvent) {
-			
+			var selEmbarqueId = oEvent.getParameter('arguments').embarqueId;
+			//MessageToast.show(selEmbarqueId);
 		}
 		
 	});

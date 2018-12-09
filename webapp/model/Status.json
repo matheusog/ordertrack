@@ -1,0 +1,49 @@
+{
+	"credito": [
+			{
+				"id": "01",
+				"descricao": "Aprovadas",
+				"documents": 2000, 
+				"color": "Good"
+			},
+			{	
+				"id": "02",
+				"descricao": "Bloqueadas",
+				"documents": 3000, 
+				"color": "Error"
+			},
+			{	
+				"id": "03",
+				"descricao": "Liberadas",
+				"documents": 4000, 
+				"color": "Critical"
+			},
+			{	
+				"id": "04",
+				"descricao": "Não Verificadas",
+				"documents": 5000, 
+				"color": "Neutral"
+			}
+		],
+
+	"bloqueio": [
+			{	
+				"id": "01",
+				"descricao": "Bloq. Remessa",
+				"documents": 2800, 
+				"color": "Error"
+			},
+			{	
+				"id": "02",
+				"descricao": "Bloq. Limbo",
+				"documents": 1200, 
+				"color": "Error"
+			},
+			{	
+				"id": "03",
+				"descricao": "Bloq. Pag.Antecipado",
+				"documents": 1200, 
+				"color": "Error"
+			}
+		]
+}

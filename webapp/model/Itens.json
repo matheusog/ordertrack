@@ -1,0 +1,88 @@
+{ 
+	"itens": [
+		{	
+			"id":1,
+			"hier":0,
+			"parent": null,
+			"drill": "expanded",
+			"documento": "00001",
+			"item": "10",
+			"cliente": "10001", 
+			"cliente_txt": "Cliente Teste 1",
+			"material": "20001",
+			"material_txt": "Material Teste 1",
+			"data": "20/10/2018",
+			"embarque": "01"
+		},
+		{	
+			"id":2,
+			"hier":1,
+			"parent": 1,
+			"drill": "leaf",
+			"documento": "00001",
+			"item": "10",
+			"cliente": "10001", 
+			"cliente_txt": "Cliente Teste 1",
+			"material": "20001",
+			"material_txt": "Material Teste 1",
+			"data": "20/10/2018",
+			"embarque": "01"
+		},
+		{	
+			"id":3,
+			"hier":0,
+			"parent": null,
+			"drill": "expanded",
+			"documento": "00001",
+			"item": "20",
+			"cliente": "10001", 
+			"cliente_txt": "Cliente Teste 1",
+			"material": "20002",
+			"material_txt": "Material Teste 2",
+			"data": "20/10/2018",
+			"embarque": "01"
+		},
+		{	
+			"id":4,
+			"hier":3,
+			"parent": 3,
+			"drill": "leaf",
+			"documento": "00001",
+			"item": "20",
+			"cliente": "10001", 
+			"cliente_txt": "Cliente Teste 1",
+			"material": "20002",
+			"material_txt": "Material Teste 2",
+			"data": "23/10/2018",
+			"embarque": "01"
+		},
+		{	
+			"id":5,
+			"hier":0,
+			"parent": null,
+			"drill": "expanded",
+			"documento": "00002",
+			"item": "10",
+			"cliente": "10002", 
+			"cliente_txt": "Cliente Teste 2",
+			"material": "20001",
+			"material_txt": "Material Teste 1",
+			"data": "22/10/2018",
+			"embarque": "03"
+		},
+		{	
+			"id":6,
+			"hier":0,
+			"parent": null,
+			"drill": "expanded",
+			"documento": "00003",
+			"item": "10",
+			"cliente": "10002", 
+			"cliente_txt": "Cliente Teste 2",
+			"material": "20003",
+			"material_txt": "Material Teste 3",
+			"data": "23/10/2018",
+			"embarque": "03"
+		}
+	]
+}

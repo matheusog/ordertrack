@@ -119,7 +119,7 @@
 				},
 				{
 					"name": "itensCarteira",
-					"pattern": "/itens",
+					"pattern": "itens/{embarqueId}",
 					"target": [
 						"s2ItensCarteira"
 					]
