@@ -1,4 +1,6 @@
-<mvc:View 
+<!--<mvc:View -->
+<core:FragmentDefinition
+	id="fragChartDonut"
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m"
@@ -7,13 +9,13 @@
 	xmlns:viz.data="sap.viz.ui5.data"
 	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_DonutChart" >
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" >
 	
-	<VBox>
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 	
 		<cms:ChartContainer
 			id="chartContainer"
+			class="sapUiSmallMargin"
 			showFullScreen="true"
 			showPersonalization="false"
 			autoAdjustHeight="false"
@@ -25,16 +27,27 @@
 						<viz:VizFrame 
 							id="idVizBaseline" 
 							vizType='donut'
-							selectData=".onSelectDataBaseline">
+							selectData=".onSelectDataBaseline"
+							busy="{view>/busy}"
+							busyIndicatorDelay="{view>/busyDelay}">
 							<viz:dataset>
-								<viz.data:FlattenedDataset data="{donutChart>/d}">
+								<viz.data:FlattenedDataset data="{donutChart>/}" >
+									<!--
+									data="{
+										path: '/CARTEIRA_FILTERSet', 
+										model: 'Carteira', 
+										parameters: {
+											expand: 'toBaseline'
+										}
+									}>
+									-->
 									<viz.data:dimensions>
 										<viz.data:DimensionDefinition name="Status" 
-																	  value="{donutChart>descricao}" 
-																	  displayValue="{donutChart>descricao} - {donutChart>documents}"/>
+																	  value="{donutChart>Descricao}" 
+																	  displayValue="{donutChart>Descricao} - {donutChart>Documents}"/>
 									</viz.data:dimensions>
 									<viz.data:measures>										
-										<viz.data:MeasureDefinition name="Documentos" value="{donutChart>documents}" />
+										<viz.data:MeasureDefinition name="Documentos" value="{donutChart>Documents}" />
 									</viz.data:measures>
 								</viz.data:FlattenedDataset>
 							</viz:dataset>
@@ -50,16 +63,18 @@
 						<viz:VizFrame 
 							id="idVizReplanejado" 
 							vizType='donut'
-							selectData=".onSelectDataReplanejado">
+							selectData=".onSelectDataReplanejado"
+							busy="{view>/busy}"
+							busyIndicatorDelay="{view>/busyDelay}">
 							<viz:dataset>
-								<viz.data:FlattenedDataset data="{donutChart>/e}">
+								<viz.data:FlattenedDataset data="{donutChartReplan>/}" >
 									<viz.data:dimensions>
 										<viz.data:DimensionDefinition name="Status"
-																	  value="{donutChart>descricao}" 
-																	  displayValue="{donutChart>descricao} - {donutChart>documents}"/>
+																	  value="{donutChartReplan>Descricao}" 
+																	  displayValue="{donutChartReplan>Descricao} - {donutChartReplan>Documents}"/>
 									</viz.data:dimensions>
 									<viz.data:measures>
-										<viz.data:MeasureDefinition name="Documentos" value="{donutChart>documents}" />
+										<viz.data:MeasureDefinition name="Documentos" value="{donutChartReplan>Documents}" />
 									</viz.data:measures>
 								</viz.data:FlattenedDataset>
 							</viz:dataset>
@@ -71,8 +86,9 @@
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
+			<cms:layoutData>
+				<FlexItemData growFactor="3" />
+			</cms:layoutData>
 		</cms:ChartContainer>
-
-	</VBox>
-
-</mvc:View>
+</core:FragmentDefinition>
+<!--</mvc:View>-->

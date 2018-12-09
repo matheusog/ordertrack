@@ -1,0 +1,52 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZTOSCM_CARTEIRA_SRV_01" xml:lang="pt" sap:schema-version="1">
+            <EntityType Name="CARTEIRA_DONUT_BASELINE" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Componente do nº versão" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Campo de caracteres do comprimento 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Value" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="2" sap:unicode="false" sap:label="%" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Documents" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CARTEIRA_FILTER" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Componente do nº versão" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Centro" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Centro" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cliente" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cliente" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="toBaseline" Relationship="ZTOSCM_CARTEIRA_SRV_01.ASSOCIATION_FILTER_BASELINE" FromRole="FromRole_ASSOCIATION_FILTER_BASELINE" ToRole="ToRole_ASSOCIATION_FILTER_BASELINE"/>
+            </EntityType>
+            <Association Name="ASSOCIATION_FILTER_BASELINE" sap:content-version="1">
+                <End Type="ZTOSCM_CARTEIRA_SRV_01.CARTEIRA_FILTER" Multiplicity="1" Role="FromRole_ASSOCIATION_FILTER_BASELINE"/>
+                <End Type="ZTOSCM_CARTEIRA_SRV_01.CARTEIRA_DONUT_BASELINE" Multiplicity="*" Role="ToRole_ASSOCIATION_FILTER_BASELINE"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ASSOCIATION_FILTER_BASELINE">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ASSOCIATION_FILTER_BASELINE">
+                        <PropertyRef Name="Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZTOSCM_CARTEIRA_SRV_01_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="CARTEIRA_DONUT_BASELINESet" EntityType="ZTOSCM_CARTEIRA_SRV_01.CARTEIRA_DONUT_BASELINE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CARTEIRA_FILTERSet" EntityType="ZTOSCM_CARTEIRA_SRV_01.CARTEIRA_FILTER" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="ASSOCIATION_FILTER_BASELINESet" Association="ZTOSCM_CARTEIRA_SRV_01.ASSOCIATION_FILTER_BASELINE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CARTEIRA_FILTERSet" Role="FromRole_ASSOCIATION_FILTER_BASELINE"/>
+                    <End EntitySet="CARTEIRA_DONUT_BASELINESet" Role="ToRole_ASSOCIATION_FILTER_BASELINE"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZTOSCM_CARTEIRA_SRV_01/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZTOSCM_CARTEIRA_SRV_01/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

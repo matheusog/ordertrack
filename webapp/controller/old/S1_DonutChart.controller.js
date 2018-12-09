@@ -5,28 +5,16 @@ sap.ui.define([
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_DonutChart", {
 
-		_mVizDonutProperties: {
-			title: {
-				visible: true,
-				text: ''
-			}, 
-			legendGroup: {
-				layout: {
-					alignment: 'topLeft', 
-					position: 'top'
-				}
-			},
-			plotArea: {
-				dataLabel: {
-					visible: true
-				}
-			}
-		}, 
+
 		
 		onInit: function() {
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
+			
+			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
+			
 			this._initializeVizChart();	
+			this._requestOdata();
 		},
 		
 		onSelectDataBaseline : function(oEvent){
@@ -74,8 +62,35 @@ sap.ui.define([
 			this.oVizReplanejado = this.getView().byId('idVizReplanejado');
 			this.oVizReplanejado.setVizProperties(oProp);
 			
+		},
+		
+		_requestOdata: function(oFilters){
+			
+			var oViewModel	= this.getView().getModel('view');
+			var oDonutChart = this.getOwnerComponent().getModel('donutChart');
+			
+			var onSuccess = function(oResultData, oResponse) {
+				oDonutChart.setData(oResultData.results[0].toBaseline.results);
+				oViewModel.setProperty('/busy', false);
+			};
+			
+			var onError = function(oError) {
+				oViewModel.setProperty('/busy', false);
+			};
+			
+			var oModel = this.getOwnerComponent().getModel('Carteira'); 
+			oModel.read('/CARTEIRA_FILTERSet', 
+				{
+					urlParameters: {
+						$expand: 'toBaseline'
+					}, 
+					filters: oFilters,
+					success: onSuccess, 
+					error: onError
+				
+			});
+			oViewModel.setProperty('/busy', true);
 		}
 		
 	});
-
 });

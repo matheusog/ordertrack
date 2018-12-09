@@ -1,4 +1,6 @@
-<mvc:View 
+<!--<mvc:View  -->
+<core:FragmentDefinition
+	id="fragChartStatus"
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
@@ -6,16 +8,11 @@
 	xmlns:mc="sap.suite.ui.microchart"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:l="sap.ui.layout"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_ComparisonChartStatus" >
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" >
 	
-	<VBox>
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
-	
-		<FlexBox
-			height="100px"
-			alignItems="Start"
-			justifyContent="Center">
-			<l:VerticalLayout>
+			<VBox
+			 class="sapUiSmallMargin">
 
 				<cms:ChartContainer
 					showFullScreen="true"
@@ -65,9 +62,9 @@
 						</cms:ChartContainerContent>
 					</cms:content>
 				</cms:ChartContainer>
-				
-			</l:VerticalLayout>
-		</FlexBox>
-	</VBox>
-	
-</mvc:View>
+				<layoutData>
+					<FlexItemData growFactor="1" />
+				</layoutData>
+			</VBox>
+</core:FragmentDefinition>
+<!--</mvc:View> -->

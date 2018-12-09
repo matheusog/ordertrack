@@ -19,7 +19,7 @@
 				"type": "OData", 
 				"settings": {
 					"odataVersion": "2.0",
-					"localUri": "localService/metadata.xml"
+					"localUri": "localService/ZTOSCM_CARTEIRA_SRV_01/metadata.xml"
 				}
 			}
 		}
@@ -83,10 +83,16 @@
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "OneWay",
-					"defaultCountMode": "Request"
+					"defaultCountMode": "None"
 				},
 				"dataSource": "ZTOSCM_CARTEIRA_SRV_01",
 				"preload": true
+			}, 
+			"donutChart": {
+				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"donutChartReplan": {
+				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
 		"resources": {

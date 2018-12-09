@@ -1,21 +1,18 @@
-<mvc:View 
+<!-- <mvc:View -->
+<core:FragmentDefinition
+	id="fragChartEmbarques"
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m"
 	xmlns:cms="sap.suite.ui.commons"
 	xmlns:mc="sap.suite.ui.microchart"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_ComparisonChart">
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 
-	<VBox>
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
-	
-		<FlexBox
-		height="100px"
-		alignItems="Start"
-		justifyContent="Center">
-				
+
 			<cms:ChartContainer
+				class="sapUiSmallMargin"
 				showFullScreen="true"
 				showPersonalization="false"
 				autoAdjustHeight="false"
@@ -39,9 +36,10 @@
 						</cms:content>
 					</cms:ChartContainerContent>
 				</cms:content>
+				<cms:layoutData>
+					<FlexItemData growFactor="2" />
+				</cms:layoutData>
 			</cms:ChartContainer>
-			
-		</FlexBox>
-	</VBox>
-	
-</mvc:View>
+
+</core:FragmentDefinition>
+<!--</mvc:View> -->

@@ -1,10 +1,12 @@
-<mvc:View	
+<!--<mvc:View	-->
+<core:FragmentDefinition
+	id="fragFilter"
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns="sap.m"
 	xmlns:fb="sap.ui.comp.filterbar"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_Filter">
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 	
 	<VBox>
 		
@@ -13,8 +15,10 @@
 				
 				<fb:FilterItem name="WERKS" label="Centro">
 					<fb:control>
-						<ComboBox	showSecondaryValues= "true" 
-									items="{path: 'filterCentro>/', sorter: { path: 'filterCentro>werks' }}">
+						<ComboBox	
+							id="comboWerks"
+							showSecondaryValues= "true" 
+							items="{path: 'filterCentro>/', sorter: { path: 'filterCentro>werks' }}">
 							<core:ListItem	key="{filterCentro>werks}" 
 											text="{filterCentro>werks}" 
 											additionalText = "{filterCentro>werks_txt}" />
@@ -24,8 +28,10 @@
 				
 				<fb:FilterItem name="KUNNR" label="Cliente">
 					<fb:control>
-						<ComboBox	showSecondaryValues= "true" 
-									items="{path: 'filterCliente>/', sorter: { path: 'filterCliente>kunnr' }}">
+						<ComboBox	
+							id="comboKunnr"
+							showSecondaryValues= "true" 
+							items="{path: 'filterCliente>/', sorter: { path: 'filterCliente>kunnr' }}">
 							<core:ListItem	key="{filterCliente>kunnr}" 
 											text="{filterCliente>kunnr}" 
 											additionalText = "{filterCliente>kunnr_txt}" />
@@ -35,7 +41,7 @@
 				
 				<fb:FilterItem name="DATA" label="Data">
 					<fb:control>
-						<DatePicker/>
+						<DatePicker id="dateDataCri"/>
 					</fb:control>				
 				</fb:FilterItem>
 				
@@ -43,4 +49,4 @@
 	    </fb:FilterBar>	
 		
 	</VBox>
-</mvc:View>
+</core:FragmentDefinition>
