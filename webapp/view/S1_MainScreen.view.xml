@@ -11,7 +11,8 @@
 		<content>
 			
 			<core:Fragment 
-				fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_Filter" type="XML"/>
+				fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_Filter" 
+				type="XML"/>
 				
 			<!--
 			<mvc:XMLView 

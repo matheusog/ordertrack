@@ -39,12 +39,12 @@ sap.ui.define([
 			//this.setModel(oModelDonut, "donutChart");
 			
 			//ComparisonChart Embarques
-			var oModelEmbarques	= new sap.ui.model.json.JSONModel("/webapp/model/Embarques.json");
-			this.setModel(oModelEmbarques, "embarques");
+			//var oModelEmbarques	= new sap.ui.model.json.JSONModel("/webapp/model/Embarques.json");
+			//this.setModel(oModelEmbarques, "embarques");
 			
 			//ComparisonChart Status
-			var oModelStatus	= new sap.ui.model.json.JSONModel("/webapp/model/Status.json");
-			this.setModel(oModelStatus, "status");
+			//var oModelStatus	= new sap.ui.model.json.JSONModel("/webapp/model/Status.json");
+			//this.setModel(oModelStatus, "status");
 			
 			//Itens
 			var oModelItens	= new sap.ui.model.json.JSONModel("/webapp/model/Itens.json");

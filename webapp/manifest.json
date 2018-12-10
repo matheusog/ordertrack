@@ -93,6 +93,15 @@
 			}, 
 			"donutChartReplan": {
 				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"chartEmbarques": {
+				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"chartStatusCred": {
+				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"chartStatusBlq": {
+				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
 		"resources": {

@@ -2,9 +2,9 @@ sap.ui.define([
 	"com/arcelor/scm/ordertrack/controller/BaseController",
 	'sap/ui/model/Filter', 
 	'sap/ui/model/FilterOperator', 
-	'sap/ui/model/json/JSONModel'
-	
-], function(BaseController, Filter, FilterOperator, JSONModel) {
+	'sap/ui/model/json/JSONModel',
+	'sap/m/MessageToast'
+], function(BaseController, Filter, FilterOperator, JSONModel, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
@@ -47,32 +47,29 @@ sap.ui.define([
 		
 		onSearch: function(oEvent) {
 			var aFilters		= this._createFilter(); 
-			
-			//var oFilters; 
-			//if(aFilters.length) { 
-			//	oFilters = new Filter({filters: aFilters, and: true}); 
-			//}
 			this._requestOdata(aFilters); 
 		}, 
 		
 		onSelectDataBaseline : function(oEvent){
 			var aData = oEvent.getParameter('data');
 			var oSelectedObject = aData[0].data;
-			
+
 			var oVizBaseline 	= oEvent.getSource(); 
 			var oDataset 		= oVizBaseline.getDataset();
 			var oBinding 		= oDataset.getBinding('data');
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
-			
+
 			var aFilters = this._createFilter(); 
-			aFilters.push(new Filter('Id', FilterOperator.EQ, oObject.Id)); 
+			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'B')); 
+			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
 			
 			this._requestOdataDetail(aFilters);
 			
 			oEvent.getSource().vizSelection(
 				oEvent.getParameter('data'), { clearSelection: true }
 			);
+			
 		}, 
 		
 		onSelectDataReplanejado : function(oEvent){
@@ -86,7 +83,8 @@ sap.ui.define([
 			var oObject			= oContext.getObject(); 
 			
 			var aFilters = this._createFilter(); 
-			aFilters.push(new Filter('Id', FilterOperator.EQ, oObject.Id)); 
+			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'R')); 
+			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
 			
 			this._requestOdataDetail(aFilters);
 			
@@ -102,18 +100,21 @@ sap.ui.define([
 				dCreationDate	= this._oDateCreation.getDateValue();
 				
 			if(this._oComboWerks.getSelectedItem()) {
-				sPlant= this._oComboWerks.getSelectedItem().getBindingContext('filterCentro').getObject().werks;
+				sPlant = this._oComboWerks.getSelectedItem().getBindingContext('filterCentro').getObject().werks;
 			}
 			if(this._oComboKunnr.getSelectedItem()) {
-				sCustomer= this._oComboKunnr.getSelectedItem().getBindingContext('filterCliente').getObject().kunnr;
+				sCustomer = this._oComboKunnr.getSelectedItem().getBindingContext('filterCliente').getObject().kunnr;
 			}
-			
+
 			
 			if(sPlant){
 				aFilters.push(new Filter('Centro', FilterOperator.EQ, sPlant));
 			}
 			if(sCustomer){
 				aFilters.push(new Filter('Cliente', FilterOperator.EQ, sCustomer));
+			}
+			if(dCreationDate){
+				aFilters.push(new Filter('Data', FilterOperator.EQ, dCreationDate));
 			}
 			return aFilters;
 		}, 
@@ -143,13 +144,19 @@ sap.ui.define([
 		
 		_requestOdata: function(oFilters){
 			
-			var oViewModel	= this.getView().getModel('view');
-			var oDonutChart = this.getOwnerComponent().getModel('donutChart');
-			var oDonutChartReplan = this.getOwnerComponent().getModel('donutChartReplan');
+			var oViewModel			= this.getView().getModel('view');
+			var oDonutChart 		= this.getOwnerComponent().getModel('donutChart');
+			var oDonutChartReplan	= this.getOwnerComponent().getModel('donutChartReplan');
+			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
+			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
+			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
 			
 			var onSuccess = function(oResultData, oResponse) {
 				oDonutChart.setData(oResultData.results[0].toBaseline.results);
 				oDonutChartReplan.setData(oResultData.results[0].toReplanejado.results);
+				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
+				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
+				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -164,7 +171,7 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toBaseline,toReplanejado'
+						$expand: 'toBaseline,toReplanejado,toEmbarques,toStatusCred,toStatusBlq'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -177,8 +184,14 @@ sap.ui.define([
 		_requestOdataDetail: function(oFilters){
 			
 			var oViewModel	= this.getView().getModel('view');
+			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
+			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
+			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
 			
 			var onSuccess = function(oResultData, oResponse) {
+				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
+				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
+				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -193,7 +206,7 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toEmbarques'
+						$expand: 'toEmbarques,toStatusCred,toStatusBlq'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -205,7 +218,19 @@ sap.ui.define([
 		
 		_routeMatched : function(oEvent) {
 
+		},
+		
+		onEmbarquesPressBarr : function(oEvent) {
+			var selEmbarqueId	= oEvent.getSource().getBindingContext('chartEmbarques').getObject().Id;
+			
+			//var selEmbarquePeso = oEvent.getSource().getBindingContext('chartEmbarques').getObject().PesoBruto;	
+			//if (selEmbarquePeso == "0.000") {
+			//	MessageToast.show("Nenhum item disponivel para esse embarque");	
+			//} else {
+				this.getRouter().navTo("itensCarteira", { embarqueId: selEmbarqueId });	
+			//}
 		}
+		
 	});
 
 });
