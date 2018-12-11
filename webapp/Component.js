@@ -47,8 +47,8 @@ sap.ui.define([
 			//this.setModel(oModelStatus, "status");
 			
 			//Itens
-			var oModelItens	= new sap.ui.model.json.JSONModel("/webapp/model/Itens.json");
-			this.setModel(oModelItens, "itens");
+			//var oModelItens	= new sap.ui.model.json.JSONModel("/webapp/model/Itens.json");
+			//this.setModel(oModelItens, "itens");
 		}
 	});
 });

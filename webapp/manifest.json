@@ -102,6 +102,9 @@
 			}, 
 			"chartStatusBlq": {
 				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"itensEmbarque": {
+				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
 		"resources": {
@@ -133,10 +136,10 @@
 					]
 				},
 				{
-					"name": "itensCarteira",
-					"pattern": "itens/{embarqueId}",
+					"name": "mainScreen2",
+					"pattern": "itens",
 					"target": [
-						"s2ItensCarteira"
+						"s2MainScreen"
 					]
 				}
 			],
@@ -153,10 +156,10 @@
 					"viewName": "S1_MainScreen",
 					"viewLevel": 1
 				}, 
-				"s2ItensCarteira": {
-					"viewId": "s2ItensCarteira",
+				"s2MainScreen": {
+					"viewId": "s2MainScreen",
 					"viewType": "XML",
-					"viewName": "S2_ItensCarteira",
+					"viewName": "S2_MainScreen",
 					"viewLevel" : 2
 				}
 			}

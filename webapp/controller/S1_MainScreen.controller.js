@@ -6,6 +6,8 @@ sap.ui.define([
 	'sap/m/MessageToast'
 ], function(BaseController, Filter, FilterOperator, JSONModel, MessageToast) {
 	"use strict";
+	
+	var aFilters = null; 
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
 		
@@ -36,8 +38,9 @@ sap.ui.define([
 			
 			this._initializeControls(); 
 			this._initializeVizChart();	
-			this._requestOdata();
 			
+			this.onSearch();
+
 			// Setar Data
 			var oModel = new JSONModel();
 			oModel.setData({ dateValue: new Date() });
@@ -46,7 +49,7 @@ sap.ui.define([
 		},
 		
 		onSearch: function(oEvent) {
-			var aFilters		= this._createFilter(); 
+			aFilters		= this._createFilter(); 
 			this._requestOdata(aFilters); 
 		}, 
 		
@@ -60,7 +63,7 @@ sap.ui.define([
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
 
-			var aFilters = this._createFilter(); 
+			aFilters = this._createFilter(); 
 			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'B')); 
 			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
 			
@@ -82,7 +85,7 @@ sap.ui.define([
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
 			
-			var aFilters = this._createFilter(); 
+			aFilters = this._createFilter(); 
 			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'R')); 
 			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
 			
@@ -106,7 +109,6 @@ sap.ui.define([
 				sCustomer = this._oComboKunnr.getSelectedItem().getBindingContext('filterCliente').getObject().kunnr;
 			}
 
-			
 			if(sPlant){
 				aFilters.push(new Filter('Centro', FilterOperator.EQ, sPlant));
 			}
@@ -150,6 +152,7 @@ sap.ui.define([
 			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
 			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
 			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
+			var oItensEmbarque  	= this.getOwnerComponent().getModel('itensEmbarque');
 			
 			var onSuccess = function(oResultData, oResponse) {
 				oDonutChart.setData(oResultData.results[0].toBaseline.results);
@@ -157,6 +160,7 @@ sap.ui.define([
 				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
 				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
 				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
+				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -171,7 +175,7 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toBaseline,toReplanejado,toEmbarques,toStatusCred,toStatusBlq'
+						$expand: 'toBaseline,toReplanejado,toEmbarques,toStatusCred,toStatusBlq,toCarteiraItens'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -187,11 +191,13 @@ sap.ui.define([
 			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
 			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
 			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
-			
+			var oItensEmbarque  	= this.getOwnerComponent().getModel('itensEmbarque');
+
 			var onSuccess = function(oResultData, oResponse) {
 				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
 				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
 				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
+				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -206,7 +212,38 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toEmbarques,toStatusCred,toStatusBlq'
+						$expand: 'toEmbarques,toStatusCred,toStatusBlq,toCarteiraItens'
+					}, 
+					filters: oFilters,
+					success: onSuccess, 
+					error: onError
+				
+			});
+			oViewModel.setProperty('/busy', true);
+		}, 
+		
+		_requestOdataDetailClk: function(oFilters){
+			
+			var oViewModel		= this.getView().getModel('view');
+			var oItensEmbarque  = this.getOwnerComponent().getModel('itensEmbarque');
+
+			var onSuccess = function(oResultData, oResponse) {
+				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
+				oViewModel.setProperty('/busy', false);
+			};
+			
+			var onError = function(oError) {
+				oViewModel.setProperty('/busy', false);
+				if(oError.responseText){
+					var oResponse = JSON.parse(oError.responseText);
+				}
+			};
+			
+			var oModel = this.getOwnerComponent().getModel('Carteira'); 
+			oModel.read('/CARTEIRA_FILTERSet', 
+				{
+					urlParameters: {
+						$expand: 'toCarteiraItens'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -221,14 +258,19 @@ sap.ui.define([
 		},
 		
 		onEmbarquesPressBarr : function(oEvent) {
-			var selEmbarqueId	= oEvent.getSource().getBindingContext('chartEmbarques').getObject().Id;
 			
-			//var selEmbarquePeso = oEvent.getSource().getBindingContext('chartEmbarques').getObject().PesoBruto;	
-			//if (selEmbarquePeso == "0.000") {
-			//	MessageToast.show("Nenhum item disponivel para esse embarque");	
-			//} else {
-				this.getRouter().navTo("itensCarteira", { embarqueId: selEmbarqueId });	
-			//}
+			var selEmbarquePeso = oEvent.getSource().getBindingContext('chartEmbarques').getObject().PesoBruto;	
+			if (selEmbarquePeso == "0.000") {
+				MessageToast.show("Nenhum item disponivel para esse embarque");	
+			} else {
+				var selEmbarqueId	= oEvent.getSource().getBindingContext('chartEmbarques').getObject().Id;
+				var aFiltersClk = aFilters;
+				aFiltersClk.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
+				this._requestOdataDetailClk(aFiltersClk);
+				
+				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
+				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
+			}
 		}
 		
 	});

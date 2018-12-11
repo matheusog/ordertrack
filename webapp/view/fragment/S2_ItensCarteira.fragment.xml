@@ -1,0 +1,72 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:core="sap.ui.core" 
+	xmlns:l="sap.ui.layout"
+	xmlns:table="sap.ui.table"
+	controllerName="com.arcelor.scm.ordertrack.controller.S2_ItensCarteira">
+	
+	<table:Table 
+        id="Table"
+        selectionMode="Single"
+        enableColumnReordering="false"
+        expandFirstLevel="true"
+        enableBusyIndicator="true"
+        enableSelectAll="false"
+    	fixedColumnCount="2"
+        rows="{itensEmbarque>/}">
+		
+		<table:columns>
+			<table:Column width="4rem">
+				<Label text="Fluxo" />
+				<table:template>
+					<Button icon="sap-icon://tree" press="onPress" />
+				</table:template>
+			</table:Column>
+			<table:Column width="4rem">
+				<Label text="Geo" />
+				<table:template>
+					<Button icon="sap-icon://shipping-status" press="onPress" type="Accept"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="8rem">
+				<Label text="Documento" />
+				<table:template>
+					<Text text="{itensEmbarque>Document}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="5rem">
+				<Label text="Item" />
+				<table:template>
+					<Text text="{itensEmbarque>Item}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="8rem">
+				<Label text="Cliente" />
+				<table:template>
+					<Text text="{itensEmbarque>Kunnr}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="30rem">
+				<Label text="Nome do Cliente" />
+				<table:template>
+					<Text text="{itensEmbarque>Name}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="8rem">
+				<Label text="Material" />
+				<table:template>
+					<Text text="{itensEmbarque>Matnr}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="30rem">
+				<Label text="Descrição do Material" />
+				<table:template>
+					<Text text="{itensEmbarque>Arktx}"/>
+				</table:template>
+			</table:Column>
+		</table:columns>
+		
+	</table:Table>	
+</core:FragmentDefinition>

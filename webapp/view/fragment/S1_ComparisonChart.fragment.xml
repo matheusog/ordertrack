@@ -28,7 +28,7 @@
 						<mc:data>
 							<mc:ComparisonMicroChartData 
 								title="{chartEmbarques>Descricao}"
-								value="{chartEmbarques>PesoBruto}"
+								value="{chartEmbarques>Value}"
 								press=".onEmbarquesPressBarr"/>
 						</mc:data>
 					</mc:ComparisonMicroChart>	
