@@ -7,8 +7,9 @@ sap.ui.define([
 ], function(BaseController, Filter, FilterOperator, JSONModel, MessageToast) {
 	"use strict";
 	
-	var aFilters = null; 
-
+	var aClkDonut,
+		aClkStatus;
+	
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreen", {
 		
 		_mVizDonutProperties: {
@@ -45,11 +46,12 @@ sap.ui.define([
 			var oModel = new JSONModel();
 			oModel.setData({ dateValue: new Date() });
 			this.getView().setModel(oModel);
-			
 		},
 		
 		onSearch: function(oEvent) {
-			aFilters		= this._createFilter(); 
+			aClkDonut	= null;
+			aClkStatus	= null;
+			var aFilters		= this._createFilter(); 
 			this._requestOdata(aFilters); 
 		}, 
 		
@@ -62,10 +64,13 @@ sap.ui.define([
 			var oBinding 		= oDataset.getBinding('data');
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
+			
+			aClkDonut	= 'B';
+			aClkStatus	= oObject.Id;
 
-			aFilters = this._createFilter(); 
-			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'B')); 
-			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
+			var aFilters = this._createFilter(); 
+			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 
+			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 			
 			this._requestOdataDetail(aFilters);
 			
@@ -85,9 +90,12 @@ sap.ui.define([
 			var oContext 		= oBinding.getContexts()[oSelectedObject._context_row_number];
 			var oObject			= oContext.getObject(); 
 			
-			aFilters = this._createFilter(); 
-			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, 'R')); 
-			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, oObject.Id)); 
+			aClkDonut	= 'R';
+			aClkStatus	= oObject.Id;
+			
+			var aFilters = this._createFilter(); 
+			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 
+			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 			
 			this._requestOdataDetail(aFilters);
 			
@@ -103,10 +111,10 @@ sap.ui.define([
 				dCreationDate	= this._oDateCreation.getDateValue();
 				
 			if(this._oComboWerks.getSelectedItem()) {
-				sPlant = this._oComboWerks.getSelectedItem().getBindingContext('filterCentro').getObject().werks;
+				sPlant = this._oComboWerks.getSelectedItem().getKey();
 			}
 			if(this._oComboKunnr.getSelectedItem()) {
-				sCustomer = this._oComboKunnr.getSelectedItem().getBindingContext('filterCliente').getObject().kunnr;
+				sCustomer =this._oComboKunnr.getSelectedItem().getKey();
 			}
 
 			if(sPlant){
@@ -264,9 +272,15 @@ sap.ui.define([
 				MessageToast.show("Nenhum item disponivel para esse embarque");	
 			} else {
 				var selEmbarqueId	= oEvent.getSource().getBindingContext('chartEmbarques').getObject().Id;
-				var aFiltersClk = aFilters;
-				aFiltersClk.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
-				this._requestOdataDetailClk(aFiltersClk);
+				var aFilters = this._createFilter(); 
+				if(aClkDonut){
+					aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 	
+				}
+				if(aClkStatus){
+					aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
+				}
+				aFilters.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
+				this._requestOdataDetailClk(aFilters);
 				
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });

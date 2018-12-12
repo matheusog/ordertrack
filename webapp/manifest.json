@@ -87,7 +87,7 @@
 				},
 				"dataSource": "ZTOSCM_CARTEIRA_SRV_01",
 				"preload": true
-			}, 
+			},
 			"donutChart": {
 				"type": "sap.ui.model.json.JSONModel"
 			}, 

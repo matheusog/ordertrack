@@ -18,10 +18,10 @@
 						<ComboBox	
 							id="comboWerks"
 							showSecondaryValues= "true" 
-							items="{path: 'filterCentro>/', sorter: { path: 'filterCentro>werks' }}">
-							<core:ListItem	key="{filterCentro>werks}" 
-											text="{filterCentro>werks}" 
-											additionalText = "{filterCentro>werks_txt}" />
+							items="{path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>WerksName' }}">
+							<core:ListItem	key="{Carteira>Werks}" 
+											text="{Carteira>Werks}" 
+											additionalText = "{Carteira>WerksName}" />
 						</ComboBox>
 					</fb:control>				
 				</fb:FilterItem>
@@ -31,10 +31,10 @@
 						<ComboBox	
 							id="comboKunnr"
 							showSecondaryValues= "true" 
-							items="{path: 'filterCliente>/', sorter: { path: 'filterCliente>kunnr' }}">
-							<core:ListItem	key="{filterCliente>kunnr}" 
-											text="{filterCliente>kunnr}" 
-											additionalText = "{filterCliente>kunnr_txt}" />
+							items="{path: 'Carteira>/FILTER_KUNNRSet', sorter: { path: 'Carteira>Name' }}">
+							<core:ListItem	key="{Carteira>Kunnr}" 
+											text="{Carteira>Kunnr}" 
+											additionalText = "{Carteira>Name}" />
 						</ComboBox>
 					</fb:control>				
 				</fb:FilterItem>

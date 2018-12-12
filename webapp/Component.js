@@ -26,16 +26,15 @@ sap.ui.define([
 			this.getRouter().initialize();
 			
 			//Filtro Centro
-			var oModelCentro = new sap.ui.model.json.JSONModel("/webapp/model/FilterCentro.json");
-			this.setModel(oModelCentro, "filterCentro");
+			//var oModelCentro = new sap.ui.model.json.JSONModel("/webapp/model/FilterCentro.json");
+			//this.setModel(oModelCentro, "filterCentro");
 			
 			//Filtro Cliente
-			var oModelCliente = new sap.ui.model.json.JSONModel("/webapp/model/FilterCliente.json");
-			this.setModel(oModelCliente, "filterCliente");
+			//var oModelCliente = new sap.ui.model.json.JSONModel("/webapp/model/FilterCliente.json");
+			//this.setModel(oModelCliente, "filterCliente");
 			
 			//Donut Baseline/Replanejado
 			//var oModelDonut	= new sap.ui.model.json.JSONModel("/webapp/model/DonutChart.json");
-			//var oModelDonut	= new sap.ui.model.json.JSONModel();
 			//this.setModel(oModelDonut, "donutChart");
 			
 			//ComparisonChart Embarques

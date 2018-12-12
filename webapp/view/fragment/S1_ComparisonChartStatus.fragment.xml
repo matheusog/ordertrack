@@ -14,7 +14,7 @@
 	
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 	<VBox class="sapUiSmallMargin">
-
+					
 		<cms:ChartContainer
 			showFullScreen="true"
 			showPersonalization="false"

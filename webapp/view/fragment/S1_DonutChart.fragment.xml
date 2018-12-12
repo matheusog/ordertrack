@@ -25,9 +25,9 @@
 					<viz:VizFrame 
 						id="idVizBaseline" 
 						vizType='donut'
-						selectData=".onSelectDataBaseline"
-						busy="{view>/busy}"
-						busyIndicatorDelay="{view>/busyDelay}">
+						selectData=".onSelectDataBaseline">
+						<!-- busy="{view>/busy}"
+						busyIndicatorDelay="{view>/busyDelay}"> -->
 						<viz:dataset>
 							<viz.data:FlattenedDataset data="{donutChart>/}" >
 								<viz.data:dimensions>
@@ -53,9 +53,9 @@
 					<viz:VizFrame 
 						id="idVizReplanejado" 
 						vizType='donut'
-						selectData=".onSelectDataReplanejado"
-						busy="{view>/busy}"
-						busyIndicatorDelay="{view>/busyDelay}">
+						selectData=".onSelectDataReplanejado">
+						<!-- busy="{view>/busy}"
+						busyIndicatorDelay="{view>/busyDelay}"> -->
 						<viz:dataset>
 							<viz.data:FlattenedDataset data="{donutChartReplan>/}" >
 								<viz.data:dimensions>

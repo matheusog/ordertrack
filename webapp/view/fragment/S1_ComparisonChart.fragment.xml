@@ -6,11 +6,12 @@
 	xmlns:cms="sap.suite.ui.commons"
 	xmlns:mc="sap.suite.ui.microchart"
 	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 	<cms:ChartContainer
-		class="sapUiSmallMargin"
+		class="sapUiContentPadding" 
 		showFullScreen="true"
 		showPersonalization="false"
 		autoAdjustHeight="false"
@@ -20,6 +21,7 @@
 		<cms:content>
 			<cms:ChartContainerContent>
 				<cms:content>
+
 					<mc:ComparisonMicroChart
 						data="{chartEmbarques>/}"
 						scale="{i18n>s1Kg}"
@@ -31,7 +33,8 @@
 								value="{chartEmbarques>Value}"
 								press=".onEmbarquesPressBarr"/>
 						</mc:data>
-					</mc:ComparisonMicroChart>	
+					</mc:ComparisonMicroChart>
+						
 				</cms:content>
 			</cms:ChartContainerContent>
 		</cms:content>
