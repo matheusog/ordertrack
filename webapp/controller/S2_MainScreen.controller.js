@@ -2,9 +2,10 @@ sap.ui.define([
 	"com/arcelor/scm/ordertrack/controller/BaseController",
 	'sap/m/MessageToast',
 	'sap/m/MessageBox',
+	'sap/ui/model/Filter',
 	'sap/ui/core/util/Export',
 	'sap/ui/core/util/ExportTypeCSV',
-], function(BaseController, MessageToast, MessageBox, Export, ExportTypeCSV) {
+], function(BaseController, MessageToast, MessageBox, Filter, Export, ExportTypeCSV) {
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S2_MainScreen", {

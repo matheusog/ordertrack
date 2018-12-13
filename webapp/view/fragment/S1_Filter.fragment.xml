@@ -10,16 +10,16 @@
 	
 	<VBox>
 		
-		<fb:FilterBar search="onSearch" showClearButton="true">
+		<fb:FilterBar id="filterBar" search="onSearch" >
 			
 			<fb:filterItems>
 				
 				<fb:FilterItem name="WERKS" label="Centro">
 					<fb:control>
-						<ComboBox	
+						<ComboBox
 							id="comboWerks"
 							showSecondaryValues= "true" 
-							items="{path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>WerksName' }}">
+							items="{path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>Werks' }}">
 							<core:ListItem	key="{Carteira>Werks}" 
 											text="{Carteira>Werks}" 
 											additionalText = "{Carteira>WerksName}" />
@@ -29,7 +29,7 @@
 				
 				<fb:FilterItem name="KUNNR" label="Cliente">
 					<fb:control>
-						<ComboBox	
+						<ComboBox
 							id="comboKunnr"
 							showSecondaryValues= "true" 
 							items="{path: 'Carteira>/FILTER_KUNNRSet', sorter: { path: 'Carteira>Name' }}">

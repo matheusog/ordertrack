@@ -124,7 +124,7 @@ sap.ui.define([
 				aFilters.push(new Filter('Cliente', FilterOperator.EQ, sCustomer));
 			}
 			if(dCreationDate){
-				aFilters.push(new Filter('Data', FilterOperator.EQ, dCreationDate));
+				aFilters.push(new Filter('DataCriacao', FilterOperator.EQ, dCreationDate));
 			}
 			return aFilters;
 		}, 
