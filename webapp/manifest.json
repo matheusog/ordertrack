@@ -141,6 +141,13 @@
 					"target": [
 						"s2MainScreen"
 					]
+				},
+				{
+					"name": "mainScreen3",
+					"pattern": "fluxo",
+					"target": [
+						"s3MainScreen"
+					]
 				}
 			],
 			"targets": { 
@@ -161,6 +168,12 @@
 					"viewType": "XML",
 					"viewName": "S2_MainScreen",
 					"viewLevel" : 2
+				}, 
+				"s3MainScreen": {
+					"viewId": "s3MainScreen",
+					"viewType": "XML",
+					"viewName": "S3_MainScreen",
+					"viewLevel" : 3
 				}
 			}
 		}

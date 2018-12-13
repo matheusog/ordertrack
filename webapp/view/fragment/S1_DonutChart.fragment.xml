@@ -19,7 +19,9 @@
 		autoAdjustHeight="false"
 		enableScrolling="false"
 		showZoom="false">
+		
 		<cms:content>
+			
 			<cms:ChartContainerContent>
 				<cms:content>
 					<viz:VizFrame 
@@ -75,9 +77,13 @@
 					</viz:VizFrame>	
 				</cms:content>
 			</cms:ChartContainerContent>
+		
 		</cms:content>
+		
 		<cms:layoutData>
 			<FlexItemData growFactor="2" />
 		</cms:layoutData>
+		
 	</cms:ChartContainer>
+	
 </core:FragmentDefinition>

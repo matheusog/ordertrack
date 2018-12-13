@@ -4,6 +4,8 @@
 	xmlns="sap.m"
 	controllerName="com.arcelor.scm.ordertrack.controller.S0_App" 
 	xmlns:html="http://www.w3.org/1999/xhtml">
+	
 	<App id="appStart">
 	</App>
+	
 </mvc:View>

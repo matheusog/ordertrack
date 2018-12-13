@@ -25,11 +25,11 @@ sap.ui.define([
 			
 			this.getRouter().initialize();
 			
-			//Filtro Centro
+			//Filter Centro
 			//var oModelCentro = new sap.ui.model.json.JSONModel("/webapp/model/FilterCentro.json");
 			//this.setModel(oModelCentro, "filterCentro");
 			
-			//Filtro Cliente
+			//Filter Cliente
 			//var oModelCliente = new sap.ui.model.json.JSONModel("/webapp/model/FilterCliente.json");
 			//this.setModel(oModelCliente, "filterCliente");
 			

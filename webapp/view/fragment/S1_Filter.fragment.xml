@@ -11,6 +11,7 @@
 	<VBox>
 		
 		<fb:FilterBar search="onSearch" showClearButton="true">
+			
 			<fb:filterItems>
 				
 				<fb:FilterItem name="WERKS" label="Centro">
@@ -46,6 +47,7 @@
 				</fb:FilterItem>
 				
 			</fb:filterItems>
+			
 	    </fb:FilterBar>	
 		
 	</VBox>

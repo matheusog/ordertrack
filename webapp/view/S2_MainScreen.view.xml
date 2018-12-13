@@ -7,11 +7,9 @@
 	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
 
 	<Page title="{i18n>s2Title}" showNavButton="true"  navButtonPress=".onNavBack">
-		
 		<content>
 			<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.S2_ItensCarteira" type="XML"/>
 		</content>
-		
 	</Page>
 
 </mvc:View>

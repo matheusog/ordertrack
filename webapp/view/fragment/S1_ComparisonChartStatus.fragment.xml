@@ -22,6 +22,7 @@
 			enableScrolling="false"
 			title="{i18n>s1TitleStatusCred}"
 			showZoom="false">
+			
 			<cms:content>
 				<cms:ChartContainerContent>
 					<cms:content>
@@ -37,6 +38,7 @@
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
+			
 		</cms:ChartContainer>
 
 		<cms:ChartContainer
@@ -46,6 +48,7 @@
 			enableScrolling="false"
 			title="{i18n>s1TitleStatusBlq}"
 			showZoom="false">
+			
 			<cms:content>
 				<cms:ChartContainerContent>
 					<cms:content>
@@ -61,6 +64,7 @@
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
+			
 		</cms:ChartContainer>
 	<!--	<layoutData>
 			<FlexItemData growFactor="1" />
