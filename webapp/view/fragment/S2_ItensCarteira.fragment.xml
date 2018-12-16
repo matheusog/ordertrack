@@ -20,16 +20,16 @@
 		<table:toolbar>
 			<Toolbar>
 				<content>
-			<MenuButton icon="sap-icon://download">
-				<menu>
-					<Menu itemSelected="onDataExport">
-						<items>
-							<MenuItem id="xls" text="Excel" icon="sap-icon://excel-attachment"/>
-							<MenuItem id="pdf" text="Pdf"   icon="sap-icon://excel-attachment"/>
-						</items>
-					</Menu>
-				</menu>
-			</MenuButton>
+					<MenuButton icon="sap-icon://download">
+						<menu>
+							<Menu itemSelected="onDataExport">
+								<items>
+									<MenuItem id="xls" text="Excel" icon="sap-icon://excel-attachment"/>
+									<MenuItem id="pdf" text="Pdf"   icon="sap-icon://pdf-attachment"/>
+								</items>
+							</Menu>
+						</menu>
+					</MenuButton>
 				</content>
 			</Toolbar>
 		</table:toolbar>

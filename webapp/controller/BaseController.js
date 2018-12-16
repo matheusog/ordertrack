@@ -5,10 +5,13 @@ sap.ui.define([
 	"com/arcelor/scm/ordertrack/model/models"
 ], function(Controller, History, Formatter, Models) {
 	"use strict";
-
+	
+	var aFiltersGlobal = [];
+	
 	return Controller.extend("com.arcelor.scm.ordertrack.controller.S0_App", {
 		oFormatter: Formatter, 
 		oGenericModel: Models, 
+		aFiltersGlobal: null,
 		
 		getRouter : function() {
 			return this.getOwnerComponent().getRouter();
@@ -25,6 +28,15 @@ sap.ui.define([
 			} else {
 				this.getRouter().navTo("mainScreen", {}, true /*no history*/);
 			}
+		},
+		
+		FilterSet: function(oFilter){
+			aFiltersGlobal = oFilter;
+		},
+		
+		FilterGet: function(){
+			return aFiltersGlobal;
 		}
+		
 	});
 });

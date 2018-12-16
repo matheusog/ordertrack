@@ -160,7 +160,6 @@ sap.ui.define([
 			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
 			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
 			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
-			var oItensEmbarque  	= this.getOwnerComponent().getModel('itensEmbarque');
 			
 			var onSuccess = function(oResultData, oResponse) {
 				oDonutChart.setData(oResultData.results[0].toBaseline.results);
@@ -168,7 +167,6 @@ sap.ui.define([
 				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
 				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
 				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
-				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -183,7 +181,7 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toBaseline,toReplanejado,toEmbarques,toStatusCred,toStatusBlq,toCarteiraItens'
+						$expand: 'toBaseline,toReplanejado,toEmbarques,toStatusCred,toStatusBlq'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -199,13 +197,11 @@ sap.ui.define([
 			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
 			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
 			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
-			var oItensEmbarque  	= this.getOwnerComponent().getModel('itensEmbarque');
 
 			var onSuccess = function(oResultData, oResponse) {
 				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
 				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
 				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
-				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -220,38 +216,7 @@ sap.ui.define([
 			oModel.read('/CARTEIRA_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toEmbarques,toStatusCred,toStatusBlq,toCarteiraItens'
-					}, 
-					filters: oFilters,
-					success: onSuccess, 
-					error: onError
-				
-			});
-			oViewModel.setProperty('/busy', true);
-		}, 
-		
-		_requestOdataDetailClk: function(oFilters){
-			
-			var oViewModel		= this.getView().getModel('view');
-			var oItensEmbarque  = this.getOwnerComponent().getModel('itensEmbarque');
-
-			var onSuccess = function(oResultData, oResponse) {
-				oItensEmbarque.setData(oResultData.results[0].toCarteiraItens.results);
-				oViewModel.setProperty('/busy', false);
-			};
-			
-			var onError = function(oError) {
-				oViewModel.setProperty('/busy', false);
-				if(oError.responseText){
-					var oResponse = JSON.parse(oError.responseText);
-				}
-			};
-			
-			var oModel = this.getOwnerComponent().getModel('Carteira'); 
-			oModel.read('/CARTEIRA_FILTERSet', 
-				{
-					urlParameters: {
-						$expand: 'toCarteiraItens'
+						$expand: 'toEmbarques,toStatusCred,toStatusBlq'
 					}, 
 					filters: oFilters,
 					success: onSuccess, 
@@ -272,15 +237,16 @@ sap.ui.define([
 				MessageToast.show("Nenhum item disponivel para esse embarque");	
 			} else {
 				var selEmbarqueId	= oEvent.getSource().getBindingContext('chartEmbarques').getObject().Id;
-				var aFilters = this._createFilter(); 
+				var aFilter = this._createFilter(); 
 				if(aClkDonut){
-					aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 	
+					aFilter.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 	
 				}
 				if(aClkStatus){
-					aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
+					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 				}
-				aFilters.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
-				this._requestOdataDetailClk(aFilters);
+				aFilter.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
+				this.FilterSet(aFilter);
+				//this._requestOdataDetailClk(aFilter);
 				
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });

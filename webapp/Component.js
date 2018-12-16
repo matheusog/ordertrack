@@ -4,7 +4,7 @@ sap.ui.define([
 	"com/arcelor/scm/ordertrack/model/models"
 ], function(UIComponent, Device, models) {
 	"use strict";
-
+	
 	return UIComponent.extend("com.arcelor.scm.ordertrack.Component", {
 
 		metadata: {
