@@ -144,9 +144,16 @@
 				},
 				{
 					"name": "mainScreen3",
-					"pattern": "fluxo",
+					"pattern": "fluxo/{idDocument}",
 					"target": [
 						"s3MainScreen"
+					]
+				},
+				{
+					"name": "mainScreen4",
+					"pattern": "fluxo/{idTransporte}",
+					"target": [
+						"s4MainScreen"
 					]
 				}
 			],
@@ -173,6 +180,12 @@
 					"viewId": "s3MainScreen",
 					"viewType": "XML",
 					"viewName": "S3_MainScreen",
+					"viewLevel" : 3
+				}, 
+				"s4MainScreen": {
+					"viewId": "s4MainScreen",
+					"viewType": "XML",
+					"viewName": "S4_MainScreen",
 					"viewLevel" : 3
 				}
 			}

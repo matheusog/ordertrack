@@ -14,20 +14,22 @@
 			
 			<fb:filterItems>
 				
-				<fb:FilterItem name="WERKS" label="Centro">
+				<fb:FilterItem name="WERKS" label="{i18n>filterCentro}">
 					<fb:control>
+						
 						<ComboBox
 							id="comboWerks"
-							showSecondaryValues= "true" 
+							showSecondaryValues="true" 
 							items="{path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>Werks' }}">
 							<core:ListItem	key="{Carteira>Werks}" 
 											text="{Carteira>Werks}" 
 											additionalText = "{Carteira>WerksName}" />
 						</ComboBox>
+						
 					</fb:control>				
 				</fb:FilterItem>
 				
-				<fb:FilterItem name="KUNNR" label="Cliente">
+				<fb:FilterItem name="KUNNR" label="{i18n>filterCliente}">
 					<fb:control>
 						<ComboBox
 							id="comboKunnr"
@@ -40,7 +42,7 @@
 					</fb:control>				
 				</fb:FilterItem>
 				
-				<fb:FilterItem name="DATA" label="Data">
+				<fb:FilterItem name="DATA" label="{i18n>filterData}">
 					<fb:control>
 						<DatePicker id="dateDataCri"/>
 					</fb:control>				

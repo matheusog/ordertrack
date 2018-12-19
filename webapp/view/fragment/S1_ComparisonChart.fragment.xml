@@ -10,42 +10,47 @@
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
-	<cms:ChartContainer
-		class="sapUiContentPadding" 
-		showFullScreen="true"
-		showPersonalization="false"
-		autoAdjustHeight="false"
-		enableScrolling="false"
-		title="{i18n>s1TitleEmbarques}"
-		showZoom="false">
-		
-		<cms:content>
-			<cms:ChartContainerContent>
-				<cms:content>
+	<VBox width="{= ${device>/system/phone} ? '95%' : '25%' }" >
+			
+		<cms:ChartContainer
+			showFullScreen="true"
+			showPersonalization="false"
+			autoAdjustHeight="false"
+			enableScrolling="false"
+			title="{i18n>s1TitleEmbarques}"
+			showZoom="false">
+			
+			<cms:content>
+				<cms:ChartContainerContent>
+					<cms:content>
+						<!-- <l:VerticalLayout class="sapUiContentPadding"> -->
+	
+							<mc:ComparisonMicroChart
+								data="{chartEmbarques>/}"
+								scale="{i18n>s1Kg}"
+								colorPalette="#80b877, 
+											  #5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, 
+											  #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
+								
+								<mc:data>
+									<mc:ComparisonMicroChartData 
+										title="{chartEmbarques>Descricao}"
+										value="{chartEmbarques>Value}"
+										press=".onEmbarquesPressBarr"/>
+								</mc:data>
+								
+							</mc:ComparisonMicroChart>
+						<!-- </l:VerticalLayout> -->
+					</cms:content>
+				</cms:ChartContainerContent>
+			</cms:content>
+			
+		</cms:ChartContainer>
 
-					<mc:ComparisonMicroChart
-						data="{chartEmbarques>/}"
-						scale="{i18n>s1Kg}"
-						colorPalette="#5cbae6, #b6d957, #fac364, #8cd3ff, #d998cb, #f2d249, 
-									  #93b9c6, #ccc5a8, #52bacc, #dbdb46, #98aafb, #fb98aa">
-						
-						<mc:data>
-							<mc:ComparisonMicroChartData 
-								title="{chartEmbarques>Descricao}"
-								value="{chartEmbarques>Value}"
-								press=".onEmbarquesPressBarr"/>
-						</mc:data>
-						
-					</mc:ComparisonMicroChart>
-						
-				</cms:content>
-			</cms:ChartContainerContent>
-		</cms:content>
-		
-		<cms:layoutData>
+		<layoutData>
 			<FlexItemData growFactor="1" />
-		</cms:layoutData>
+		</layoutData>
+			
+	</VBox>
 		
-	</cms:ChartContainer>
-
 </core:FragmentDefinition>

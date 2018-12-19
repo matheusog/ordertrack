@@ -11,11 +11,24 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S2_MainScreen", {
-
+	
+		EXCEL_FORMAT:		'xls',
+		PDF_FORMAT: 		'pdf', 
+		DEFAULT_FILENAME:	"Report", 
+		PATH_EXPORT_REPORT: "/GRUWEB/ManutencaoApresentacoes/ExportReportXls", 
+		
 		onInit: function() {
 			this.getRouter().getRoute("mainScreen2").attachMatched(this._routeMatched, this);
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
+			
+			var oViewModel = new JSONModel({
+				searchTermIms:			"",
+				searchTermImsOld:		"",
+				searchTermCloseup:		"",
+				searchTermCloseupOld:	"",
+				busy: false
+			});
 			
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
 		}, 
@@ -57,50 +70,63 @@ sap.ui.define([
 			oViewModel.setProperty('/busy', true);
 		}, 
 		
-		onDataExport : sap.m.Table.prototype.exportData || function(oEvent) {
+		onDataExport: sap.m.Table.prototype.exportData || function(oEvent) {
 	
 			if(oEvent.getParameter("item").getText() == 'Excel'){
-					
-				var oExport = new Export({
-					// Type that will be used to generate the content. Own ExportType's can be created to support other formats
-					exportType: new ExportTypeCSV({ separatorChar: ";" }),
-					// Pass in the model created above
-					models: this.getOwnerComponent().getModel('itensEmbarque'),
-					// binding information for the rows aggregation
-					rows: {path : "{itensEmbarque>/}"},
-					// column definitions with column name and binding info for the content
-					columns: [{	
-								name : "Documento",
-								template : {content: "{itensEmbarque>Document}"}
-							}, {
-								name : "Item",
-								template : {content: "{itensEmbarque>Item}"}
-							}, {
-								name : "Tipo Documento",
-								template : {content: "{itensEmbarque>Type}"}
-							}, {
-								name : "Fornecimento",
-								template : {content: "{itensEmbarque>VbelnVl}"}
-							}, {
-								name : "Item",
-								template : {content: "{itensEmbarque>PosnrVl}"}
-							}, {
-								name : "Material",
-								template : {content: "{itensEmbarque>Matnr}"}
-							}, {
-								name : "Descrição Material",
-								template : {content: "{itensEmbarque>Arktx}"}
-							}]
-				});
-	
-				// download exported file
-				oExport.saveFile().catch(function(oError) {
-					MessageBox.error("Erro ao exportar dados!\n\n" + oError);
-				}).then(function() {
-					oExport.destroy();
-				});
-				
+				this._export(this.EXCEL_FORMAT);
+			}else if (oEvent.getParameter("item").getText() == 'Pdf'){
+				this._export(this.PDF_FORMAT);
 			}
+		},
+		
+		_export: function(sFormat) {
+			var oViewModel		= this.getView().getModel('view');
+			oViewModel.setProperty("/busy", true);
+			var sPath;
+
+			switch (sFormat) {
+				case this.EXCEL_FORMAT:
+					sPath = this.PATH_EXPORT_REPORT ;
+					break;
+				case this.PDF_FORMAT:
+					sPath = this.PATH_EXPORT_REPORT ;
+					break;
+				default:
+					return;
+			}
+
+			var req = new XMLHttpRequest();
+			req.open("GET", sPath, true);
+			req.responseType = "blob";
+
+			req.setRequestHeader("Content-Type", "application/json");
+			//req.setRequestHeader("Authorization", this.getToken(true));
+
+			function handleSuccess(event) {
+
+				oViewModel.setProperty("/busy", false);
+				if (req.response && req.response.size > 0) {
+					var blob = req.response;
+					var link = document.createElement('a');
+					link.href = window.URL.createObjectURL(blob);
+					link.download = this.DEFAULT_FILENAME + '.' + sFormat;
+					link.click();
+				} else {
+					MessageBox.error(
+						this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("s1_export_error"));
+				}
+			}
+
+			req.onload = handleSuccess.bind(this);
+			req.send();
+		},
+		
+		onPressFluxo: function(oEvent) {
+			var a;
+		},
+		
+		onPressGeo: function(oEvent) {
+			var a;
 		}
 		
 	});

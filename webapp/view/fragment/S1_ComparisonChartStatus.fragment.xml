@@ -13,7 +13,7 @@
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" >
 	
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
-	<VBox class="sapUiSmallMargin">
+	<VBox width="{= ${device>/system/phone} ? '95%' : '20%' }" >
 					
 		<cms:ChartContainer
 			showFullScreen="true"
@@ -26,15 +26,14 @@
 			<cms:content>
 				<cms:ChartContainerContent>
 					<cms:content>
-						<l:HorizontalLayout class="sapUiContentPadding" >
-							<mc:ComparisonMicroChart data="{chartStatusCred>/}">
-								<mc:data>
-									<mc:ComparisonMicroChartData	title="{chartStatusCred>Descricao}"
-																	value="{chartStatusCred>Documents}" 
-																	color="{chartStatusCred>Color}" />
-								</mc:data>
-							</mc:ComparisonMicroChart>
-						</l:HorizontalLayout>
+						<mc:ComparisonMicroChart data="{chartStatusCred>/}" scale="{i18n>s1Kg}">
+							<mc:data>
+								<mc:ComparisonMicroChartData	title="{chartStatusCred>Descricao}"
+																value="{chartStatusCred>Value}" 
+																color="{chartStatusCred>Color}" 
+																press=".onStatusCredPressBarr"/>
+							</mc:data>
+						</mc:ComparisonMicroChart>
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
@@ -52,22 +51,24 @@
 			<cms:content>
 				<cms:ChartContainerContent>
 					<cms:content>
-						<l:HorizontalLayout class="sapUiContentPadding" >
-							<mc:ComparisonMicroChart data="{chartStatusBlq>/}">
-								<mc:data>
-									<mc:ComparisonMicroChartData	title="{chartStatusBlq>Descricao}"
-																	value="{chartStatusBlq>Documents}" 
-																	color="{chartStatusBlq>Color}" />
-								</mc:data>
-							</mc:ComparisonMicroChart>
-						</l:HorizontalLayout>
+						<mc:ComparisonMicroChart data="{chartStatusBlq>/}" scale="{i18n>s1Kg}">
+							<mc:data>
+								<mc:ComparisonMicroChartData	title="{chartStatusBlq>Descricao}"
+																value="{chartStatusBlq>Value}" 
+																color="{chartStatusBlq>Color}" 
+																press=".onStatusBlqPressBarr"/>
+							</mc:data>
+						</mc:ComparisonMicroChart>
 					</cms:content>
 				</cms:ChartContainerContent>
 			</cms:content>
-			
+		
 		</cms:ChartContainer>
-	<!--	<layoutData>
+		
+		<layoutData>
 			<FlexItemData growFactor="1" />
-		</layoutData> -->
+		</layoutData>
+
 	</VBox>
+		
 </core:FragmentDefinition>

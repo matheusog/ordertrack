@@ -48,6 +48,10 @@ sap.ui.define([
 			this.getView().setModel(oModel);
 		},
 		
+		_routeMatched : function(oEvent) {
+
+		},
+		
 		onSearch: function(oEvent) {
 			aClkDonut	= null;
 			aClkStatus	= null;
@@ -72,7 +76,7 @@ sap.ui.define([
 			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 
 			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 			
-			this._requestOdataDetail(aFilters);
+			this._requestOdata(aFilters);
 			
 			oEvent.getSource().vizSelection(
 				oEvent.getParameter('data'), { clearSelection: true }
@@ -97,7 +101,7 @@ sap.ui.define([
 			aFilters.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 
 			aFilters.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 			
-			this._requestOdataDetail(aFilters);
+			this._requestOdata(aFilters);
 			
 			oEvent.getSource().vizSelection(
 				oEvent.getParameter('data'), { clearSelection: true }
@@ -191,45 +195,6 @@ sap.ui.define([
 			oViewModel.setProperty('/busy', true);
 		}, 
 		
-		_requestOdataDetail: function(oFilters){
-			
-			var oViewModel	= this.getView().getModel('view');
-			var oChartEmbarques 	= this.getOwnerComponent().getModel('chartEmbarques');
-			var oChartStatusCred 	= this.getOwnerComponent().getModel('chartStatusCred');
-			var oChartStatusBlq  	= this.getOwnerComponent().getModel('chartStatusBlq');
-
-			var onSuccess = function(oResultData, oResponse) {
-				oChartEmbarques.setData(oResultData.results[0].toEmbarques.results);
-				oChartStatusCred.setData(oResultData.results[0].toStatusCred.results);
-				oChartStatusBlq.setData(oResultData.results[0].toStatusBlq.results);
-				oViewModel.setProperty('/busy', false);
-			};
-			
-			var onError = function(oError) {
-				oViewModel.setProperty('/busy', false);
-				if(oError.responseText){
-					var oResponse = JSON.parse(oError.responseText);
-				}
-			};
-			
-			var oModel = this.getOwnerComponent().getModel('Carteira'); 
-			oModel.read('/CARTEIRA_FILTERSet', 
-				{
-					urlParameters: {
-						$expand: 'toEmbarques,toStatusCred,toStatusBlq'
-					}, 
-					filters: oFilters,
-					success: onSuccess, 
-					error: onError
-				
-			});
-			oViewModel.setProperty('/busy', true);
-		}, 
-		
-		_routeMatched : function(oEvent) {
-
-		},
-		
 		onEmbarquesPressBarr : function(oEvent) {
 			
 			var selEmbarquePeso = oEvent.getSource().getBindingContext('chartEmbarques').getObject().PesoBruto;	
@@ -246,8 +211,51 @@ sap.ui.define([
 				}
 				aFilter.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
 				this.FilterSet(aFilter);
-				//this._requestOdataDetailClk(aFilter);
-				
+
+				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
+				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
+			}
+		},
+		
+		onStatusCredPressBarr : function(oEvent) {
+			
+			var selStatusPeso = oEvent.getSource().getBindingContext('chartStatusCred').getObject().Peso;	
+			if (selStatusPeso == "0.000") {
+				MessageToast.show("Nenhum item disponivel para esse status");	
+			} else {
+				var selStatusId	= oEvent.getSource().getBindingContext('chartStatusCred').getObject().Id;
+				var aFilter = this._createFilter(); 
+				if(aClkDonut){
+					aFilter.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 	
+				}
+				if(aClkStatus){
+					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
+				}
+				aFilter.push(new Filter('ClkStatusCred', FilterOperator.EQ, selStatusId)); 
+				this.FilterSet(aFilter);
+
+				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
+				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
+			}
+		},
+		
+		onStatusBlqPressBarr : function(oEvent) {
+			
+			var selStatusPeso = oEvent.getSource().getBindingContext('chartStatusBlq').getObject().Peso;	
+			if (selStatusPeso == "0.000") {
+				MessageToast.show("Nenhum item disponivel para esse status");	
+			} else {
+				var selStatusId	= oEvent.getSource().getBindingContext('chartStatusBlq').getObject().Id;
+				var aFilter = this._createFilter(); 
+				if(aClkDonut){
+					aFilter.push(new Filter('ClkDonut', FilterOperator.EQ, aClkDonut)); 	
+				}
+				if(aClkStatus){
+					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
+				}
+				aFilter.push(new Filter('ClkStatusBlq', FilterOperator.EQ, selStatusId)); 
+				this.FilterSet(aFilter);
+
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
 			}

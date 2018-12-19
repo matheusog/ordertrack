@@ -1,4 +1,5 @@
 <core:FragmentDefinition
+	id="fragItens"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:html="http://www.w3.org/1999/xhtml"
@@ -11,9 +12,9 @@
         id="TableItens"
         selectionMode="None"
     	fixedColumnCount="2"
+    	alternateRowColors="true"
         rows="{itensEmbarque>/}"
 		ariaLabelledBy="title"
-		class="sapUiContentPadding"
 		busy="{view>/busy}"
 		busyIndicatorDelay="{view>/busyDelay}">
 
@@ -24,8 +25,8 @@
 						<menu>
 							<Menu itemSelected="onDataExport">
 								<items>
-									<MenuItem id="xls" text="Excel" icon="sap-icon://excel-attachment"/>
-									<MenuItem id="pdf" text="Pdf"   icon="sap-icon://pdf-attachment"/>
+									<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
+									<MenuItem id="pdf" text="{i18n>s2Pdf}"   icon="sap-icon://pdf-attachment"/>
 								</items>
 							</Menu>
 						</menu>
@@ -36,103 +37,103 @@
 		
 		<table:columns>
 			<table:Column width="4rem">
-				<Label text="Fluxo" />
+				<Label text="{i18n>s2TableFluxo}" />
 				<table:template>
 					<Button icon="sap-icon://tree" press="onPressFluxo" />
 				</table:template>
 			</table:Column>
 			<table:Column width="4rem">
-				<Label text="Geo" />
+				<Label text="{i18n>s2TableGeo}" />
 				<table:template>
 					<Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Documento" />
+				<Label text="{i18n>s2TableDocumento}" />
 				<table:template>
 					<Text text="{itensEmbarque>Document}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="4rem">
-				<Label text="Item" />
+				<Label text="{i18n>s2TableItem}" />
 				<table:template>
 					<Text text="{itensEmbarque>Item}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="4rem">
-				<Label text="Tipo Doc." />
+				<Label text="{i18n>s2TableTipoDoc}" />
 				<table:template>
 					<Text text="{itensEmbarque>Type}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Fornecimento" />
+				<Label text="{i18n>s2TableFornecimento}" />
 				<table:template>
 					<Text text="{itensEmbarque>VbelnVl}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="4rem">
-				<Label text="Item" />
+				<Label text="{i18n>s2TableItem}" />
 				<table:template>
 					<Text text="{itensEmbarque>PosnrVl}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Material" />
+				<Label text="{i18n>s2TableMaterial}" />
 				<table:template>
 					<Text text="{itensEmbarque>Matnr}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="20rem">
-				<Label text="Descrição do Material" />
+				<Label text="{i18n>s2TableDescricaoMaterial}" />
 				<table:template>
 					<Text text="{itensEmbarque>Arktx}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Qtde" />
+				<Label text="{i18n>s2TableQtde}" />
 				<table:template>
 					<Text text="{itensEmbarque>Menge}"/>
 				</table:template>
 			</table:Column>
-			<table:Column width="3rem">
-				<Label text="UM" />
+			<table:Column width="4rem">
+				<Label text="{i18n>s2TableUm}" />
 				<table:template>
 					<Text text="{itensEmbarque>Meins}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Peso" />
+				<Label text="{i18n>s2TablePeso}" />
 				<table:template>
 					<Text text="{itensEmbarque>Brgew}"/>
 				</table:template>
 			</table:Column>
-			<table:Column width="3rem">
-				<Label text="UMP" />
+			<table:Column width="4rem">
+				<Label text="{i18n>s2TableUmp}" />
 				<table:template>
 					<Text text="{itensEmbarque>Gewei}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Centro" />
+				<Label text="{i18n>s2TableCentro}" />
 				<table:template>
 					<Text text="{itensEmbarque>Werks}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="20rem">
-				<Label text="Nome do Centro" />
+				<Label text="{i18n>s2TableNomeCentro}" />
 				<table:template>
 					<Text text="{itensEmbarque>WerksName}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
-				<Label text="Cliente" />
+				<Label text="{i18n>s2TableCliente}" />
 				<table:template>
 					<Text text="{itensEmbarque>Kunnr}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="20rem">
-				<Label text="Nome do Cliente" />
+				<Label text="{i18n>s2TableNomeCliente}" />
 				<table:template>
 					<Text text="{itensEmbarque>Name}"/>
 				</table:template>
