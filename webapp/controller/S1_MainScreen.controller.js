@@ -51,6 +51,21 @@ sap.ui.define([
 		_routeMatched : function(oEvent) {
 
 		},
+
+		handleChange: function (oEvent) {
+			var sFrom = oEvent.getParameter("from");
+			var sTo = oEvent.getParameter("to");
+			var bValid = oEvent.getParameter("valid");
+			var oEventSource = oEvent.getSource();
+
+			//this._iEvent++;
+
+			if (bValid) {
+				oEventSource.setValueState(sap.ui.core.ValueState.None);
+			} else {
+				oEventSource.setValueState(sap.ui.core.ValueState.Error);
+			}
+		},
 		
 		onSearch: function(oEvent) {
 			aClkDonut	= null;
@@ -110,33 +125,133 @@ sap.ui.define([
 		
 		_createFilter: function() {
 			var aFilters		= [], 
-				sPlant			, 
-				sCustomer		, 
-				dCreationDate	= this._oDateCreation.getDateValue();
+				i				= 0,
+				sValue			,
+				aSelectedItems	= [], 
+				dDateFrom		,
+				dDateTo 		;
 				
-			if(this._oComboWerks.getSelectedItem()) {
-				sPlant = this._oComboWerks.getSelectedItem().getKey();
+			if(this._oComboWerks.getSelectedItems()) {
+				aSelectedItems = this._oComboWerks.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('Centro', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
 			}
-			if(this._oComboKunnr.getSelectedItem()) {
-				sCustomer =this._oComboKunnr.getSelectedItem().getKey();
+				
+			if(this._oComboUf.getSelectedItems()) {
+				aSelectedItems = this._oComboUf.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('Uf', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
 			}
-
-			if(sPlant){
-				aFilters.push(new Filter('Centro', FilterOperator.EQ, sPlant));
+			
+			if(this._oComboKunnr.getSelectedItems()) {
+				aSelectedItems = this._oComboKunnr.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('Cliente', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
 			}
-			if(sCustomer){
-				aFilters.push(new Filter('Cliente', FilterOperator.EQ, sCustomer));
+				
+			if(this._oComboCidade.getSelectedItems()) {
+				aSelectedItems = this._oComboCidade.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('Cidade', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
 			}
-			if(dCreationDate){
-				aFilters.push(new Filter('DataCriacao', FilterOperator.EQ, dCreationDate));
+				
+			if(this._oComboCanalDist.getSelectedItems()) {
+				aSelectedItems = this._oComboCanalDist.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('CanalDist', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
 			}
+				
+			if(this._oComboSetorAtv.getSelectedItems()) {
+				aSelectedItems = this._oComboSetorAtv.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('SetorAtv', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
+			}
+				
+			if(this._oComboEscVendas.getSelectedItems()) {
+				aSelectedItems = this._oComboEscVendas.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('EscVendas', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
+			}
+				
+			if(this._oComboEquipVendas.getSelectedItems()) {
+				aSelectedItems = this._oComboEquipVendas.getSelectedItems();
+				if(aSelectedItems.length){
+					for (i = 0; i < aSelectedItems.length; i++) {
+						sValue = aSelectedItems[i].getKey();
+						if(sValue){
+							aFilters.push(new Filter('EquipVendas', FilterOperator.EQ, sValue));						
+						}
+					}				
+				}
+			}
+			
+			if(this._oDateCreation.getDateValue()) {
+				dDateFrom = this._oDateCreation.getFrom();
+				dDateTo = this._oDateCreation.getTo();
+				if(dDateFrom){
+					if(dDateTo){
+						aFilters.push(new Filter('DataCriacao', FilterOperator.BT, dDateFrom, dDateTo));
+					}else{
+						aFilters.push(new Filter('DataCriacao', FilterOperator.EQ, dDateFrom));	
+					}
+				}
+			}
+			
 			return aFilters;
 		}, 
 		
 		_initializeControls: function() {
-			this._oComboWerks	= this.getView().byId("comboWerks");
-			this._oComboKunnr	= this.getView().byId("comboKunnr");
-			this._oDateCreation = this.getView().byId("dateDataCri");
+			this._oComboWerks		= this.getView().byId("comboWerks");
+			this._oComboUf   		= this.getView().byId("comboUf");
+			this._oComboKunnr		= this.getView().byId("comboKunnr");
+			this._oComboCidade		= this.getView().byId("comboCidade");
+			this._oComboCanalDist	= this.getView().byId("comboCanalDistrib");
+			this._oComboSetorAtv	= this.getView().byId("comboSetorAtv");
+			this._oComboEscVendas	= this.getView().byId("comboEscVendas");
+			this._oComboEquipVendas	= this.getView().byId("comboEquipVendas");
+			this._oDateCreation 	= this.getView().byId("dateDataCri");
 		},
 		
 		_initializeVizChart: function() {

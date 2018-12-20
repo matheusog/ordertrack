@@ -3,6 +3,7 @@
 	id="fragFilter"
 	xmlns:core="sap.ui.core" 
 	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout"
 	xmlns="sap.m"
 	xmlns:fb="sap.ui.comp.filterbar"
 	xmlns:html="http://www.w3.org/1999/xhtml"
@@ -16,35 +17,100 @@
 				
 				<fb:FilterItem name="WERKS" label="{i18n>filterCentro}">
 					<fb:control>
-						
-						<ComboBox
+						<MultiComboBox
 							id="comboWerks"
-							showSecondaryValues="true" 
-							items="{path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>Werks' }}">
-							<core:ListItem	key="{Carteira>Werks}" 
-											text="{Carteira>Werks}" 
-											additionalText = "{Carteira>WerksName}" />
-						</ComboBox>
-						
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>Werks' } }">
+							<core:Item key="{Carteira>Werks}" text="{Carteira>Werks} - {Carteira>WerksName}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+
+				<fb:FilterItem name="UF" label="{i18n>filterUf}">
+					<fb:control>
+						<MultiComboBox
+							id="comboUf"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_UFSet', sorter: { path: 'Carteira>Regiao' } }">
+							<core:Item key="{Carteira>Regiao}" text="{Carteira>Regiao}"/>
+						</MultiComboBox>
 					</fb:control>				
 				</fb:FilterItem>
 				
 				<fb:FilterItem name="KUNNR" label="{i18n>filterCliente}">
 					<fb:control>
-						<ComboBox
+						<MultiComboBox
 							id="comboKunnr"
-							showSecondaryValues= "true" 
-							items="{path: 'Carteira>/FILTER_KUNNRSet', sorter: { path: 'Carteira>Name' }}">
-							<core:ListItem	key="{Carteira>Kunnr}" 
-											text="{Carteira>Kunnr}" 
-											additionalText = "{Carteira>Name}" />
-						</ComboBox>
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_KUNNRSet', sorter: { path: 'Carteira>Name' } }">
+							<core:Item key="{Carteira>Kunnr}" text="{Carteira>Kunnr} - {Carteira>Name}"/>
+						</MultiComboBox>
 					</fb:control>				
 				</fb:FilterItem>
-				
+
+				<fb:FilterItem name="CIDADE" label="{i18n>filterCidade}">
+					<fb:control>
+						<MultiComboBox
+							id="comboCidade"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_CIDADESet', sorter: { path: 'Carteira>City' } }">
+							<core:Item key="{Carteira>City}" text="{Carteira>City}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+			
+				<fb:FilterItem name="CANALDISTRIB" label="{i18n>filterCanalDistrib}">
+					<fb:control>
+						<MultiComboBox
+							id="comboCanalDistrib"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_CANALDISTSet', sorter: { path: 'Carteira>Vtweg' } }">
+							<core:Item key="{Carteira>Vtweg}" text="{Carteira>Vtweg}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+			
+				<fb:FilterItem name="SETORATV" label="{i18n>filterSetorAtiv}">
+					<fb:control>
+						<MultiComboBox
+							id="comboSetorAtv"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_SETORATVSet', sorter: { path: 'Carteira>Spart' } }">
+							<core:Item key="{Carteira>Spart}" text="{Carteira>Spart}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+
+				<fb:FilterItem name="ESCVENDAS" label="{i18n>filterEscVendas}">
+					<fb:control>
+						<MultiComboBox
+							id="comboEscVendas"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_ESCVENDASSet', sorter: { path: 'Carteira>Vkbur' } }">
+							<core:Item key="{Carteira>Vkbur}" text="{Carteira>Vkbur}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+			
+				<fb:FilterItem name="EQUIPVENDAS" label="{i18n>filterEquipVendas}">
+					<fb:control>
+						<MultiComboBox
+							id="comboEquipVendas"
+							width="500px"
+							items="{ path: 'Carteira>/FILTER_EQUIPVENDASSet', sorter: { path: 'Carteira>Vkgrp' } }">
+							<core:Item key="{Carteira>Vkgrp}" text="{Carteira>Vkgrp}"/>
+						</MultiComboBox>
+					</fb:control>				
+				</fb:FilterItem>
+
 				<fb:FilterItem name="DATA" label="{i18n>filterData}">
 					<fb:control>
-						<DatePicker id="dateDataCri"/>
+						<!-- <DatePicker id="dateDataCri"/> -->
+						<DateRangeSelection id="dateDataCri" 
+											width="500px" 
+											delimiter= "-" 
+											displayFormat="dd/MM/yy"  
+											change="handleChange"/>
 					</fb:control>				
 				</fb:FilterItem>
 				
