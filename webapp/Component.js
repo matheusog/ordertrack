@@ -48,6 +48,10 @@ sap.ui.define([
 			//Itens
 			//var oModelItens	= new sap.ui.model.json.JSONModel("/webapp/model/Itens.json");
 			//this.setModel(oModelItens, "itens");
+			
+			//Fluxo
+			var oModelFluxo	= new sap.ui.model.json.JSONModel("/webapp/model/Fluxos.json");
+			this.setModel(oModelFluxo, "fluxosTransp");
 		}
 	});
 });

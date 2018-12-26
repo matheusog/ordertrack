@@ -20,7 +20,7 @@
 						<MultiComboBox
 							id="comboWerks"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_WERKSSet', sorter: { path: 'Carteira>Werks' } }">
+							items="{Carteira>/FILTER_WERKSSet}">
 							<core:Item key="{Carteira>Werks}" text="{Carteira>Werks} - {Carteira>WerksName}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -31,7 +31,7 @@
 						<MultiComboBox
 							id="comboUf"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_UFSet', sorter: { path: 'Carteira>Regiao' } }">
+							items="{Carteira>/FILTER_UFSet}">
 							<core:Item key="{Carteira>Regiao}" text="{Carteira>Regiao}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -42,7 +42,7 @@
 						<MultiComboBox
 							id="comboKunnr"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_KUNNRSet', sorter: { path: 'Carteira>Name' } }">
+							items="{Carteira>/FILTER_KUNNRSet}">
 							<core:Item key="{Carteira>Kunnr}" text="{Carteira>Kunnr} - {Carteira>Name}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -53,7 +53,7 @@
 						<MultiComboBox
 							id="comboCidade"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_CIDADESet', sorter: { path: 'Carteira>City' } }">
+							items="{Carteira>/FILTER_CIDADESet}">
 							<core:Item key="{Carteira>City}" text="{Carteira>City}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -64,7 +64,7 @@
 						<MultiComboBox
 							id="comboCanalDistrib"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_CANALDISTSet', sorter: { path: 'Carteira>Vtweg' } }">
+							items="{Carteira>/FILTER_CANALDISTSet}">
 							<core:Item key="{Carteira>Vtweg}" text="{Carteira>Vtweg}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -75,7 +75,7 @@
 						<MultiComboBox
 							id="comboSetorAtv"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_SETORATVSet', sorter: { path: 'Carteira>Spart' } }">
+							items="{Carteira>/FILTER_SETORATVSet}">
 							<core:Item key="{Carteira>Spart}" text="{Carteira>Spart}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -86,7 +86,7 @@
 						<MultiComboBox
 							id="comboEscVendas"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_ESCVENDASSet', sorter: { path: 'Carteira>Vkbur' } }">
+							items="{Carteira>/FILTER_ESCVENDASSet}">
 							<core:Item key="{Carteira>Vkbur}" text="{Carteira>Vkbur}"/>
 						</MultiComboBox>
 					</fb:control>				
@@ -97,7 +97,7 @@
 						<MultiComboBox
 							id="comboEquipVendas"
 							width="500px"
-							items="{ path: 'Carteira>/FILTER_EQUIPVENDASSet', sorter: { path: 'Carteira>Vkgrp' } }">
+							items="{Carteira>/FILTER_EQUIPVENDASSet}">
 							<core:Item key="{Carteira>Vkgrp}" text="{Carteira>Vkgrp}"/>
 						</MultiComboBox>
 					</fb:control>				

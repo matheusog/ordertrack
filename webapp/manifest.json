@@ -105,6 +105,15 @@
 			}, 
 			"itensEmbarque": {
 				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"fluxoNodes": {
+				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"fluxoLanes": {
+				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"geoLocalizacao": {
+				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
 		"resources": {
@@ -144,14 +153,14 @@
 				},
 				{
 					"name": "mainScreen3",
-					"pattern": "fluxo/{idDocument}",
+					"pattern": "fluxo/{documentId}&{itemId}",
 					"target": [
 						"s3MainScreen"
 					]
 				},
 				{
 					"name": "mainScreen4",
-					"pattern": "fluxo/{idTransporte}",
+					"pattern": "geoLocalizacao/{docTranspId}",
 					"target": [
 						"s4MainScreen"
 					]

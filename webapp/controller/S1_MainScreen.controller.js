@@ -71,7 +71,7 @@ sap.ui.define([
 			aClkDonut	= null;
 			aClkStatus	= null;
 			var aFilters		= this._createFilter(); 
-			this._requestOdata(aFilters); 
+			this._requestOdata(aFilters);
 		}, 
 		
 		onSelectDataBaseline : function(oEvent){
@@ -325,7 +325,7 @@ sap.ui.define([
 					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 				}
 				aFilter.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
-				this.FilterSet(aFilter);
+				this.FilterS1Set(aFilter);
 
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
@@ -347,7 +347,7 @@ sap.ui.define([
 					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 				}
 				aFilter.push(new Filter('ClkStatusCred', FilterOperator.EQ, selStatusId)); 
-				this.FilterSet(aFilter);
+				this.FilterS1Set(aFilter);
 
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
@@ -369,7 +369,7 @@ sap.ui.define([
 					aFilter.push(new Filter('ClkStatus', FilterOperator.EQ, aClkStatus)); 
 				}
 				aFilter.push(new Filter('ClkStatusBlq', FilterOperator.EQ, selStatusId)); 
-				this.FilterSet(aFilter);
+				this.FilterS1Set(aFilter);
 
 				this.getRouter().navTo("mainScreen2", {}, true /*no history*/);
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });

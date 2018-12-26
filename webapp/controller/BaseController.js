@@ -30,11 +30,11 @@ sap.ui.define([
 			}
 		},
 		
-		FilterSet: function(oFilter){
+		FilterS1Set: function(oFilter){
 			aFiltersGlobal = oFilter;
 		},
 		
-		FilterGet: function(){
+		FilterS1Get: function(){
 			return aFiltersGlobal;
 		}
 		

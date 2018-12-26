@@ -20,18 +20,17 @@
 
 		<table:toolbar>
 			<Toolbar>
-				<content>
-					<MenuButton icon="sap-icon://download">
-						<menu>
-							<Menu itemSelected="onDataExport">
-								<items>
-									<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
-									<MenuItem id="pdf" text="{i18n>s2Pdf}"   icon="sap-icon://pdf-attachment"/>
-								</items>
-							</Menu>
-						</menu>
-					</MenuButton>
-				</content>
+				<ToolbarSpacer/>
+				<MenuButton text="Download" icon="sap-icon://download">
+					<menu>
+						<Menu itemSelected="onDataExport">
+							<items>
+								<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
+								<MenuItem id="pdf" text="{i18n>s2Pdf}"   icon="sap-icon://pdf-attachment"/>
+							</items>
+						</Menu>
+					</menu>
+				</MenuButton>
 			</Toolbar>
 		</table:toolbar>
 		
@@ -76,6 +75,18 @@
 				<Label text="{i18n>s2TableItem}" />
 				<table:template>
 					<Text text="{itensEmbarque>PosnrVl}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="6rem">
+				<Label text="{i18n>s2TableTransporte}" />
+				<table:template>
+					<Text text="{itensEmbarque>Tknum}"/>
+				</table:template>
+			</table:Column>
+			<table:Column width="4rem">
+				<Label text="{i18n>s2TableTransporteEtapa}" />
+				<table:template>
+					<Text text="{itensEmbarque>Tsnum}"/>
 				</table:template>
 			</table:Column>
 			<table:Column width="6rem">
@@ -139,6 +150,7 @@
 				</table:template>
 			</table:Column>
 		</table:columns>
+		
 	</table:Table>
 
 </core:FragmentDefinition>

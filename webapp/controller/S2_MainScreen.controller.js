@@ -36,7 +36,7 @@ sap.ui.define([
 		_routeMatched: function(oEvent) {
 			//var selEmbarqueId = oEvent.getParameter('arguments').embarqueId;
 			//MessageToast.show(selEmbarqueId);
-			this._requestOdataDetailClk(this.FilterGet());
+			this._requestOdataDetailClk(this.FilterS1Get());
 		},
 		
 		_requestOdataDetailClk: function(oFilters){
@@ -122,11 +122,25 @@ sap.ui.define([
 		},
 		
 		onPressFluxo: function(oEvent) {
-			var a;
+			var selDocument = oEvent.getSource().getBindingContext('itensEmbarque').getObject().Document;
+			var selItem = oEvent.getSource().getBindingContext('itensEmbarque').getObject().Item;
+			
+			if(selDocument){
+				if(selItem){
+					this.getRouter().navTo("mainScreen3", { documentId: selDocument , itemId: selItem });
+				}
+			}
 		},
 		
 		onPressGeo: function(oEvent) {
-			var a;
+			var selTransp = oEvent.getSource().getBindingContext('itensEmbarque').getObject().Tknum;
+			
+			if(selTransp){
+				this.getRouter().navTo("mainScreen4", { docTranspId: selTransp });
+			}else{
+				MessageToast.show("Item sem Transporte atribuido!");	
+			}
+
 		}
 		
 	});

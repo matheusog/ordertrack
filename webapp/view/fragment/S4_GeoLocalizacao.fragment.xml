@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+	id="fragGeo"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:core="sap.ui.core" 
+	xmlns:l="sap.ui.layout"
+	xmlns:vbm="sap.ui.vbm"
+	xmlns:vk="sap.ui.vk"
+	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
+
+	<vk:MapContainer autoAdjustHeight="true"
+					 busy="{view>/busy}"
+					 busyIndicatorDelay="{view>/busyDelay}">
+
+		<vk:listPanelStack>
+			<vk:ListPanelStack width="230px">
+				<vk:content>
+					<vk:ListPanel	headerText="{i18n>s4PanelTransporte}" 
+									headerIcon="sap-icon://legend" 
+									expanded="true" 
+									selectionMode="None" 
+									items="{geoLocalizacao>/}">
+						<vk:items>
+							<vk:LegendItem title="{geoLocalizacao>Tknum}"	icon="sap-icon://shipping-status" />
+						</vk:items>
+					</vk:ListPanel>
+				</vk:content>
+			</vk:ListPanelStack>
+		</vk:listPanelStack>
+				
+		<vk:ContainerContent>
+			<vk:content>
+
+				<vbm:GeoMap id="GeoMap"	
+							initialZoom='12'
+							initialPosition="-46.769174;-23.534698;0">
+					<vbm:vos>
+						<vbm:Spots items="{geoLocalizacao>/}">
+							<vbm:items>
+								<vbm:Spot position="{geoLocalizacao>Longitude};{geoLocalizacao>Latitude};0" />
+							</vbm:items>
+						</vbm:Spots>
+					</vbm:vos>
+				</vbm:GeoMap>
+			
+			</vk:content>
+		</vk:ContainerContent>
+
+	</vk:MapContainer>
+	
+</core:FragmentDefinition>
