@@ -13,34 +13,41 @@
 
 		<OverflowToolbar>
 			<ToolbarSpacer />
-			<Button text="Zoom In"	press="onZoomIn"  />
-			<Button text="Zoom Out" press="onZoomOut" />
+			<Button text="Zoom In"  press="onZoomIn"  type="Transparent" />
+			<Button text="Zoom Out" press="onZoomOut" type="Transparent" />
 		</OverflowToolbar>
 		
-		<commons:ProcessFlow
-			id="processflow"
-			scrollable="false"
-			nodes="{fluxoNodes>/}"
-			lanes="{fluxoLanes>/}"
-			nodePress="onNodePress">
-			<commons:nodes>
-				<commons:ProcessFlowNode
-					laneId="{fluxoNodes>Lane}"
-					nodeId="{fluxoNodes>Id}"
-					title="{fluxoNodes>Title}"
-					state="{fluxoNodes>State}"
-					stateText="{fluxoNodes>StateText}"
-					children="{fluxosTransp>children}"/>
-					<!-- texts="{fluxosTransp>texts}" /> --> 
-			</commons:nodes>
-			<commons:lanes>
-				<commons:ProcessFlowLaneHeader
-					laneId="{fluxoLanes>Id}"
-					iconSrc="{fluxoLanes>Icon}"
-					text="{fluxoLanes>Label}"
-					position="{fluxoLanes>Position}"/>
-			</commons:lanes>
-		</commons:ProcessFlow>
+		<FlexBox
+			alignItems="Start"
+			justifyContent="{= ${device>/system/phone} ? 'Start' : 'Center' }">
+					
+			<commons:ProcessFlow
+				id="processflow"
+				scrollable="false"
+				wheelZoomable="false"
+				nodes="{fluxoNodes>/}"
+				lanes="{fluxoLanes>/}"
+				nodePress="onNodePress">
+				<commons:nodes>
+					<commons:ProcessFlowNode
+						laneId="{fluxoNodes>Lane}"
+						nodeId="{fluxoNodes>Id}"
+						title="{fluxoNodes>Title}"
+						state="{fluxoNodes>State}"
+						stateText="{fluxoNodes>StateText}"
+						children="{fluxoNodes>Children}"
+						texts="{fluxoNodes>Texts}" />
+				</commons:nodes>
+				<commons:lanes>
+					<commons:ProcessFlowLaneHeader
+						laneId="{fluxoLanes>Id}"
+						iconSrc="{fluxoLanes>Icon}"
+						text="{fluxoLanes>Label}"
+						position="{fluxoLanes>Position}"/>
+				</commons:lanes>
+			</commons:ProcessFlow>
+		
+		</FlexBox>
 
 	</Panel>
 	

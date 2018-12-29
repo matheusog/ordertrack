@@ -1,0 +1,13 @@
+[
+	{
+		"id": "colDoc",
+		"text": "Fluxo",
+		"order": 1,
+		"visible": true
+	}, {
+		"id": "colItmDoc",
+		"text": "Geolocalizacao",
+		"order": 0,
+		"visible": false
+	}
+]

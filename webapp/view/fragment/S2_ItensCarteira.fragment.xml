@@ -1,156 +1,317 @@
-<core:FragmentDefinition
-	id="fragItens"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:html="http://www.w3.org/1999/xhtml"
+<core:FragmentDefinition 
+	id="fragItens" 
+	xmlns="sap.m" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:html="http://w'ww.w3.org/1999/xhtml" 
 	xmlns:core="sap.ui.core" 
-	xmlns:l="sap.ui.layout"
-	xmlns:table="sap.ui.table"
+	xmlns:l="sap.ui.layout" 
+	xmlns:table="sap.ui.table" 
+	xmlns:v="sap.ui.comp.variants" 
 	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
 
-	<table:Table 
-        id="TableItens"
-        selectionMode="None"
-    	fixedColumnCount="2"
-    	alternateRowColors="true"
-        rows="{itensEmbarque>/}"
-		ariaLabelledBy="title"
-		busy="{view>/busy}"
-		busyIndicatorDelay="{view>/busyDelay}">
+	<VBox	width="{= ${device>/system/phone} ? '98%' : '100%' }">
+	
+		<OverflowToolbar>
+			<Button icon="sap-icon://action-settings" type="Transparent" press="onPersoButtonPressed"/>
+			<ToolbarSpacer />
+			<MenuButton text="Download" icon="sap-icon://download" type="Transparent">
+				<menu>
+					<Menu itemSelected="onDataExport">
+						<items>
+							<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
+							<MenuItem id="pdf" text="{i18n>s2Pdf}" icon="sap-icon://pdf-attachment"/>
+						</items>
+					</Menu>
+				</menu>
+			</MenuButton>
+		</OverflowToolbar>
+		
+		<table:Table 
+			id="TableItens" 
+			selectionMode="None" 
+			fixedColumnCount="2" 
+			alternateRowColors="true" 
+			rows="{itensEmbarque>/}"
+			visibleRowCount="9"
+			busy="{view>/busy}"
+			busyIndicatorDelay="{view>/busyDelay}">
 
-		<table:toolbar>
-			<Toolbar>
-				<ToolbarSpacer/>
-				<MenuButton text="Download" icon="sap-icon://download">
-					<menu>
-						<Menu itemSelected="onDataExport">
-							<items>
-								<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
-								<MenuItem id="pdf" text="{i18n>s2Pdf}"   icon="sap-icon://pdf-attachment"/>
-							</items>
-						</Menu>
-					</menu>
-				</MenuButton>
-			</Toolbar>
-		</table:toolbar>
-		
-		<table:columns>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableFluxo}" />
-				<table:template>
-					<Button icon="sap-icon://tree" press="onPressFluxo" />
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableGeo}" />
-				<table:template>
-					<Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableDocumento}" />
-				<table:template>
-					<Text text="{itensEmbarque>Document}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableItem}" />
-				<table:template>
-					<Text text="{itensEmbarque>Item}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableTipoDoc}" />
-				<table:template>
-					<Text text="{itensEmbarque>Type}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableFornecimento}" />
-				<table:template>
-					<Text text="{itensEmbarque>VbelnVl}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableItem}" />
-				<table:template>
-					<Text text="{itensEmbarque>PosnrVl}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableTransporte}" />
-				<table:template>
-					<Text text="{itensEmbarque>Tknum}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableTransporteEtapa}" />
-				<table:template>
-					<Text text="{itensEmbarque>Tsnum}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableMaterial}" />
-				<table:template>
-					<Text text="{itensEmbarque>Matnr}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="20rem">
-				<Label text="{i18n>s2TableDescricaoMaterial}" />
-				<table:template>
-					<Text text="{itensEmbarque>Arktx}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableQtde}" />
-				<table:template>
-					<Text text="{itensEmbarque>Menge}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableUm}" />
-				<table:template>
-					<Text text="{itensEmbarque>Meins}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TablePeso}" />
-				<table:template>
-					<Text text="{itensEmbarque>Brgew}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="4rem">
-				<Label text="{i18n>s2TableUmp}" />
-				<table:template>
-					<Text text="{itensEmbarque>Gewei}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableCentro}" />
-				<table:template>
-					<Text text="{itensEmbarque>Werks}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="20rem">
-				<Label text="{i18n>s2TableNomeCentro}" />
-				<table:template>
-					<Text text="{itensEmbarque>WerksName}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="6rem">
-				<Label text="{i18n>s2TableCliente}" />
-				<table:template>
-					<Text text="{itensEmbarque>Kunnr}"/>
-				</table:template>
-			</table:Column>
-			<table:Column width="20rem">
-				<Label text="{i18n>s2TableNomeCliente}" />
-				<table:template>
-					<Text text="{itensEmbarque>Name}"/>
-				</table:template>
-			</table:Column>
-		</table:columns>
-		
-	</table:Table>
+			<table:columns>
+				
+				<table:Column id="colDoc" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableDocumento}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Document}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colItmDoc" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableItem}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Item}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colTpDoc" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableTipoDoc}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Type}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colMat" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableMaterial}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Matnr}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colMatDesc" width="20rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableDescricaoMaterial}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Arktx}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colQtdeDoc" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableQtde}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Menge}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colUmDoc" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableUm}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Meins}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colPesoBDoc" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TablePesoB}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Brgew}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colPesoLDoc" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TablePesoL}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Ntgew}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colUmpDoc" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableUmp}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Gewei}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colCentro" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableCentro}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Werks}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colCentroNome" width="20rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableNomeCentro}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>WerksName}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colCliente" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableCliente}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Kunnr}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colClienteNome" width="20rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableNomeCliente}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Name}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colRem" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableRemessa}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>VbelnVl}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colItemRem" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableItem}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>PosnrVl}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colQtdeRem" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableQtde}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Menge}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colUmRem" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableUm}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Meins}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colPesoBRem" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TablePesoB}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Brgew}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colPesoLRem" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TablePesoL}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Ntgew}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colUmpRem" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableUmp}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Gewei}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colDt" width="6rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableTransporte}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Tknum}"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colEtpDt" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableTransporteEtapa}"/>
+					</table:multiLabels>
+					<table:template>
+						<Text text="{itensEmbarque>Tsnum}"/>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="multiheaderBlq" width="5rem">
+					<table:multiLabels>
+						<Label text="{i18n>s2TableBlq}" textAlign="Center" width="100%"/>
+						<Label text="{i18n>s2TableBlqCredito}" textAlign="Center" width="100%"/>
+					</table:multiLabels>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon src="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToColor'}"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colBlqRem" width="5rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableBlqRemessa}" textAlign="Center" width="100%"/>
+					</table:multiLabels>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon src="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToColor'}"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colBlqLim" width="5rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableBlqLimbo}" textAlign="Center" width="100%"/>
+					</table:multiLabels>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon src="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToColor'}"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colBlqPgto" width="5rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableBlqPgto}" textAlign="Center" width="100%"/>
+					</table:multiLabels>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon src="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToColor'}"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colFlx" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableFluxo}"/>
+					</table:multiLabels>
+					<table:template>
+						<Button icon="sap-icon://tree" press="onPressFluxo"/>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colGeo" width="4rem">
+					<table:multiLabels>
+						<Label/><Label text="{i18n>s2TableGeo}"/>
+					</table:multiLabels>
+					<table:template>
+						<Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/>
+					</table:template>
+				</table:Column>
+				
+			</table:columns>
+			
+		</table:Table>
+	
+	</VBox>
 
 </core:FragmentDefinition>

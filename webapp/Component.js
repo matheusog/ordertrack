@@ -11,6 +11,10 @@ sap.ui.define([
 			manifest: "json"
 		},
 
+	    constructor: function(sId, mSettings) {
+	        UIComponent.call(this, "OrderTrack", mSettings);
+	    },
+    
 		/**
 		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 		 * @public
@@ -50,8 +54,12 @@ sap.ui.define([
 			//this.setModel(oModelItens, "itens");
 			
 			//Fluxo
-			var oModelFluxo	= new sap.ui.model.json.JSONModel("/webapp/model/Fluxos.json");
-			this.setModel(oModelFluxo, "fluxosTransp");
+			//var oModelFluxo	= new sap.ui.model.json.JSONModel("/webapp/model/Fluxos.json");
+			//this.setModel(oModelFluxo, "fluxosTransp");
+			
+			//PersonTable
+			var oModelPerson	= new sap.ui.model.json.JSONModel("/webapp/model/PersonTable.json");
+			this.setModel(oModelPerson, "personTable");
 		}
 	});
 });

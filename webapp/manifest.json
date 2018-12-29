@@ -114,6 +114,9 @@
 			}, 
 			"geoLocalizacao": {
 				"type": "sap.ui.model.json.JSONModel"
+			}, 
+			"personTable": {
+				"type": "sap.ui.model.json.JSONModel"
 			}
 		},
 		"resources": {
@@ -140,30 +143,22 @@
 				{
 					"name": "mainScreen",
 					"pattern": "",
-					"target": [
-						"s1MainScreen"
-					]
+					"target": [ "s1MainScreen" ]
 				},
 				{
 					"name": "mainScreen2",
-					"pattern": "itens",
-					"target": [
-						"s2MainScreen"
-					]
+					"pattern": "ordertrack/itens",
+					"target": [ "s2MainScreen" ]
 				},
 				{
 					"name": "mainScreen3",
-					"pattern": "fluxo/{documentId}&{itemId}",
-					"target": [
-						"s3MainScreen"
-					]
+					"pattern": "ordertrack/fluxo/{documentType}&{documentId}&{itemId}&{fornId}",
+					"target": [ "s3MainScreen" ]
 				},
 				{
 					"name": "mainScreen4",
-					"pattern": "geoLocalizacao/{docTranspId}",
-					"target": [
-						"s4MainScreen"
-					]
+					"pattern": "ordertrack/geoLocalizacao/{docTranspId}",
+					"target": [ "s4MainScreen" ]
 				}
 			],
 			"targets": { 

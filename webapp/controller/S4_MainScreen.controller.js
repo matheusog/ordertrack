@@ -5,6 +5,8 @@ sap.ui.define([
 	'sap/ui/model/FilterOperator', 
 ], function(BaseController, Device, Filter, FilterOperator) {
 	"use strict";
+	
+	var	oPosition;
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S4_MainScreen", {
 
@@ -15,8 +17,11 @@ sap.ui.define([
 			
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
 			this._geoLoading();
+			
+			//this._setPosition(oPosition);
+			this._setPosition("-46.769174;-23.534698;0");
 		}, 
-		
+
 		_routeMatched: function(oEvent) {
 			var selTranspId = oEvent.getParameter('arguments').docTranspId;
 			var aFilter = []; 
@@ -28,13 +33,11 @@ sap.ui.define([
 			
 			var oViewModel		= this.getView().getModel('view');
 			var oGeoLocalizacao = this.getOwnerComponent().getModel('geoLocalizacao');
-			var oGeoMap  		= this.getView().byId('GeoMap');
 
 			var onSuccess = function(oResultData, oResponse) {
 				oGeoLocalizacao.setData(oResultData.results[0].toGeoLocalizacao.results);
-				var oPos = oGeoLocalizacao.oData[0].Longitude + ';' + oGeoLocalizacao.oData[0].Latitude + ';0';
-				//oGeoMap.setInitialPosition(oPos)
 				oViewModel.setProperty('/busy', false);
+				oPosition = oGeoLocalizacao.oData[0].Longitude + ';' + oGeoLocalizacao.oData[0].Latitude + ';0';
 			};
 			
 			var onError = function(oError) {
@@ -43,7 +46,7 @@ sap.ui.define([
 					var oResponse = JSON.parse(oError.responseText);
 				}
 			};
-			
+		
 			var oModel = this.getOwnerComponent().getModel('Carteira'); 
 			oModel.read('/GEO_FILTERSet', 
 				{
@@ -57,10 +60,40 @@ sap.ui.define([
 			});
 			oViewModel.setProperty('/busy', true);
 		}, 
+			
+		_setPosition: function(Position) {
+			this.getView().byId('GeoMap').setInitialPosition(Position);
+		},
 		
 		_geoLoading: function() {
 			
 			var oGeoMap = this.getView().byId("GeoMap");
+			
+			//GOOGLE
+			var oMapConfig = { 
+				"MapProvider": [{ 
+					"name": "GMAP", 
+					"Source": [{
+					  "id": "s1",
+					  "url": 
+						//"https://mt.google.com/vt/lyrs=s&x={X}&y={Y}&z={LOD}" 
+						"https://mt.google.com/vt/x={X}&y={Y}&z={LOD}"
+						//"https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&avoid=TOLLS&libraries=places&callback=initMap"
+					}] 
+				}], 
+				"MapLayerStacks": [{ 
+					"name": "DEFAULT", 
+					"MapLayer": { 
+						"name": "layer1", 
+						"refMapProvider": "GMAP", 
+						"opacity": "1", 
+						"colBkgnd": "RGB(255,255,255)" 
+					} 
+				}] 
+		    }; 
+		    
+			/**
+			//HEREMAPS
 			var oMapConfig = {
 			  "MapProvider": [{
 			    "name": "HEREMAPS",
@@ -70,6 +103,7 @@ sap.ui.define([
 			    "tileY": "256",
 			    "maxLOD": "20",
 			    "copyright": "Tiles Courtesy of HERE Maps",
+			    
 			    //Exemplos de exibição do mapa = https://developer.here.com/documentation/map-tile/topics/examples.html
 			    "Source": [{
 			        "id": "s1",
@@ -79,16 +113,7 @@ sap.ui.define([
 			        "url": "https://2.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/reduced.day/{LOD}/{X}/{Y}/256/png8?app_id=a9DceSVlMOTq3eSej8Dg&app_code=p2t3V4MZa7T314zVYr0XjA"
 			      }
 			    ]
-			    
-			    /**"Source": [{
-			        "id": "s1",
-			        "url": "https://1.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{LOD}/{X}/{Y}/256/png8?app_id=a9DceSVlMOTq3eSej8Dg&app_code=p2t3V4MZa7T314zVYr0XjA"
-			      }, {
-			        "id": "s2",
-			        "url": "https://2.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{LOD}/{X}/{Y}/256/png8?app_id=a9DceSVlMOTq3eSej8Dg&app_code=p2t3V4MZa7T314zVYr0XjA"
-			      }
-			    ]**/
-			    
+
 			  }],
 			  "MapLayerStacks": [{
 			    "name": "DEFAULT",
@@ -100,10 +125,12 @@ sap.ui.define([
 			    }
 			  }]
 			};
-			
+			**/
+    
 			oGeoMap.setMapConfiguration(oMapConfig);
-			oGeoMap.setRefMapLayerStack("DEFAULT");		
-			
+			oGeoMap.setRefMapLayerStack("DEFAULT");	
+			oGeoMap.setInitialZoom(12);
+
 		}
 
 	});

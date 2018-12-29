@@ -6,7 +6,7 @@ sap.ui.define([
 ], function(Controller, History, Formatter, Models) {
 	"use strict";
 	
-	var aFiltersGlobal = [];
+	var aFiltersGlobal	= [];
 	
 	return Controller.extend("com.arcelor.scm.ordertrack.controller.S0_App", {
 		oFormatter: Formatter, 

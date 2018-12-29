@@ -6,7 +6,7 @@ sap.ui.define([
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S0_App", {
 
 		onInit: function() {
-			//this.getRouter().navTo("mainScreen", {});          
+			//this.getRouter().navTo("mainScreen", {});     
 		}
 		
 	});

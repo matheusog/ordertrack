@@ -41,7 +41,7 @@ sap.ui.define([
 			this._initializeVizChart();	
 			
 			this.onSearch();
-
+			
 			// Setar Data
 			var oModel = new JSONModel();
 			oModel.setData({ dateValue: new Date() });
