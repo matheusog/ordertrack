@@ -58,8 +58,8 @@ sap.ui.define([
 			//this.setModel(oModelFluxo, "fluxosTransp");
 			
 			//PersonTable
-			var oModelPerson	= new sap.ui.model.json.JSONModel("/webapp/model/PersonTable.json");
-			this.setModel(oModelPerson, "personTable");
+			//var oModelPerson	= new sap.ui.model.json.JSONModel("/webapp/model/PersonTable.json");
+			//this.setModel(oModelPerson, "personTable");
 		}
 	});
 });

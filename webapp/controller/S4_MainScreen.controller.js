@@ -6,8 +6,6 @@ sap.ui.define([
 ], function(BaseController, Device, Filter, FilterOperator) {
 	"use strict";
 	
-	var	oPosition;
-
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S4_MainScreen", {
 
 		onInit: function() {
@@ -17,9 +15,6 @@ sap.ui.define([
 			
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
 			this._geoLoading();
-			
-			//this._setPosition(oPosition);
-			this._setPosition("-46.769174;-23.534698;0");
 		}, 
 
 		_routeMatched: function(oEvent) {
@@ -30,15 +25,19 @@ sap.ui.define([
 		},
 		
 		_requestOdataGeo: function(oFilters){
-			
 			var oViewModel		= this.getView().getModel('view');
 			var oGeoLocalizacao = this.getOwnerComponent().getModel('geoLocalizacao');
 
 			var onSuccess = function(oResultData, oResponse) {
 				oGeoLocalizacao.setData(oResultData.results[0].toGeoLocalizacao.results);
 				oViewModel.setProperty('/busy', false);
-				oPosition = oGeoLocalizacao.oData[0].Longitude + ';' + oGeoLocalizacao.oData[0].Latitude + ';0';
-			};
+				var oPosition  = oGeoLocalizacao.oData[0].Longitude + ';' + oGeoLocalizacao.oData[0].Latitude;
+				this._setPosition(oPosition);
+				this._setListPanel(oGeoLocalizacao.oData[0].Tknum,
+								   oGeoLocalizacao.oData[0].Datum,
+								   oGeoLocalizacao.oData[0].Uzeit,
+								   oGeoLocalizacao.oData[0].Timestamp);
+			}.bind(this);
 			
 			var onError = function(oError) {
 				oViewModel.setProperty('/busy', false);
@@ -54,6 +53,7 @@ sap.ui.define([
 						$expand: 'toGeoLocalizacao'
 					}, 
 					filters: oFilters,
+					async: false,
 					success: onSuccess, 
 					error: onError
 				
@@ -62,9 +62,20 @@ sap.ui.define([
 		}, 
 			
 		_setPosition: function(Position) {
-			this.getView().byId('GeoMap').setInitialPosition(Position);
+			this.getView().byId('GeoMap').setInitialPosition(Position + ';0');
+			this.getView().byId('GeoMap').setCenterPosition(Position);
 		},
-		
+			
+		_setListPanel: function(tknum,data,hora,timestamp) {
+			this.getView().byId('listPanel').getItems()[0].setProperty("title",tknum);
+
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "dd/MM/yyyy HH:mm:ss"});
+			timestamp = oDateFormat.format(new Date(timestamp));
+			this.getView().byId('listPanel').getItems()[1].setProperty("title", timestamp);
+			//this.getView().byId('listPanel').getItems()[1].setProperty("title",data + '-' + hora);
+			//this.getView().byId('listPanel').getItems()[1].setProperty("title", timestamp);
+		},
+
 		_geoLoading: function() {
 			
 			var oGeoMap = this.getView().byId("GeoMap");

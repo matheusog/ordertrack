@@ -6,7 +6,9 @@ sap.ui.define([
 ], function(Controller, History, Formatter, Models) {
 	"use strict";
 	
-	var aFiltersGlobal	= [];
+	var aFiltersGlobal	= [],
+		aName,
+		oDialog;
 	
 	return Controller.extend("com.arcelor.scm.ordertrack.controller.S0_App", {
 		oFormatter: Formatter, 
@@ -28,6 +30,29 @@ sap.ui.define([
 			} else {
 				this.getRouter().navTo("mainScreen", {}, true /*no history*/);
 			}
+		},
+
+		onOpenDialog: function () {
+			// Add dialog
+			if(!oDialog){
+				oDialog = sap.ui.xmlfragment("com.arcelor.scm.ordertrack.view.fragment.BusyDialog", this);
+				this.getView().insertDependent(oDialog);
+			}
+			// open dialog
+			oDialog.open();
+		},
+
+		onCloseDialog: function () {
+			// close dialog
+			oDialog.close();
+		},
+		
+		NamePressS1Set: function(name){
+			aName = name;
+		},
+		
+		NamePressS1Get: function(){
+			return aName;
 		},
 		
 		FilterS1Set: function(oFilter){

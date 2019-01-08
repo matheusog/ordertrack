@@ -1,10 +1,10 @@
-<core:FragmentDefinition 
+<core:FragmentDefinition
 	id="fragItens" 
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:html="http://w'ww.w3.org/1999/xhtml" 
 	xmlns:core="sap.ui.core" 
-	xmlns:l="sap.ui.layout" 
+	xmlns:l="sap.ui.layout"
 	xmlns:table="sap.ui.table" 
 	xmlns:v="sap.ui.comp.variants" 
 	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
@@ -12,8 +12,46 @@
 	<VBox	width="{= ${device>/system/phone} ? '98%' : '100%' }">
 	
 		<OverflowToolbar>
-			<Button icon="sap-icon://action-settings" type="Transparent" press="onPersoButtonPressed"/>
+
+			<FlexBox
+				height="100px"
+				alignItems="Center"
+				justifyContent="Center">
+				<items>
+					<Label id="labelText" text="-" design="Bold" textAlign="Center" visible="false"/>
+				</items>
+			</FlexBox>
+			
+			<ToolbarSeparator id="separatorText" visible="false"/>
+			
+			<l:HorizontalLayout>
+				<l:content>
+					
+					<v:VariantManagement
+						id="variant" 
+						select="variantOnSelect"
+						save="variantOnSave"
+						manage="variantOnManage"
+						enabled="true"
+						showExecuteOnSelection="true"
+						showShare="false"
+						variantItems="{variantId>/}">
+						
+						<v:variantItems>
+							<v:VariantItem text="{variantId>Variant}" key="{variantId>Variant}" />
+						</v:variantItems>                             
+					
+					</v:VariantManagement>
+				</l:content>
+				<l:dependents>
+					<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.BusyDialog" type="XML"/>
+				</l:dependents>
+			</l:HorizontalLayout>
+			
 			<ToolbarSpacer />
+
+			<Button icon="sap-icon://action-settings" type="Transparent" press="onPersoButtonPressed"/>
+
 			<MenuButton text="Download" icon="sap-icon://download" type="Transparent">
 				<menu>
 					<Menu itemSelected="onDataExport">
@@ -24,287 +62,442 @@
 					</Menu>
 				</menu>
 			</MenuButton>
+			
 		</OverflowToolbar>
 		
 		<table:Table 
 			id="TableItens" 
 			selectionMode="None" 
-			fixedColumnCount="2" 
+			fixedColumnCount="5" 
 			alternateRowColors="true" 
 			rows="{itensEmbarque>/}"
-			visibleRowCount="9"
 			busy="{view>/busy}"
 			busyIndicatorDelay="{view>/busyDelay}">
 
 			<table:columns>
+
+				<table:Column id="colFlx" width="4rem">
+					<Label text="{i18n>s2TableFluxo}" textAlign="Center"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<!-- <Button icon="sap-icon://tree" press="onPressFluxo"/> -->
+							<core:Icon src="sap-icon://tree" color="#1C4C98" press="onPressFluxo"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colEvt" width="4rem">
+					<Label text="{i18n>s2TableEvento}" textAlign="Center"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<!-- <Button icon="sap-icon://activities" press="onPressEvento"/> -->
+							<core:Icon src="sap-icon://activities" color="#55A1E5" press="onPressEvento"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colGeo" width="4rem">
+					<Label text="{i18n>s2TableGeo}" textAlign="Center" />
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<!-- <Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/> -->
+							<core:Icon src="sap-icon://shipping-status" color="Positive" press="onPressGeo"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
 				
 				<table:Column id="colDoc" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableDocumento}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Document}"/>
-					</table:template>
+					<Label text="{i18n>s2TableDocumento}"/>
+					<table:template> <Text text="{itensEmbarque>Document}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colItmDoc" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableItem}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Item}"/>
-					</table:template>
+					<Label text="{i18n>s2TableItem}"/>
+					<table:template> <Text text="{itensEmbarque>Item}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colTpDoc" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableTipoDoc}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Type}"/>
-					</table:template>
+					<Label text="{i18n>s2TableTipoDoc}"/>
+					<table:template> <Text text="{itensEmbarque>Type}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colMat" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableMaterial}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Matnr}"/>
-					</table:template>
+					<Label text="{i18n>s2TableMaterial}"/>
+					<table:template> <Text text="{itensEmbarque>Matnr}"/> </table:template>
 				</table:Column>
 				
-				<table:Column id="colMatDesc" width="20rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableDescricaoMaterial}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Arktx}"/>
-					</table:template>
+				<table:Column id="colMatDesc" width="23rem">
+					<Label text="{i18n>s2TableDescricaoMaterial}"/>
+					<table:template> <Text text="{itensEmbarque>Arktx}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colQtdeDoc" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableQtde}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Menge}"/>
-					</table:template>
+					<Label text="{i18n>s2TableQtde}"/>
+					<table:template> <Text text="{itensEmbarque>Menge}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colQtdFornDoc" width="6rem">
+					<Label text="{i18n>s2TableQtdForn}"/>
+					<table:template> <Text text="{itensEmbarque>Forn}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colSaldoDoc" width="6rem">
+					<Label text="{i18n>s2TableSaldo}"/>
+					<table:template> <Text text="{itensEmbarque>Saldo}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colUmDoc" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableUm}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Meins}"/>
-					</table:template>
+					<Label text="{i18n>s2TableUm}"/>
+					<table:template> <Text text="{itensEmbarque>Meins}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colPesoBDoc" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TablePesoB}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Brgew}"/>
-					</table:template>
+					<Label text="{i18n>s2TablePesoB}"/>
+					<table:template> <Text text="{itensEmbarque>Brgew}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colPesoLDoc" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TablePesoL}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Ntgew}"/>
-					</table:template>
+					<Label text="{i18n>s2TablePesoL}"/>
+					<table:template> <Text text="{itensEmbarque>Ntgew}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colUmpDoc" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableUmp}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Gewei}"/>
-					</table:template>
+					<Label text="{i18n>s2TableUmp}"/>
+					<table:template> <Text text="{itensEmbarque>Gewei}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colLocExp" width="6rem">
+					<Label text="{i18n>s2TableLocExp}"/>
+					<table:template> <Text text="{itensEmbarque>Vstel}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colCentro" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableCentro}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Werks}"/>
-					</table:template>
+					<Label text="{i18n>s2TableCentro}"/>
+					<table:template> <Text text="{itensEmbarque>Werks}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colCentroNome" width="20rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableNomeCentro}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>WerksName}"/>
-					</table:template>
+					<Label text="{i18n>s2TableNomeCentro}"/>
+					<table:template> <Text text="{itensEmbarque>WerksName}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colCliente" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableCliente}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Kunnr}"/>
-					</table:template>
+					<Label text="{i18n>s2TableCliente}"/>
+					<table:template> <Text text="{itensEmbarque>Kunnr}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colClienteNome" width="20rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableNomeCliente}"/>
-					</table:multiLabels>
+					<Label text="{i18n>s2TableNomeCliente}"/>
+					<table:template> <Text text="{itensEmbarque>Name}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colBaseDataRem" width="10rem">
+					<Label text="{i18n>s2TableBaseDataRem}" textAlign="Center" width="100%"/>
 					<table:template>
-						<Text text="{itensEmbarque>Name}"/>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataRemessa', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colBaseDataSm" width="10rem">
+					<Label text="{i18n>s2TableBaseDataSm}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataSm', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colBaseDataCarreg" width="10rem">
+					<Label text="{i18n>s2TableBaseDataCarreg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataCarreg', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colBaseDataPrep" width="10rem">
+					<Label text="{i18n>s2TableBaseDataPrep}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataPrepMat', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colBaseDataOrg" width="10rem">
+					<Label text="{i18n>s2TableBaseDataOrg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataOrgTransp', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colReplanejado" width="7rem">
+					<Label text="{i18n>s2TableReplanejado}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon	src="{ path: 'itensEmbarque>Replanejado', formatter: '.formatReplanToIcon'}"
+										color="#003153"/>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+				
+				<table:Column id="colConfDataRem" width="10rem">
+					<Label text="{i18n>s2TableConfDataRem}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataRemessaCnf', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colConfDataSm" width="10rem">
+					<Label text="{i18n>s2TableConfDataSm}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataSmCnf', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colConfDataCarreg" width="10rem">
+					<Label text="{i18n>s2TableConfDataCarreg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataCarregCnf', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colConfDataPrep" width="10rem">
+					<Label text="{i18n>s2TableConfDataPrep}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataPrepMatCnf', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colConfDataOrg" width="10rem">
+					<Label text="{i18n>s2TableConfDataOrg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataOrgTranspCnf', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
 					</table:template>
 				</table:Column>
 				
 				<table:Column id="colRem" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableRemessa}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>VbelnVl}"/>
-					</table:template>
+					<Label text="{i18n>s2TableRemessa}"/>
+					<table:template> <Text text="{itensEmbarque>VbelnVl}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colItemRem" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableItem}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>PosnrVl}"/>
-					</table:template>
+					<Label text="{i18n>s2TableItem}"/>
+					<table:template> <Text text="{path: 'itensEmbarque>PosnrVl', formatter: '.formatItem'}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colQtdeRem" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableQtde}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Menge}"/>
-					</table:template>
+					<Label text="{i18n>s2TableQtde}"/>
+					<table:template> <Text text="{path: 'itensEmbarque>MengeVl', formatter: '.formatQtdPeso'}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colUmRem" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableUm}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Meins}"/>
-					</table:template>
+					<Label text="{i18n>s2TableUm}"/>
+					<table:template> <Text text="{itensEmbarque>MeinsVl}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colPesoBRem" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TablePesoB}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Brgew}"/>
-					</table:template>
+					<Label text="{i18n>s2TablePesoB}"/>
+					<table:template> <Text text="{path: 'itensEmbarque>BrgewVl', formatter: '.formatQtdPeso'}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colPesoLRem" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TablePesoL}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Ntgew}"/>
-					</table:template>
+					<Label text="{i18n>s2TablePesoL}"/>
+					<table:template> <Text text="{path: 'itensEmbarque>NtgewVl', formatter: '.formatQtdPeso'}"/> </table:template>
 				</table:Column>
 				
 				<table:Column id="colUmpRem" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableUmp}"/>
-					</table:multiLabels>
+					<Label text="{i18n>s2TableUmp}"/>
+					<table:template> <Text text="{itensEmbarque>GeweiVl}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colNfRem" width="8rem">
+					<Label text="{i18n>s2TableNf}"/>
+					<table:template> <Text text="{itensEmbarque>NfnumVl}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colFatRem" width="8rem">
+					<Label text="{i18n>s2TableFat}"/>
+					<table:template> <Text text="{itensEmbarque>FaturaVl}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colReplanejadoVl" width="7rem">
+					<Label text="{i18n>s2TableReplanejado}" textAlign="Center" width="100%"/>
 					<table:template>
-						<Text text="{itensEmbarque>Gewei}"/>
+						<FlexBox justifyContent="Center">
+							<core:Icon	src="{ path: 'itensEmbarque>ReplanejadoVl', formatter: '.formatReplanToIcon'}"
+										color="#003153"/>
+						</FlexBox>
 					</table:template>
 				</table:Column>
 				
-				<table:Column id="colDt" width="6rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableTransporte}"/>
-					</table:multiLabels>
+				<table:Column id="colVlDataRem" width="10rem">
+					<Label text="{i18n>s2TableVlDataRem}" textAlign="Center" width="100%"/>
 					<table:template>
-						<Text text="{itensEmbarque>Tknum}"/>
-					</table:template>
-				</table:Column>
-				
-				<table:Column id="colEtpDt" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableTransporteEtapa}"/>
-					</table:multiLabels>
-					<table:template>
-						<Text text="{itensEmbarque>Tsnum}"/>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataRemessaVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
 					</table:template>
 				</table:Column>
 
-				<table:Column id="multiheaderBlq" width="5rem">
-					<table:multiLabels>
-						<Label text="{i18n>s2TableBlq}" textAlign="Center" width="100%"/>
-						<Label text="{i18n>s2TableBlqCredito}" textAlign="Center" width="100%"/>
-					</table:multiLabels>
+				<table:Column id="colVlDataSm" width="10rem">
+					<Label text="{i18n>s2TableVlDataSm}" textAlign="Center" width="100%"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<core:Icon src="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToColor'}"/>
+							<Text text="{ path: 'itensEmbarque>DataSmVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colVlDataCarreg" width="10rem">
+					<Label text="{i18n>s2TableVlDataCarreg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataCarregVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colVlDataPrep" width="10rem">
+					<Label text="{i18n>s2TableVlDataPrep}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataPrepMatVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colVlDataOrg" width="10rem">
+					<Label text="{i18n>s2TableVlDataOrg}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DataOrgTranspVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colVlDataPick" width="10rem">
+					<Label text="{i18n>s2TableVlDataPick}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Text text="{ path: 'itensEmbarque>DatePickingVl', formatter: '.formatTimestamp'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colDt" width="6rem">
+					<Label text="{i18n>s2TableTransporte}"/>
+					<table:template> <Text text="{itensEmbarque>Tknum}"/> </table:template>
+				</table:Column>
+				
+				<table:Column id="colEtpDt" width="4rem">
+					<Label text="{i18n>s2TableTransporteEtapa}"/>
+					<table:template> <Text text="{path: 'itensEmbarque>Tsnum', formatter: '.formatEtapa'}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colLocOrgDt" width="4rem">
+					<Label text="{i18n>s2TableLocOrg}"/>
+					<table:template> <Text text="{itensEmbarque>Tplst}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colPlacaDt" width="5rem">
+					<Label text="{i18n>s2TablePlaca}"/>
+					<table:template> <Text text="{itensEmbarque>Signi}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colTpTranspDt" width="4rem">
+					<Label text="{i18n>s2TableTpTransp}"/>
+					<table:template> <Text text="{itensEmbarque>Shtyp}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colTpTranspNomeDt" width="20rem">
+					<Label text="{i18n>s2TableTpTranspTxt}"/>
+					<table:template> <Text text="{itensEmbarque>ShtypTxt}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colAgenteDt" width="6rem">
+					<Label text="{i18n>s2TableAgente}"/>
+					<table:template> <Text text="{itensEmbarque>Tdlnr}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colAgenteNomeDt" width="20rem">
+					<Label text="{i18n>s2TableAgenteTxt}"/>
+					<table:template> <Text text="{itensEmbarque>TdlnrTxt}"/> </table:template>
+				</table:Column>
+
+				<table:Column id="colBaseStatus" width="7rem">
+					<Label text="{i18n>s2TableBaseStatus}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<ObjectStatus	text="{ path: 'itensEmbarque>BaseStatus', formatter: '.formatBaseToDesc'}"
+											state="{ path: 'itensEmbarque>BaseStatus', formatter: '.formatBaseToColor'}"/> 
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colStatusEmbarq" width="18rem">
+					<Label text="{i18n>s2TableStatusEmbarq}" textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<Select selectedKey="{itensEmbarque>StatusEmbarq}" items="{Carteira>/STATUS_EMBQSet}">
+								<core:Item text="{Carteira>Value}" key="{Carteira>Id}" enabled="false"/>
+							</Select>
+						</FlexBox>
+					</table:template>
+				</table:Column>
+
+				<table:Column id="colBlqCred" width="5rem">
+					<Label text="{i18n>s2TableBlqCredito}"	textAlign="Center" width="100%"/>
+					<table:template>
+						<FlexBox justifyContent="Center">
+							<core:Icon	src="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToIcon'}" 
+										color="{ path: 'itensEmbarque>BlqCredito', formatter: '.formatBlqToColor'}"/>
 						</FlexBox>
 					</table:template>
 				</table:Column>
 				
 				<table:Column id="colBlqRem" width="5rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableBlqRemessa}" textAlign="Center" width="100%"/>
-					</table:multiLabels>
+					<Label text="{i18n>s2TableBlqRemessa}" textAlign="Center" width="100%"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<core:Icon src="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToColor'}"/>
+							<core:Icon	src="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToIcon'}"
+										color="{ path: 'itensEmbarque>BlqRemessa', formatter: '.formatBlqToColor'}"/>
 						</FlexBox>
 					</table:template>
 				</table:Column>
 				
 				<table:Column id="colBlqLim" width="5rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableBlqLimbo}" textAlign="Center" width="100%"/>
-					</table:multiLabels>
+					<Label text="{i18n>s2TableBlqLimbo}" textAlign="Center" width="100%"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<core:Icon src="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToColor'}"/>
+							<core:Icon	src="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToIcon'}" 
+										color="{ path: 'itensEmbarque>BlqLimbo', formatter: '.formatBlqToColor'}"/>
 						</FlexBox>
 					</table:template>
 				</table:Column>
 				
 				<table:Column id="colBlqPgto" width="5rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableBlqPgto}" textAlign="Center" width="100%"/>
-					</table:multiLabels>
+					<Label text="{i18n>s2TableBlqPgto}" textAlign="Center" width="100%"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<core:Icon src="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToIcon'}" color="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToColor'}"/>
+							<core:Icon	src="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToIcon'}" 
+										color="{ path: 'itensEmbarque>BlqPgtoAnt', formatter: '.formatBlqToColor'}"/>
 						</FlexBox>
-					</table:template>
-				</table:Column>
-
-				<table:Column id="colFlx" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableFluxo}"/>
-					</table:multiLabels>
-					<table:template>
-						<Button icon="sap-icon://tree" press="onPressFluxo"/>
-					</table:template>
-				</table:Column>
-				
-				<table:Column id="colGeo" width="4rem">
-					<table:multiLabels>
-						<Label/><Label text="{i18n>s2TableGeo}"/>
-					</table:multiLabels>
-					<table:template>
-						<Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/>
 					</table:template>
 				</table:Column>
 				

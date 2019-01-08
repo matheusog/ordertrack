@@ -8,7 +8,7 @@
 	xmlns:viz.data="sap.viz.ui5.data"
 	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen" >
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreenP1" >
 	
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 	<VBox width="{= ${device>/system/phone} ? '95%' : '55%' }" >
@@ -38,8 +38,10 @@
 																	  value="{donutChart>Descricao}" 
 																	  displayValue="{donutChart>Descricao} - 
 																					{donutChart>Peso} {donutChart>PesoUm}"/>
+										<!-- Numero de documentos
 										<viz.data:DimensionDefinition name="Documentos" 
 																	  value="{donutChart>Documents}"/>
+										-->
 									</viz.data:dimensions>
 									<viz.data:measures>										
 										<viz.data:MeasureDefinition name="Peso"
@@ -50,7 +52,9 @@
 							<viz:feeds>
 								<viz.feeds:FeedItem uid="size"	type="Measure"	 values="Peso" />
 								<viz.feeds:FeedItem uid="color" type="Dimension" values="Status" />
+								<!-- Numero de documentos
 								<viz.feeds:FeedItem uid="color" type="Dimension" values="Documentos" />
+								-->
 							</viz:feeds>
 						</viz:VizFrame>	
 					</cms:content>
@@ -71,8 +75,10 @@
 																	  value="{donutChartReplan>Descricao}" 
 																	  displayValue="{donutChartReplan>Descricao} - 
 																					{donutChartReplan>Peso} {donutChartReplan>PesoUm}"/>
+										<!-- Numero de documentos
 										<viz.data:DimensionDefinition name="Documentos" 
 																	  value="{donutChartReplan>Documents}"/>
+										-->
 									</viz.data:dimensions>
 									<viz.data:measures>
 										<viz.data:MeasureDefinition name="Peso"
@@ -83,7 +89,9 @@
 							<viz:feeds>
 								<viz.feeds:FeedItem uid="size"	type="Measure"	 values="Peso" />
 								<viz.feeds:FeedItem uid="color" type="Dimension" values="Status" />
+								<!-- Numero de documentos
 								<viz.feeds:FeedItem uid="color" type="Dimension" values="Documentos" />
+								-->
 							</viz:feeds>
 						</viz:VizFrame>	
 					</cms:content>

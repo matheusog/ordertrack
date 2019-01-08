@@ -7,7 +7,7 @@
 	xmlns="sap.m"
 	xmlns:fb="sap.ui.comp.filterbar"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreenP1">
 	
 	<VBox>
 		

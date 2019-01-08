@@ -115,9 +115,12 @@
 			"geoLocalizacao": {
 				"type": "sap.ui.model.json.JSONModel"
 			}, 
-			"personTable": {
+			"variantTable": {
 				"type": "sap.ui.model.json.JSONModel"
-			}
+			}, 
+			"variantId": {
+				"type": "sap.ui.model.json.JSONModel"
+			} 
 		},
 		"resources": {
 			"css": [{
@@ -144,6 +147,16 @@
 					"name": "mainScreen",
 					"pattern": "",
 					"target": [ "s1MainScreen" ]
+				},
+				{
+					"name": "mainScreenP1",
+					"pattern": "ordertrack1",
+					"target": [ "s1MainScreenP1" ]
+				},
+				{
+					"name": "mainScreenP2",
+					"pattern": "ordertrack2",
+					"target": [ "s1MainScreenP2" ]
 				},
 				{
 					"name": "mainScreen2",
@@ -174,23 +187,35 @@
 					"viewName": "S1_MainScreen",
 					"viewLevel": 1
 				}, 
+				"s1MainScreenP1": {
+					"viewId": "s1MainScreenP1",
+					"viewType": "XML",
+					"viewName": "S1_MainScreenP1",
+					"viewLevel": 2
+				}, 
+				"s1MainScreenP2": {
+					"viewId": "s1MainScreenP2",
+					"viewType": "XML",
+					"viewName": "S1_MainScreenP2",
+					"viewLevel": 2
+				}, 
 				"s2MainScreen": {
 					"viewId": "s2MainScreen",
 					"viewType": "XML",
 					"viewName": "S2_MainScreen",
-					"viewLevel" : 2
+					"viewLevel" : 3
 				}, 
 				"s3MainScreen": {
 					"viewId": "s3MainScreen",
 					"viewType": "XML",
 					"viewName": "S3_MainScreen",
-					"viewLevel" : 3
+					"viewLevel" : 4
 				}, 
 				"s4MainScreen": {
 					"viewId": "s4MainScreen",
 					"viewType": "XML",
 					"viewName": "S4_MainScreen",
-					"viewLevel" : 3
+					"viewLevel" : 4
 				}
 			}
 		}

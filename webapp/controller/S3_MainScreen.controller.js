@@ -4,9 +4,15 @@ sap.ui.define([
 	'sap/ui/model/Filter',
 	'sap/ui/model/FilterOperator', 
 	'sap/ui/model/json/JSONModel',
-	'sap/m/MessageToast'
-], function(BaseController, SuiteLibrary, Filter, FilterOperator, JSONModel, MessageToast) {
+	'sap/m/MessageToast',
+	'sap/m/Table'
+], function(BaseController, SuiteLibrary, Filter, FilterOperator, JSONModel, MessageToast, Table) {
 	"use strict";
+	
+	var selDocumentType, 
+		selDocumentId, 
+		selItemId, 
+		selFornId;
 
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S3_MainScreen", {
 
@@ -19,19 +25,24 @@ sap.ui.define([
 		}, 
 
 		_routeMatched: function(oEvent) {
-			var selDocumentType = oEvent.getParameter('arguments').documentType;
-			var selDocumentId = oEvent.getParameter('arguments').documentId;
-			var selItemId = oEvent.getParameter('arguments').itemId;
-			var selFornId = oEvent.getParameter('arguments').fornId;
-			
+			selDocumentType = oEvent.getParameter('arguments').documentType;
+			selDocumentId = oEvent.getParameter('arguments').documentId;
+			selItemId = oEvent.getParameter('arguments').itemId;
+			selFornId = oEvent.getParameter('arguments').fornId;
+
+			var aFilter = this._loadFilters();
+			this._requestOdataFluxo(aFilter);
+		},
+
+		_loadFilters: function() {
 			var aFilter = []; 
 			aFilter.push(new Filter('DocumentType', FilterOperator.EQ, selDocumentType)); 
 			aFilter.push(new Filter('Document', FilterOperator.EQ, selDocumentId)); 
 			aFilter.push(new Filter('Item', FilterOperator.EQ, selItemId)); 
 			aFilter.push(new Filter('VbelnVl', FilterOperator.EQ, selFornId)); 
-			this._requestOdataFluxo(aFilter);
+			return aFilter;
 		},
-
+		
 		onZoomIn: function () {
 			this.getView().byId('processflow').zoomIn();
 		},
@@ -41,8 +52,10 @@ sap.ui.define([
 		},
 		
 		onNodePress: function(event) {
-			MessageToast.show("Node " + event.getParameters().getNodeId() + " has been clicked.");
-		},
+			if( event.getParameters().getNodeId() ) {
+				//MessageToast.show("Node " + event.getParameters().getNodeId() + " has been clicked.");
+			};
+		},    
 
 		_requestOdataFluxo: function(oFilters){
 			
@@ -70,13 +83,38 @@ sap.ui.define([
 						$expand: 'toFluxoNodes,toFluxoLanes'
 					}, 
 					filters: oFilters,
+					async: false,
 					success: onSuccess, 
 					error: onError
 				
 			});
 			oViewModel.setProperty('/busy', true);
-		}
+		},
+		
+		handleIconTabBarSelect: function(oEvent){
+			
+			var sKey = oEvent.getParameter("key");
+			if (sKey === "Eventos") {
+				this.handleIconTabBarSelect2(oEvent);
+			}
+			
+		},
 
+		handleIconTabBarSelect2: function(oEvent){
+			
+			if(oEvent.getParameter("key") === "Eventos") {
+				sKey = "Document";
+			} else {
+				var sKey = oEvent.getParameter("key");
+			}
+
+			if (sKey === "Document") {
+				
+
+			}
+			
+		},
+		
 	});
 
 });

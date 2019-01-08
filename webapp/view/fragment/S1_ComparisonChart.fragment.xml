@@ -7,7 +7,7 @@
 	xmlns:mc="sap.suite.ui.microchart"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:l="sap.ui.layout"
-	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreenP1">
 
 	<!--width="{= ${device>/system/phone} ? '100%' : '100%' }" >-->
 	<VBox width="{= ${device>/system/phone} ? '95%' : '25%' }" >

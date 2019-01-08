@@ -13,8 +13,8 @@
 
 		<OverflowToolbar>
 			<ToolbarSpacer />
-			<Button text="Zoom In"  press="onZoomIn"  type="Transparent" />
-			<Button text="Zoom Out" press="onZoomOut" type="Transparent" />
+			<Button press="onZoomIn"  type="Transparent" icon="sap-icon://zoom-in"/>
+			<Button press="onZoomOut" type="Transparent" icon="sap-icon://zoom-out"/>
 		</OverflowToolbar>
 		
 		<FlexBox
@@ -23,7 +23,6 @@
 					
 			<commons:ProcessFlow
 				id="processflow"
-				scrollable="false"
 				wheelZoomable="false"
 				nodes="{fluxoNodes>/}"
 				lanes="{fluxoLanes>/}"
@@ -33,6 +32,7 @@
 						laneId="{fluxoNodes>Lane}"
 						nodeId="{fluxoNodes>Id}"
 						title="{fluxoNodes>Title}"
+						focused="{fluxoNodes>focus}"
 						state="{fluxoNodes>State}"
 						stateText="{fluxoNodes>StateText}"
 						children="{fluxoNodes>Children}"
@@ -50,5 +50,75 @@
 		</FlexBox>
 
 	</Panel>
+	
+	<!--
+	<IconTabBar
+		id="idIconTabBar"
+		select="handleIconTabBarSelect"
+		class="sapUiResponsiveContentPadding">
+		<items>
+			
+			<IconTabFilter
+				icon="sap-icon://tree"
+				iconColor="Neutral"
+				text="Fluxo"
+				key="Fluxo">
+				
+			</IconTabFilter>
+			
+			<IconTabFilter
+				icon="sap-icon://activities"
+				iconColor="Neutral"
+				text="Eventos"
+				key="Eventos">
+				
+				<IconTabBar
+					id="idIconTabBar2"
+					select="handleIconTabBarSelect2"
+					class="sapUiResponsiveContentPadding"
+					headerBackgroundDesign="Transparent">
+					<items>
+						
+						<IconTabFilter
+							icon="sap-icon://documents"
+							iconColor="Neutral"
+							text="Ordem Venda"
+							key="Document">
+
+							
+						</IconTabFilter>
+						<IconTabFilter
+							icon="sap-icon://detail-view"
+							iconColor="Neutral"
+							text="Fornecimento"
+							key="Remessa">
+							
+							
+						</IconTabFilter>
+						<IconTabFilter
+							icon="sap-icon://sales-document"
+							iconColor="Neutral"
+							text="Fatura"
+							key="Fatura">
+							
+							
+						</IconTabFilter>
+						<IconTabFilter
+							icon="sap-icon://shipping-status"
+							iconColor="Neutral"
+							text="Transporte"
+							key="Transporte">
+							
+							
+						</IconTabFilter>
+						
+					</items>
+				</IconTabBar>
+				
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+	-->
 	
 </core:FragmentDefinition>

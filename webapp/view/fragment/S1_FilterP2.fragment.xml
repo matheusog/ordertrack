@@ -1,0 +1,41 @@
+<!--<mvc:View	-->
+<core:FragmentDefinition
+	id="fragFilter2"
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:l="sap.ui.layout"
+	xmlns="sap.m"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
+	
+	<VBox>
+		
+		<fb:FilterBar id="filterBar" search="onSearch" >
+			
+			<fb:filterItems>
+				
+				<fb:FilterItem name="Doc" label="{i18n>filterDoc}">
+					<fb:control>
+						<Input id="filterDoc" />
+					</fb:control>				
+				</fb:FilterItem>
+
+				<fb:FilterItem name="DT" label="{i18n>filterDt}">
+					<fb:control>
+						<Input id="filterDt" />
+					</fb:control>				
+				</fb:FilterItem>
+				
+				<fb:FilterItem name="NF" label="{i18n>filterNf}">
+					<fb:control>
+						<Input id="filterNf" />
+					</fb:control>				
+				</fb:FilterItem>
+
+			</fb:filterItems>
+			
+	    </fb:FilterBar>	
+		
+	</VBox>
+</core:FragmentDefinition>

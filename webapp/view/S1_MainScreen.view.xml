@@ -3,46 +3,32 @@
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
-	
-	<Page title="{i18n>appTitle} - {path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'long'}}"
-		  busy="{view>/busy}"
-		  busyIndicatorDelay="{view>/busyDelay}">
-		
-		<content>
-			
-			<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_Filter" type="XML"/>
-				
-			<!--
-			<mvc:XMLView 
-				viewName="com.arcelor.scm.ordertrack.view.S1_Filter" displayBlock="true"/>
-			-->
-			
-			<FlexBox 
-				direction="{= ${device>/system/phone} ? 'Column' : 'Row'  }"
-				width="100%"
-				renderType="Div"
-				alignItems="Start"
-				justifyContent="Start">
-				
-				<core:Fragment 
-					class="sapUiTinyMargin" 
-					fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_DonutChart" type="XML">
-				</core:Fragment>
-				
-				<core:Fragment 
-					class="sapUiTinyMargin" 
-					fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_ComparisonChart" type="XML">
-				</core:Fragment>
-				
-				<core:Fragment 
-					class="sapUiTinyMargin" 
-					fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_ComparisonChartStatus" type="XML">
-				</core:Fragment>
 
-			</FlexBox>
-		</content>
-		
+	<Page title="{i18n>orderTrack}">
+
+		<f:SimpleForm title="{path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'full'}}" />
+
+		<TileContainer id="tileCarteira" tileDelete="handleTileDelete">
+
+			<StandardTile
+				id="idCarteira"
+				icon="sap-icon://pie-chart"
+				type="Monitor"
+				title="Status Carteira"
+				press="onTilePress"/>
+
+			<StandardTile
+				id="idDetalhe"
+				icon="sap-icon://detail-view"
+				type="Monitor"
+				title="Detalhes Carteira"
+				press="onTilePress"/>
+
+		</TileContainer>
+			
 	</Page>
+
 </mvc:View>

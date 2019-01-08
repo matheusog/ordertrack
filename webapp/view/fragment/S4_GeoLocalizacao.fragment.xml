@@ -10,17 +10,30 @@
 	controllerName="com.arcelor.scm.ordertrack.controller.S4_MainScreen">
 	
 	<vk:MapContainer
+		id="mapContainer"
 		autoAdjustHeight="true" 
+		showHome="false"
 		busy="{view>/busy}"
 		busyIndicatorDelay="{view>/busyDelay}">
 
 		<vk:listPanelStack>
 			<vk:ListPanelStack>
 				<vk:content>
-					<vk:ListPanel headerText="{i18n>s4PanelTransporte}" headerIcon="sap-icon://legend" expanded="true" mode="MultiSelect" includeItemInSelection="true" selectionMode="None" items="{geoLocalizacao>/}">
+					<vk:ListPanel
+						id="listPanel"
+						headerText="{i18n>s4PanelTransporte}" 
+						headerIcon="sap-icon://legend" 
+						expanded="true" 
+						mode="MultiSelect" 
+						includeItemInSelection="true" 
+						selectionMode="None" >
+						<!-- items="{geoLocalizacao>/}"    title="{geoLocalizacao>Tknum}"-->
+						
 						<vk:items>
-							<vk:LegendItem title="{geoLocalizacao>Tknum}" icon="sap-icon://shipping-status"/>
+							<vk:LegendItem id="tk"  icon="sap-icon://shipping-status"/>
+							<vk:LegendItem id="dh"  icon="sap-icon://history"/>
 						</vk:items>
+						
 					</vk:ListPanel>
 				</vk:content>
 			</vk:ListPanelStack>
@@ -28,7 +41,7 @@
 
 		<vk:ContainerContent>
 			<vk:content>
-				<vbm:GeoMap id="GeoMap"> <!--initialPosition="-46.769174;-23.534698;0"> -->
+				<vbm:GeoMap id="GeoMap">
 					<vbm:vos>
 						<vbm:Spots items="{geoLocalizacao>/}">
 							<vbm:items>

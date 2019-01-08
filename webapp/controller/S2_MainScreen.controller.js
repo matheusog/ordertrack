@@ -4,13 +4,16 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
+	"sap/ui/model/FilterType",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/util/Export",
 	"sap/ui/core/util/ExportTypeCSV",
 	"sap/ui/table/TablePersoController"
-], function(BaseController, MessageToast, MessageBox, Filter, FilterOperator, JSONModel, Export, ExportTypeCSV, TablePersoController) {
+], function(BaseController, MessageToast, MessageBox, Filter, FilterOperator, FilterType, JSONModel, Export, ExportTypeCSV, TablePersoController) {
 	"use strict";
-
+	
+	var oDialog;
+	
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S2_MainScreen", {
 		
 		EXCEL_FORMAT: "xls",
@@ -22,32 +25,67 @@ sap.ui.define([
 			this.getRouter().getRoute("mainScreen2").attachMatched(this._routeMatched, this);
 			this._oComponent = this.getOwnerComponent();
 			this._oBundle = this._oComponent.getModel("i18n").getResourceBundle();
-			var oViewModel = new JSONModel({
-				searchTermIms: "",
-				searchTermImsOld: "",
-				searchTermCloseup: "",
-				searchTermCloseupOld: "",
-				busy: false
-			});
 			this.getView().setModel(this.oGenericModel.createDefaultViewModel(), "view");
-			
-			//this._oModelPerson = this._oComponent.getModel("personTable");
-			//this._PersonTable(this._oModelPerson);
-			
-			this._multiHeader();
 		},
 		
 		_routeMatched: function(oEvent) {
+			if(this.NamePressS1Get()){
+				this.getView().byId("labelText").setText(this.NamePressS1Get());
+			}else {
+				this.getView().byId("labelText").setText('TODOS');
+			}
+			this.getView().byId("labelText").setVisible(true);
+			this.getView().byId("separatorText").setVisible(true);
+			
+			oDialog = null;
+			this._requestOdataPerson();
 			this._requestOdataDetailClk(this.FilterS1Get());
+		},
+
+		_requestOdataPerson: function(oFilters) {
+			var oVariantTable	= this.getOwnerComponent().getModel("variantTable");
+			var oVariantId		= this.getOwnerComponent().getModel("variantId");
+
+			var oModel = this.getOwnerComponent().getModel("Carteira");
+			oModel.read("/VARIANT_FILTERSet", {
+				urlParameters: {
+					$expand: "toVariantTable,toVariantId"
+				},
+				filters: oFilters,
+				async: false,
+			    success: function(oResultData, oResponse){
+					oVariantTable.setData(oResultData.results[0].toVariantTable.results);
+					oVariantId.setData(oResultData.results[0].toVariantId.results);
+					this._PersonTable(oVariantTable);
+			    }.bind(this),
+				error: function(oError) {
+					if (oError.responseText) {
+						var oResponse = JSON.parse(oError.responseText);
+					}
+				}
+			});
+		},
+
+		_requestOdataPersonSave: function(oVarTable) {
+			var oModel = this.getOwnerComponent().getModel("Carteira");
+			
+			var onSuccess	= function(){MessageToast.show("Success!");};
+			var onError 	= function(){MessageToast.show("Error!");};
+			var reqHeaders = {
+                    context: this,		// mention the context you want
+                    success: onSuccess, // success call back method
+                    error: onError, 	// error call back method
+                    async: true 		// flage for async true
+                };
+                
+			oModel.create("/VARIANT_TABLESet", oVarTable, reqHeaders);
 		},
 		
 		_requestOdataDetailClk: function(oFilters) {
 			var oViewModel = this.getView().getModel("view");
 			var oItensEmbarque = this.getOwnerComponent().getModel("itensEmbarque");
-			var oModelPerson = this.getOwnerComponent().getModel('personTable');
-			
+
 			var oModel = this.getOwnerComponent().getModel("Carteira");
-			
 			oModel.read("/CARTEIRA_FILTERSet", {
 				urlParameters: {
 					$expand: "toCarteiraItens"
@@ -64,45 +102,23 @@ sap.ui.define([
 					}
 				}
 			});
-			
-			oModel.read('/PERFIL_ITENSSet', {
-			    success: function(oResultData, oResponse){
-					oModelPerson.setData(oResultData.results);
-					this._PersonTable(oModelPerson);
-					oViewModel.setProperty("/busy", false);
-			    }.bind(this),
-				error: function(oError) {
-					oViewModel.setProperty("/busy", false);
-					if (oError.responseText) {
-						var oResponse = JSON.parse(oError.responseText);
-					}
-				}
-			});
-			
+
 			oViewModel.setProperty("/busy", true);
 		},
 
-		_PersonTable: function(oModelPerson) {
+		_PersonTable: function(oModelVariant) {
 			
 			var oModel		= new JSONModel(),
-				aSelected	= oModelPerson.getData(),
+				aSelected	= oModelVariant.getData(),
 				aColumns	= [],
-				aId			= this.getView().byId("TableItens").getId() + "-OrderTrack---s2MainScreen--",
-				aVisible;
+				aId			= this.getView().byId("TableItens").getId() + "-OrderTrack---s2MainScreen--";
 				
-			for(var i = 0; i < oModelPerson.getData().length; i++){
-				
-		    	if( aSelected[i].Visible === 'X'){ 
-		    		aVisible = true;
-		    	} else { 
-		    		aVisible = false;
-		    	};
-		    	
+			for(var i = 0; i < oModelVariant.getData().length; i++){
 				aColumns[i] = {
-				    id:  aId + aSelected[i].Id, 
-				    text: aSelected[i].Text,
-				    order: aSelected[i].Order,
-				    visible: aVisible 
+				    id:  aId + aSelected[i].Varid, 
+				    order: aSelected[i].Varorder,
+					text:  aSelected[i].Vartext,
+				    visible: aSelected[i].Varvisible
 				};
 			};
 
@@ -142,17 +158,55 @@ sap.ui.define([
 				persoService: oProvider
         	}); 
         	
+        	if(oDialog){
+        		oDialog.close();
+        	}
+        	
 		},
-	
-		_multiHeader: function() {
-			this.getView().byId("multiheaderBlq").setHeaderSpan([4,1,1,1]);
+		
+		variantOnSelect: function(oEvent) {
+			oDialog = this.getView().byId("BusyDialog");
+			oDialog.open();
+			
+			var selVariant = oEvent.getSource().getSelectionKey().toString();
+			var filters = [];
+  			var filter = new Filter("Variant", sap.ui.model.FilterOperator.EQ, selVariant);
+			filters.push(filter);
+  			this._requestOdataPerson(filters);
+		},
+		
+		variantOnSave: function(oEvent) {
+			var oVarTable = {};
+			/**	
+			var oPerson = this._oTPC._getCurrentTablePersoData().aColumns;
+			for(var i = 0; i < oPerson.length; i++){
+			
+				oVarTable.push({
+					'Variant': 		oEvent.getParameters().name,
+					'Padrao': 		oEvent.getParameters().def,
+					'Exec': 		oEvent.getParameters().exe,
+					'Varid':		oPerson[i].id,
+					'Varorder':		oPerson[i].order,
+					'Varvisible':	oPerson[i].visible
+				});
+
+			}
+			**/
+
+			this._requestOdataPersonSave(oVarTable);
+		},
+
+		variantOnManage: function(oEvent) {
+				
 		},
 
 		formatBlqToIcon: function(bCred) {
 			if (bCred == "X") {
-				return "sap-icon://status-error";
+				return "sap-icon://circle-task-2";
 			} else if (bCred == "0") {
-				return "sap-icon://status-critical";
+				return "sap-icon://circle-task-2";
+			} else if (bCred == "A") {
+				return "sap-icon://sys-enter-2";
 			}
 		},
 		
@@ -161,6 +215,66 @@ sap.ui.define([
 				return "Negative";
 			} else if (bCred == "0") {
 				return "Critical";
+			} else if (bCred == "A") {
+				return "Positive";
+			}
+		},
+		
+		formatReplanToIcon: function(replan) {
+			if (replan == true) {
+				return "sap-icon://overlay";
+			} else{
+				return null;
+			}
+		},
+
+		formatBaseToDesc: function(base) {
+			if (base == "01") {
+				return "Em Dia";
+			} else if (base == "02") {
+				return "Em Atraso";
+			}
+		},
+		
+		formatBaseToColor: function(base) {
+			if (base == "01") {
+				return "Success";
+			} else if (base == "02") {
+				return "Error";
+			}
+		},
+		
+		formatTimestamp: function(timestamp) {
+			if(timestamp){
+				var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "dd/MM/yyyy HH:mm:ss"});
+				var oText = oDateFormat.format(new Date(timestamp));
+				return oText;
+			}else {
+				return null;
+			}
+		},
+		
+		formatItem: function(value) {
+			if(value === '000000'){
+				return null;
+			}else {
+				return value;
+			}
+		},
+		
+		formatEtapa: function(value) {
+			if(value === '0000'){
+				return null;
+			}else {
+				return value;
+			}
+		},
+		
+		formatQtdPeso: function(value) {
+			if(value === '0.000'){
+				return null;
+			}else {
+				return value;
 			}
 		},
 		
@@ -214,6 +328,8 @@ sap.ui.define([
 		onPressFluxo: function(oEvent) {
 			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
 			if (selFornec) {
+				this.onOpenDialog();
+				
 				var selDocType = oEvent.getSource().getBindingContext("itensEmbarque").getObject().DocumentType;
 				var selDocument = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Document;
 				var selItem = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Item;
@@ -223,6 +339,17 @@ sap.ui.define([
 					itemId: selItem,
 					fornId: selFornec
 				});
+				
+				this.onCloseDialog();
+			} else {
+				MessageToast.show("Item ainda n\xE3o foi fornecido!");
+			}
+		},
+		
+		onPressEvento: function(oEvent) {
+			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
+			if (selFornec) {
+				MessageToast.show("Item ainda n\xE3o foi fornecido!");
 			} else {
 				MessageToast.show("Item ainda n\xE3o foi fornecido!");
 			}
@@ -231,12 +358,48 @@ sap.ui.define([
 		onPressGeo: function(oEvent) {
 			var selTransp = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Tknum;
 			if (selTransp) {
+				this.onOpenDialog();
+				
 				this.getRouter().navTo("mainScreen4", {
 					docTranspId: selTransp
 				});
+				
+				this.onCloseDialog();
 			} else {
 				MessageToast.show("Item sem Transporte atribuido!");
 			}
+		},
+		
+		onSearch: function(oEvent) {
+			var selDoc,
+				selTknum,
+				selNfnum,
+				aFilters		= []; 
+			
+			this.onOpenDialog();
+			
+			if(this.getView().byId('filterDoc').getValue()){
+				selDoc = this.getView().byId('filterDoc').getValue();
+				aFilters.push(new Filter('Document', FilterOperator.EQ, selDoc));	
+			}
+			
+			if(this.getView().byId('filterDt').getValue()){
+				selTknum = this.getView().byId('filterDt').getValue();
+				aFilters.push(new Filter('Tknum', FilterOperator.EQ, selTknum));	
+			}
+			
+			if(this.getView().byId('filterNf').getValue()){
+				selNfnum = this.getView().byId('filterNf').getValue();
+				aFilters.push(new Filter('NfnumVl', FilterOperator.EQ, selNfnum));	
+			}
+			
+			if(!selDoc && !selTknum && !selNfnum) {
+				MessageToast.show("Favor inserir algum filtro!");
+			} else {
+				this._requestOdataDetailClk(aFilters);
+			}
+			
+			this.onCloseDialog();
 		}
 		
 	});
