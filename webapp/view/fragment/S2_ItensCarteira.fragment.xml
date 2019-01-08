@@ -54,7 +54,7 @@
 
 			<MenuButton text="Download" icon="sap-icon://download" type="Transparent">
 				<menu>
-					<Menu itemSelected="onDataExport">
+					<Menu id="menuExport" itemSelected="onDataExport">
 						<items>
 							<MenuItem id="xls" text="{i18n>s2Excel}" icon="sap-icon://excel-attachment"/>
 							<MenuItem id="pdf" text="{i18n>s2Pdf}" icon="sap-icon://pdf-attachment"/>

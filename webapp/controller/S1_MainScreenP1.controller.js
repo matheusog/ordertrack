@@ -299,8 +299,8 @@ sap.ui.define([
 					filters: oFilters,
 					success: onSuccess, 
 					error: onError
-				
-			});
+				}
+			);
 			oViewModel.setProperty('/busy', true);
 		}, 
 		

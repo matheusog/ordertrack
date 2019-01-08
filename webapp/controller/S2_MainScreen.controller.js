@@ -19,10 +19,13 @@ sap.ui.define([
 		EXCEL_FORMAT: "xls",
 		PDF_FORMAT: "pdf",
 		DEFAULT_FILENAME: "Report",
-		PATH_EXPORT_REPORT: "/GRUWEB/ManutencaoApresentacoes/ExportReportXls",
 		
 		onInit: function() {
 			this.getRouter().getRoute("mainScreen2").attachMatched(this._routeMatched, this);
+			this.getRouter().getRoute("mainScreenP2").attachMatched(this._routeMatchedP2, this);
+			
+			this.getOwnerComponent().getModel("itensEmbarque").setData(null);
+			
 			this._oComponent = this.getOwnerComponent();
 			this._oBundle = this._oComponent.getModel("i18n").getResourceBundle();
 			this.getView().setModel(this.oGenericModel.createDefaultViewModel(), "view");
@@ -37,9 +40,14 @@ sap.ui.define([
 			this.getView().byId("labelText").setVisible(true);
 			this.getView().byId("separatorText").setVisible(true);
 			
-			oDialog = null;
 			this._requestOdataPerson();
 			this._requestOdataDetailClk(this.FilterS1Get());
+		},
+		
+		_routeMatchedP2: function(oEvent) {
+			this.getView().byId("labelText").setVisible(false);
+			this.getView().byId("separatorText").setVisible(false);
+			this._requestOdataPerson();
 		},
 
 		_requestOdataPerson: function(oFilters) {
@@ -57,6 +65,14 @@ sap.ui.define([
 					oVariantTable.setData(oResultData.results[0].toVariantTable.results);
 					oVariantId.setData(oResultData.results[0].toVariantId.results);
 					this._PersonTable(oVariantTable);
+					if(!oFilters){
+						if(oVariantTable.getData()[0].Padrao == true){
+							this.getView().byId('variant').setDefaultVariantKey(oVariantTable.getData()[0].Variant);
+						}
+						this.getView().byId('variant').setInitialSelectionKey(oVariantTable.getData()[0].Variant);
+					}else {
+						oDialog.close();
+					}
 			    }.bind(this),
 				error: function(oError) {
 					if (oError.responseText) {
@@ -66,7 +82,7 @@ sap.ui.define([
 			});
 		},
 
-		_requestOdataPersonSave: function(oVarTable) {
+		_requestOdataPersonSave: function(oVariaveis) {
 			var oModel = this.getOwnerComponent().getModel("Carteira");
 			
 			var onSuccess	= function(){MessageToast.show("Success!");};
@@ -78,7 +94,7 @@ sap.ui.define([
                     async: true 		// flage for async true
                 };
                 
-			oModel.create("/VARIANT_TABLESet", oVarTable, reqHeaders);
+			oModel.create("/VARIANT_TABLESet", oVariaveis, reqHeaders);
 		},
 		
 		_requestOdataDetailClk: function(oFilters) {
@@ -115,7 +131,7 @@ sap.ui.define([
 				
 			for(var i = 0; i < oModelVariant.getData().length; i++){
 				aColumns[i] = {
-				    id:  aId + aSelected[i].Varid, 
+				    id:  /**aId + **/ aSelected[i].Varid, 
 				    order: aSelected[i].Varorder,
 					text:  aSelected[i].Vartext,
 				    visible: aSelected[i].Varvisible
@@ -156,44 +172,47 @@ sap.ui.define([
 			this._oTPC = new TablePersoController({
 				table: this.getView().byId("TableItens"),
 				persoService: oProvider
-        	}); 
-        	
-        	if(oDialog){
-        		oDialog.close();
-        	}
-        	
+        	});
 		},
 		
 		variantOnSelect: function(oEvent) {
+			var filters = [];
+			
 			oDialog = this.getView().byId("BusyDialog");
 			oDialog.open();
 			
-			var selVariant = oEvent.getSource().getSelectionKey().toString();
-			var filters = [];
-  			var filter = new Filter("Variant", sap.ui.model.FilterOperator.EQ, selVariant);
-			filters.push(filter);
+			var selVariant = oEvent.getSource().getSelectionKey();
+			if(selVariant){
+	  			var filter = new Filter("Variant", sap.ui.model.FilterOperator.EQ, selVariant);
+				filters.push(filter);			
+			}
+
   			this._requestOdataPerson(filters);
 		},
 		
 		variantOnSave: function(oEvent) {
-			var oVarTable = {};
-			/**	
+			var oVariaveis = {};
+			var oVarTable = [];
+			
 			var oPerson = this._oTPC._getCurrentTablePersoData().aColumns;
+
 			for(var i = 0; i < oPerson.length; i++){
 			
 				oVarTable.push({
+					'Id': 			oPerson[i].order,
 					'Variant': 		oEvent.getParameters().name,
 					'Padrao': 		oEvent.getParameters().def,
-					'Exec': 		oEvent.getParameters().exe,
+					'Execucao': 	oEvent.getParameters().exe,
 					'Varid':		oPerson[i].id,
 					'Varorder':		oPerson[i].order,
 					'Varvisible':	oPerson[i].visible
 				});
 
 			}
-			**/
-
-			this._requestOdataPersonSave(oVarTable);
+			
+			oVariaveis = {value: oVarTable};
+			
+			this._requestOdataPersonSave(oVariaveis);
 		},
 
 		variantOnManage: function(oEvent) {
@@ -286,13 +305,23 @@ sap.ui.define([
 			if (oEvent.getParameter("item").getText() == "Excel") {
 				this._export(this.EXCEL_FORMAT);
 			} else if (oEvent.getParameter("item").getText() == "Pdf") {
-				this._export(this.PDF_FORMAT);
+				this._export(oEvent,this.PDF_FORMAT);
 			}
 		},
 		
-		_export: function(sFormat) {
-			var oViewModel = this.getView().getModel("view");
-			oViewModel.setProperty("/busy", true);
+		_export: function(oEvent,sFormat) {
+			
+			/**
+			var oModel = this.getOwnerComponent().getModel("itensEmbarque");
+			var JSONData = oModel.getData();
+			var oTable = this.getView().bytId('TableItens');
+            var oModel = this.getView().getModel("itensEmbarque");
+            var oData = oModel.getData();
+            var oTab = this.getView().byId("TableItens");
+            var oBinding = oTab.getBinding("items");
+			**/
+			
+			/**
 			var sPath;
 			switch (sFormat) {
 				case this.EXCEL_FORMAT:
@@ -310,7 +339,6 @@ sap.ui.define([
 			req.setRequestHeader("Content-Type", "application/json");
 			//req.setRequestHeader("Authorization", this.getToken(true));
 			function handleSuccess(event) {
-				oViewModel.setProperty("/busy", false);
 				if (req.response && req.response.size > 0) {
 					var blob = req.response;
 					var link = document.createElement("a");
@@ -323,8 +351,47 @@ sap.ui.define([
 			}
 			req.onload = handleSuccess.bind(this);
 			req.send();
-		},
-		
+			**/
+
+			var oExport = new Export({
+				
+				// Type that will be used to generate the content. Own ExportType's can be created to support other formats
+				exportType: new ExportTypeCSV({
+					separatorChar : ";"
+				}),
+	
+				// Pass in the model created above
+				models : this.getOwnerComponent().getModel("itensEmbarque"),
+					// binding information for the rows aggregation
+					rows : { path: "/itensEmbarque" },
+					// column definitions with column name and binding info for the content
+					columns : [{
+						name : "Documento",
+						template : {
+							content : "{itensEmbarque>Document}"
+						}
+					}, {
+						name : "Item",
+						template : {
+							content : "{itensEmbarque>Item}"
+						}
+					}, {
+						name : "Tipo",
+						template : {
+							content : "{itensEmbarque>Type}"
+						}
+					}]
+			});
+
+			// download exported file
+			oExport.saveFile().catch(function(oError) {
+				MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
+			}).then(function() {
+				oExport.destroy();
+			});
+			
+        },
+	
 		onPressFluxo: function(oEvent) {
 			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
 			if (selFornec) {
@@ -347,12 +414,7 @@ sap.ui.define([
 		},
 		
 		onPressEvento: function(oEvent) {
-			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
-			if (selFornec) {
-				MessageToast.show("Item ainda n\xE3o foi fornecido!");
-			} else {
-				MessageToast.show("Item ainda n\xE3o foi fornecido!");
-			}
+			MessageToast.show("Em desenvolvimento!");
 		},
 		
 		onPressGeo: function(oEvent) {
