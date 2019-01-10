@@ -6,19 +6,19 @@
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreenP1">
 
-	<Page 
-		title="{i18n>appTitle}"
-		showNavButton="true"  
-		navButtonPress=".onNavBack"
-		busy="{view>/busy}"
-		busyIndicatorDelay="{view>/busyDelay}">
-		  
+	<Page	id="pageS1P1" 
+			title="{i18n>appTitle}" 
+			showNavButton="true" 
+			navButtonPress=".onNavBack"
+			busy="{view>/busy}" 
+			busyIndicatorDelay="{view>/busyDelay}">
+		
 		<content>
 			
 			<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_Filter" type="XML"/>
 
 			<FlexBox 
-				direction="{= ${device>/system/phone} ? 'Column' : 'Row'  }"
+				direction="{= ${device>/system/phone} ? 'Column' : 'Row' }"
 				width="100%"
 				renderType="Div"
 				alignItems="Start"
@@ -42,7 +42,6 @@
 			</FlexBox>
 
 		</content>
-		
 	</Page>
 	
 </mvc:View>

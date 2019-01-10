@@ -12,8 +12,8 @@ sap.ui.define([
 			this.getRouter().getRoute("mainScreen4").attachMatched(this._routeMatched, this);
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
-			
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
+			
 			this._geoLoading();
 		}, 
 
@@ -36,7 +36,8 @@ sap.ui.define([
 				this._setListPanel(oGeoLocalizacao.oData[0].Tknum,
 								   oGeoLocalizacao.oData[0].Datum,
 								   oGeoLocalizacao.oData[0].Uzeit,
-								   oGeoLocalizacao.oData[0].Timestamp);
+								   oGeoLocalizacao.oData[0].Timestamp,
+								   oGeoLocalizacao.oData[0].TextData);
 			}.bind(this);
 			
 			var onError = function(oError) {
@@ -66,14 +67,15 @@ sap.ui.define([
 			this.getView().byId('GeoMap').setCenterPosition(Position);
 		},
 			
-		_setListPanel: function(tknum,data,hora,timestamp) {
+		_setListPanel: function(tknum,data,hora,timestamp,textData) {
 			this.getView().byId('listPanel').getItems()[0].setProperty("title",tknum);
-
-			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "dd/MM/yyyy HH:mm:ss"});
-			timestamp = oDateFormat.format(new Date(timestamp));
-			this.getView().byId('listPanel').getItems()[1].setProperty("title", timestamp);
 			//this.getView().byId('listPanel').getItems()[1].setProperty("title",data + '-' + hora);
+			
+			//var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "dd/MM/yyyy HH:mm:ss"});
+			//timestamp = oDateFormat.format(new Date(timestamp));
 			//this.getView().byId('listPanel').getItems()[1].setProperty("title", timestamp);
+
+			this.getView().byId('listPanel').getItems()[1].setProperty("title", textData);
 		},
 
 		_geoLoading: function() {

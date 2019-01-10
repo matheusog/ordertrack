@@ -6,12 +6,10 @@
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S4_MainScreen">
 
-	<Page title="{i18n>s4Title}" showNavButton="true"  navButtonPress=".onNavBack">
-		
+	<Page id="pageS4" title="{i18n>s4Title}" showNavButton="true"  navButtonPress=".onNavBack">
 		<content>
 			<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.S4_GeoLocalizacao" type="XML"/>
 		</content>
-		
 	</Page>
 
 </mvc:View>

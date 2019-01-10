@@ -20,7 +20,6 @@ sap.ui.define([
 			this.getRouter().getRoute("mainScreen3").attachMatched(this._routeMatched, this);
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
-
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
 		}, 
 
@@ -29,9 +28,8 @@ sap.ui.define([
 			selDocumentId = oEvent.getParameter('arguments').documentId;
 			selItemId = oEvent.getParameter('arguments').itemId;
 			selFornId = oEvent.getParameter('arguments').fornId;
-
-			var aFilter = this._loadFilters();
-			this._requestOdataFluxo(aFilter);
+			
+			this._requestOdataFluxo(this._loadFilters());
 		},
 
 		_loadFilters: function() {
@@ -58,14 +56,32 @@ sap.ui.define([
 		},    
 
 		_requestOdataFluxo: function(oFilters){
+			var oViewModel			= this.getView().getModel('view');
+			var oFluxoNodes 		= this.getOwnerComponent().getModel('fluxoNodes');
+			var oFluxoLanes 		= this.getOwnerComponent().getModel('fluxoLanes');
 			
-			var oViewModel	 = this.getView().getModel('view');
-			var oFluxoNodes  = this.getOwnerComponent().getModel('fluxoNodes');
-			var oFluxoLanes  = this.getOwnerComponent().getModel('fluxoLanes');
-
 			var onSuccess = function(oResultData, oResponse) {
-				oFluxoNodes.setData(oResultData.results[0].toFluxoNodes.results);
+				//oFluxoNodes.setData(oResultData.results[0].toFluxoNodes.results);
 				oFluxoLanes.setData(oResultData.results[0].toFluxoLanes.results);
+
+				var oModelNodes = $.extend([], oResultData.results[0].toFluxoNodes.results);
+				for(var i=0; i< oModelNodes.length; i++) {
+					
+					var oChilds = $.extend([], oModelNodes[i].toChildren.results); 
+					oModelNodes[i].Children = [];
+					for(var j1=0; j1 < oChilds.length; j1++){
+				  		oModelNodes[i].Children.push(oChilds[j1].Node);
+					}
+					
+					var oTexts	= $.extend([], oModelNodes[i].toTexts.results); 
+					oModelNodes[i].Texts	= [];
+					for(var j2=0; j2 < oTexts.length; j2++){
+				  		oModelNodes[i].Texts.push(oTexts[j2].Text);
+					}
+					
+				}
+				oFluxoNodes.setData(oModelNodes);
+				
 				oViewModel.setProperty('/busy', false);
 			};
 			
@@ -80,7 +96,7 @@ sap.ui.define([
 			oModel.read('/FLUXO_FILTERSet', 
 				{
 					urlParameters: {
-						$expand: 'toFluxoNodes,toFluxoLanes'
+						$expand: 'toFluxoNodes,toFluxoLanes,toFluxoNodes/toChildren,toFluxoNodes/toTexts'
 					}, 
 					filters: oFilters,
 					async: false,
@@ -89,31 +105,7 @@ sap.ui.define([
 				
 			});
 			oViewModel.setProperty('/busy', true);
-		},
-		
-		handleIconTabBarSelect: function(oEvent){
-			
-			var sKey = oEvent.getParameter("key");
-			if (sKey === "Eventos") {
-				this.handleIconTabBarSelect2(oEvent);
-			}
-			
-		},
-
-		handleIconTabBarSelect2: function(oEvent){
-			
-			if(oEvent.getParameter("key") === "Eventos") {
-				sKey = "Document";
-			} else {
-				var sKey = oEvent.getParameter("key");
-			}
-
-			if (sKey === "Document") {
-				
-
-			}
-			
-		},
+		}
 		
 	});
 

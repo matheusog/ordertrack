@@ -1,10 +1,44 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-	controllerName="com.arcelor.scm.ordertrack.controller.S5_MainScreen" xmlns:html="http://www.w3.org/1999/xhtml">
-	<App>
-		<pages>
-			<Page title="Title">
-				<content></content>
-			</Page>
-		</pages>
-	</App>
+<mvc:View 
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout"
+	controllerName="com.arcelor.scm.ordertrack.controller.S5_MainScreen">
+
+	<Page id="pageS5" title="{i18n>s5Title}" showNavButton="true"  navButtonPress=".onNavBack">
+		  
+		<content>
+					
+			<IconTabBar
+				id="idIconTabBar"
+				class="sapUiResponsiveContentPadding"> <!-- select="handleIconTabBarSelect" -->
+				<items>
+					<IconTabFilter
+						icon="sap-icon://begin"
+						iconColor="Positive"
+						text="Documento"
+						key="Documento" />
+					<IconTabFilter
+						icon="sap-icon://compare"
+						iconColor="Critical"
+						text="Fornecimento"
+						key="Fornecimento" />
+					<IconTabFilter
+						icon="sap-icon://inventory"
+						iconColor="Negative"
+						text="Transporte"
+						key="Transporte" />
+					<IconTabFilter
+						icon="sap-icon://history"
+						iconColor="Negative"
+						text="Outras Datas"
+						key="Outros" />
+				</items>
+			</IconTabBar>
+					
+		</content>
+		
+	</Page>
+	
 </mvc:View>

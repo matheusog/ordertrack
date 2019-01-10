@@ -32,9 +32,9 @@
 						laneId="{fluxoNodes>Lane}"
 						nodeId="{fluxoNodes>Id}"
 						title="{fluxoNodes>Title}"
-						focused="{fluxoNodes>focus}"
+						focused="{fluxoNodes>Focused}"
 						state="{fluxoNodes>State}"
-						stateText="{fluxoNodes>StateText}"
+						stateText="{fluxoNodes>Statetext}"
 						children="{fluxoNodes>Children}"
 						texts="{fluxoNodes>Texts}" />
 				</commons:nodes>

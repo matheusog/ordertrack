@@ -7,11 +7,11 @@
 	xmlns="sap.m"
 	xmlns:fb="sap.ui.comp.filterbar"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
+	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreenP2">
 	
 	<VBox>
 		
-		<fb:FilterBar id="filterBar" search="onSearch" >
+		<fb:FilterBar id="filterBar" search="onSearchP2" >
 			
 			<fb:filterItems>
 				

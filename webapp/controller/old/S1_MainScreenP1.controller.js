@@ -9,7 +9,7 @@ sap.ui.define([
 	
 	var aClkDonut,
 		aClkStatus;
-	
+
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S1_MainScreenP1", {
 
 		_mVizDonutProperties: {
@@ -34,6 +34,7 @@ sap.ui.define([
 			this.getRouter().getRoute("mainScreenP1").attachMatched(this._routeMatched, this);
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();
+			
 			this.getView().setModel( this.oGenericModel.createDefaultViewModel(), 'view');
 			
 			this._initializeControls(); 
@@ -43,6 +44,21 @@ sap.ui.define([
 		},
 		
 		_routeMatched : function(oEvent) {
+		},
+
+		handleChange: function (oEvent) {
+			var sFrom = oEvent.getParameter("from");
+			var sTo = oEvent.getParameter("to");
+			var bValid = oEvent.getParameter("valid");
+			var oEventSource = oEvent.getSource();
+
+			//this._iEvent++;
+
+			if (bValid) {
+				oEventSource.setValueState(sap.ui.core.ValueState.None);
+			} else {
+				oEventSource.setValueState(sap.ui.core.ValueState.Error);
+			}
 		},
 		
 		onSearch: function(oEvent) {
@@ -307,8 +323,7 @@ sap.ui.define([
 				aFilter.push(new Filter('ClkEmbarque', FilterOperator.EQ, selEmbarqueId)); 
 				this.FilterS1Set(aFilter);
 				
-				var text = 'Embarque - ' + oEvent.getSource().getBindingContext('chartEmbarques').getObject().Descricao;
-				this.NamePressS1Set(text);
+				this.NamePressS1Set(oEvent.getSource().getBindingContext('chartEmbarques').getObject().Descricao);
 
 				this.getRouter().navTo("mainScreen2");
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
@@ -336,8 +351,7 @@ sap.ui.define([
 				aFilter.push(new Filter('ClkStatusCred', FilterOperator.EQ, selStatusId)); 
 				this.FilterS1Set(aFilter);
 				
-				var text = 'Status Crédito - ' + oEvent.getSource().getBindingContext('chartStatusCred').getObject().Descricao;
-				this.NamePressS1Set(text);
+				this.NamePressS1Set(oEvent.getSource().getBindingContext('chartStatusCred').getObject().Descricao);
 
 				this.getRouter().navTo("mainScreen2");
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });
@@ -365,8 +379,7 @@ sap.ui.define([
 				aFilter.push(new Filter('ClkStatusBlq', FilterOperator.EQ, selStatusId)); 
 				this.FilterS1Set(aFilter);
 				
-				var text = 'Status Bloqueio - ' + oEvent.getSource().getBindingContext('chartStatusBlq').getObject().Descricao;
-				this.NamePressS1Set(text);
+				this.NamePressS1Set(oEvent.getSource().getBindingContext('chartStatusBlq').getObject().Descricao);
 
 				this.getRouter().navTo("mainScreen2");
 				//this.getRouter().navTo("mainScreen2", { embarqueId: selEmbarqueId });

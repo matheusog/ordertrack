@@ -43,7 +43,6 @@
 		"supportedThemes": [
 			"sap_hcb",
 			"sap_belize"
-
 		]
 	},
 
@@ -108,7 +107,7 @@
 			}, 
 			"fluxoNodes": {
 				"type": "sap.ui.model.json.JSONModel"
-			}, 
+			},
 			"fluxoLanes": {
 				"type": "sap.ui.model.json.JSONModel"
 			}, 
@@ -172,6 +171,11 @@
 					"name": "mainScreen4",
 					"pattern": "ordertrack/geoLocalizacao/{docTranspId}",
 					"target": [ "s4MainScreen" ]
+				},
+				{
+					"name": "mainScreen5",
+					"pattern": "ordertrack/eventos/{documentType}&{documentId}&{itemId}&{fornId}",
+					"target": [ "s5MainScreen" ]
 				}
 			],
 			"targets": { 
@@ -203,19 +207,25 @@
 					"viewId": "s2MainScreen",
 					"viewType": "XML",
 					"viewName": "S2_MainScreen",
-					"viewLevel" : 3
+					"viewLevel": 3
 				}, 
 				"s3MainScreen": {
 					"viewId": "s3MainScreen",
 					"viewType": "XML",
 					"viewName": "S3_MainScreen",
-					"viewLevel" : 4
+					"viewLevel": 4
 				}, 
 				"s4MainScreen": {
 					"viewId": "s4MainScreen",
 					"viewType": "XML",
 					"viewName": "S4_MainScreen",
-					"viewLevel" : 4
+					"viewLevel": 4
+				}, 
+				"s5MainScreen": {
+					"viewId": "s5MainScreen",
+					"viewType": "XML",
+					"viewName": "S5_MainScreen",
+					"viewLevel": 4
 				}
 			}
 		}

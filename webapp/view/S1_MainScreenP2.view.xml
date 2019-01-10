@@ -6,12 +6,12 @@
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S2_MainScreen">
 
-	<Page 
-		title="{i18n>appTitle2}"
-		showNavButton="true"  
-		navButtonPress=".onNavBack"
-		busy="{view>/busy}"
-		busyIndicatorDelay="{view>/busyDelay}">
+	<Page	id="pageS1P2" 
+			title="{i18n>appTitle2}" 
+			showNavButton="true" 
+			navButtonPress=".onNavBack"
+			busy="{view>/busy}" 
+			busyIndicatorDelay="{view>/busyDelay}">
 		  
 		<content>
 			<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.S1_FilterP2" type="XML"/>

@@ -7,11 +7,11 @@
 	xmlns:l="sap.ui.layout"
 	controllerName="com.arcelor.scm.ordertrack.controller.S1_MainScreen">
 
-	<Page title="{i18n>orderTrack}">
-
+	<Page id="pageS1" title="{i18n>orderTracking}">
+		
 		<f:SimpleForm title="{path:'/dateValue', type:'sap.ui.model.type.Date', formatOptions: { style: 'full'}}" />
 
-		<TileContainer id="tileCarteira" tileDelete="handleTileDelete">
+		<TileContainer id="tileCarteira">
 
 			<StandardTile
 				id="idCarteira"
@@ -28,7 +28,7 @@
 				press="onTilePress"/>
 
 		</TileContainer>
-			
+		
 	</Page>
-
+	
 </mvc:View>

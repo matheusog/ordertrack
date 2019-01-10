@@ -19,35 +19,31 @@ sap.ui.define([
 		EXCEL_FORMAT: "xls",
 		PDF_FORMAT: "pdf",
 		DEFAULT_FILENAME: "Report",
+		PATH_EXPORT_REPORT: "",
 		
 		onInit: function() {
 			this.getRouter().getRoute("mainScreen2").attachMatched(this._routeMatched, this);
 			this.getRouter().getRoute("mainScreenP2").attachMatched(this._routeMatchedP2, this);
-			
-			this.getOwnerComponent().getModel("itensEmbarque").setData(null);
-			
 			this._oComponent = this.getOwnerComponent();
 			this._oBundle = this._oComponent.getModel("i18n").getResourceBundle();
 			this.getView().setModel(this.oGenericModel.createDefaultViewModel(), "view");
+			
+			this._requestOdataPerson();
 		},
 		
 		_routeMatched: function(oEvent) {
+			this.getOwnerComponent().getModel("itensEmbarque").setData(null);
 			if(this.NamePressS1Get()){
-				this.getView().byId("labelText").setText(this.NamePressS1Get());
+				this.getView().byId("sfTitle").setTitle(this.NamePressS1Get());
 			}else {
-				this.getView().byId("labelText").setText('TODOS');
+				this.getView().byId("sfTitle").setTitle('TODOS');
 			}
-			this.getView().byId("labelText").setVisible(true);
-			this.getView().byId("separatorText").setVisible(true);
-			
-			this._requestOdataPerson();
 			this._requestOdataDetailClk(this.FilterS1Get());
 		},
 		
 		_routeMatchedP2: function(oEvent) {
-			this.getView().byId("labelText").setVisible(false);
-			this.getView().byId("separatorText").setVisible(false);
-			this._requestOdataPerson();
+			this.getOwnerComponent().getModel("itensEmbarque").setData(null);
+			this.getView().byId("sfTitle").setVisible(false);
 		},
 
 		_requestOdataPerson: function(oFilters) {
@@ -311,17 +307,6 @@ sap.ui.define([
 		
 		_export: function(oEvent,sFormat) {
 			
-			/**
-			var oModel = this.getOwnerComponent().getModel("itensEmbarque");
-			var JSONData = oModel.getData();
-			var oTable = this.getView().bytId('TableItens');
-            var oModel = this.getView().getModel("itensEmbarque");
-            var oData = oModel.getData();
-            var oTab = this.getView().byId("TableItens");
-            var oBinding = oTab.getBinding("items");
-			**/
-			
-			/**
 			var sPath;
 			switch (sFormat) {
 				case this.EXCEL_FORMAT:
@@ -351,70 +336,47 @@ sap.ui.define([
 			}
 			req.onload = handleSuccess.bind(this);
 			req.send();
-			**/
 
-			var oExport = new Export({
-				
-				// Type that will be used to generate the content. Own ExportType's can be created to support other formats
-				exportType: new ExportTypeCSV({
-					separatorChar : ";"
-				}),
-	
-				// Pass in the model created above
-				models : this.getOwnerComponent().getModel("itensEmbarque"),
-					// binding information for the rows aggregation
-					rows : { path: "/itensEmbarque" },
-					// column definitions with column name and binding info for the content
-					columns : [{
-						name : "Documento",
-						template : {
-							content : "{itensEmbarque>Document}"
-						}
-					}, {
-						name : "Item",
-						template : {
-							content : "{itensEmbarque>Item}"
-						}
-					}, {
-						name : "Tipo",
-						template : {
-							content : "{itensEmbarque>Type}"
-						}
-					}]
-			});
-
-			// download exported file
-			oExport.saveFile().catch(function(oError) {
-				MessageBox.error("Error when downloading data. Browser might not be supported!\n\n" + oError);
-			}).then(function() {
-				oExport.destroy();
-			});
-			
         },
 	
 		onPressFluxo: function(oEvent) {
+			this.onOpenDialog();
+			
+			var selDocType = oEvent.getSource().getBindingContext("itensEmbarque").getObject().DocumentType;
+			var selDocument = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Document;
+			var selItem = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Item;
 			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
-			if (selFornec) {
-				this.onOpenDialog();
-				
-				var selDocType = oEvent.getSource().getBindingContext("itensEmbarque").getObject().DocumentType;
-				var selDocument = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Document;
-				var selItem = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Item;
-				this.getRouter().navTo("mainScreen3", {
-					documentType: selDocType,
-					documentId: selDocument,
-					itemId: selItem,
-					fornId: selFornec
-				});
-				
-				this.onCloseDialog();
-			} else {
-				MessageToast.show("Item ainda n\xE3o foi fornecido!");
+			if(!selFornec){
+				selFornec = 'not';
 			}
+			this.getRouter().navTo("mainScreen3", {
+				documentType: selDocType,
+				documentId: selDocument,
+				itemId: selItem,
+				fornId: selFornec
+			});
+			
+			this.onCloseDialog();
 		},
 		
 		onPressEvento: function(oEvent) {
-			MessageToast.show("Em desenvolvimento!");
+			this.onOpenDialog();
+			
+			var selDocType = oEvent.getSource().getBindingContext("itensEmbarque").getObject().DocumentType;
+			var selDocument = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Document;
+			var selItem = oEvent.getSource().getBindingContext("itensEmbarque").getObject().Item;
+			var selFornec = oEvent.getSource().getBindingContext("itensEmbarque").getObject().VbelnVl;
+			if(!selFornec){
+				selFornec = 'not';
+			}
+			this.getRouter().navTo("mainScreen5", {
+				documentType: selDocType,
+				documentId: selDocument,
+				itemId: selItem,
+				fornId: selFornec
+			});
+			
+			this.onCloseDialog();
 		},
 		
 		onPressGeo: function(oEvent) {
@@ -432,11 +394,12 @@ sap.ui.define([
 			}
 		},
 		
-		onSearch: function(oEvent) {
+
+		onSearchP2: function(oEvent) {
 			var selDoc,
 				selTknum,
 				selNfnum,
-				aFilters		= []; 
+				aFilters	= []; 
 			
 			this.onOpenDialog();
 			
@@ -457,8 +420,6 @@ sap.ui.define([
 			
 			if(!selDoc && !selTknum && !selNfnum) {
 				MessageToast.show("Favor inserir algum filtro!");
-			} else {
-				this._requestOdataDetailClk(aFilters);
 			}
 			
 			this.onCloseDialog();

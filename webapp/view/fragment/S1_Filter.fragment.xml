@@ -11,7 +11,7 @@
 	
 	<VBox>
 		
-		<fb:FilterBar id="filterBar" search="onSearch" >
+		<fb:FilterBar id="filterBar" search="onSearch" filterBarExpanded="false">
 			
 			<fb:filterItems>
 				
