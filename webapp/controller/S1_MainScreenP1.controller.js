@@ -31,6 +31,10 @@ sap.ui.define([
 		}, 
 		
 		onInit: function() {
+			
+			// call the base component's init function
+			BaseController.prototype.onInit.apply(this, arguments);
+			
 			this.getRouter().getRoute("mainScreenP1").attachMatched(this._routeMatched, this);
 			this._oComponent	= this.getOwnerComponent();
 			this._oBundle		= this._oComponent.getModel('i18n').getResourceBundle();

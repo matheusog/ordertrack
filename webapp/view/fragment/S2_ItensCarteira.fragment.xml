@@ -26,7 +26,8 @@
 			<l:HorizontalLayout>
 				<l:content>
 					<Button icon="sap-icon://action-settings" type="Transparent" press="onPersoButtonPressed"/>
-
+					
+					<!--
 					<v:VariantManagement
 						id="variant" 
 						select="variantOnSelect"
@@ -42,10 +43,26 @@
 						</v:variantItems>                             
 					
 					</v:VariantManagement>
+					-->
+
+					<v:VariantManagement 
+						variantItems="{/Variants}" 
+						standardItemText="{/DefaultVariant}" 
+						select="onSelectVariant" 
+						save="onSaveAsVariant" 
+						manage="onManageVariant" 
+						enabled="true" 
+						showExecuteOnSelection="false" 
+						showShare="false" 
+						id="variantManagement">
+						
+						<v:variantItems>
+							<v:VariantItem text="{VariantName}" key="{VariantKey}"/>
+						</v:variantItems>
+						
+					</v:VariantManagement>
+					
 				</l:content>
-				<l:dependents>
-					<core:Fragment fragmentName="com.arcelor.scm.ordertrack.view.fragment.BusyDialog" type="XML"/>
-				</l:dependents>
 			</l:HorizontalLayout>
 			
 			<ToolbarSpacer />
@@ -62,7 +79,7 @@
 			</MenuButton>
 			
 		</OverflowToolbar>
-		
+		<!--
 		<table:Table 
 			id="TableItens" 
 			selectionMode="None" 
@@ -78,7 +95,6 @@
 					<Label text="{i18n>s2TableFluxo}" textAlign="Center"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<!-- <Button icon="sap-icon://tree" press="onPressFluxo"/> -->
 							<core:Icon src="sap-icon://tree" color="#1C4C98" press="onPressFluxo"/>
 						</FlexBox>
 					</table:template>
@@ -88,7 +104,6 @@
 					<Label text="{i18n>s2TableEvento}" textAlign="Center"/>
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<!-- <Button icon="sap-icon://activities" press="onPressEvento"/> -->
 							<core:Icon src="sap-icon://activities" color="#55A1E5" press="onPressEvento"/>
 						</FlexBox>
 					</table:template>
@@ -98,7 +113,6 @@
 					<Label text="{i18n>s2TableGeo}" textAlign="Center" />
 					<table:template>
 						<FlexBox justifyContent="Center">
-							<!-- <Button icon="sap-icon://shipping-status" press="onPressGeo" type="Accept"/> -->
 							<core:Icon src="sap-icon://shipping-status" color="Positive" press="onPressGeo"/>
 						</FlexBox>
 					</table:template>
@@ -502,7 +516,45 @@
 			</table:columns>
 			
 		</table:Table>
+		-->
 		
+		<Table 
+			id="TableItens" 
+			items="{itensEmbarque>/}"
+			busy="{view>/busy}"
+			busyIndicatorDelay="{view>/busyDelay}">
+
+			<columns>
+
+				<Column id="colFlx" width="4rem">
+					<Label text="{i18n>s2TableFluxo}" textAlign="Center"/>
+				</Column>
+
+				<Column id="colEvt" width="4rem">
+					<Label text="{i18n>s2TableEvento}" textAlign="Center"/>
+				</Column>
+				
+				<Column id="colGeo" width="4rem">
+					<Label text="{i18n>s2TableGeo}" textAlign="Center" />
+				</Column>
+				
+				<Column id="colDoc" width="6rem">
+					<Label text="{i18n>s2TableDocumento}"/>
+				</Column>
+				
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<core:Icon src="sap-icon://tree" color="#1C4C98" press="onPressFluxo"/>
+						<core:Icon src="sap-icon://activities" color="#55A1E5" press="onPressEvento"/>
+						<core:Icon src="sap-icon://shipping-status" color="Positive" press="onPressGeo"/>
+						<Text text="{itensEmbarque>Document}"/>
+					</cells><!-- sap.ui.core.Control -->
+				</ColumnListItem>
+			</items>
+			
+		</Table>
 	</VBox>
 
 </core:FragmentDefinition>

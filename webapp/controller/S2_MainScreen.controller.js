@@ -8,11 +8,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/util/Export",
 	"sap/ui/core/util/ExportTypeCSV",
-	"sap/ui/table/TablePersoController"
+	"sap/m/TablePersoController"
 ], function(BaseController, MessageToast, MessageBox, Filter, FilterOperator, FilterType, JSONModel, Export, ExportTypeCSV, TablePersoController) {
 	"use strict";
-	
-	var oDialog;
 	
 	return BaseController.extend("com.arcelor.scm.ordertrack.controller.S2_MainScreen", {
 		
@@ -22,13 +20,217 @@ sap.ui.define([
 		PATH_EXPORT_REPORT: "",
 		
 		onInit: function() {
+			this._loadPersonalization();
+			
 			this.getRouter().getRoute("mainScreen2").attachMatched(this._routeMatched, this);
 			this.getRouter().getRoute("mainScreenP2").attachMatched(this._routeMatchedP2, this);
 			this._oComponent = this.getOwnerComponent();
 			this._oBundle = this._oComponent.getModel("i18n").getResourceBundle();
 			this.getView().setModel(this.oGenericModel.createDefaultViewModel(), "view");
 			
-			this._requestOdataPerson();
+			//this._requestOdataPerson();
+		},
+		
+		_loadPersonalization : function() {
+			var that = this; 
+			
+			function fnCallBack(aVariants) {
+				var oVariantModel = new JSONModel(),
+				oVariantMgmtControl = that.getView().byId("variantManagement");
+				oVariantModel.oData.Variants = aVariants;
+	            oVariantMgmtControl.setModel(oVariantModel);  
+
+	            //enable save button
+	         //   oVariantMgmtControl.oVariantSave.onAfterRendering = 
+	         //   	function(){ this.setEnabled(true); };
+			}
+			
+			var oVariantSet = {},
+				aVariantKeysAndNames = [], 
+				aExistingVariants = []; 
+			
+			var oComponent = this.getView().getOwnerComponent;
+			var oPersonalizationService = sap.ushell.Container.getService("Personalization");
+			var oScope = {
+			  keyCategory : oPersonalizationService.constants.keyCategory.FIXED_KEY,
+			  writeFrequency: oPersonalizationService.constants.writeFrequency.HIGH,
+			  clientStorageAllowed : true,
+			  validity : 30
+			};
+			
+			//this._oPersonalizer = oPersonalizationService.getTransientPersonalizer(); 
+			var oPersId = {
+				container: "PersOrdertrackS2", //any
+				item: "TableItens" //any- I have used the table name 
+			};
+			this._oPersonalizer = oPersonalizationService.getPersonalizer(oPersId, oScope, oComponent);
+			this._oTPC = new TablePersoController({
+				table: this.getView().byId("TableItens"),
+				persoService: this._oPersonalizer
+        	});
+			this._oTPC.activate();
+			
+			this._oPersonalizationContainer = 
+			oPersonalizationService.getContainer("com.arcelor.scm.ordertrack", oScope, oComponent)
+			  .fail(function() {
+				jQuery.sap.log.error("Loading personalization data failed.");
+			})
+			.done(function(oContainer) {
+	            that._oPersInternalContainer = oContainer;
+	            var oVariantSetAdapter = new sap.ushell.services.Personalization.VariantSetAdapter(oContainer);
+	            // get the variant set
+	            // check if the current variant set exists, If not, add the new variant set to the container
+	            oVariantSet = oVariantSetAdapter.getVariantSet('ordertrackS2');
+	            if (!oVariantSet) {
+	                oVariantSet = oVariantSetAdapter.addVariantSet('ordertrackS2');
+	            }
+            	
+            	aVariantKeysAndNames = oVariantSet.getVariantNamesAndKeys();
+	            for(var sKey in aVariantKeysAndNames){
+	                if (aVariantKeysAndNames.hasOwnProperty(sKey)) {
+	                    var oVariantItemObject = {};
+	                    oVariantItemObject.VariantKey = aVariantKeysAndNames[sKey];
+	                    oVariantItemObject.VariantName = sKey;
+	                    aExistingVariants.push(oVariantItemObject);
+	                }
+	            }
+	            fnCallBack(aExistingVariants);
+    			//that.oFruits = oContainer.getItemValue("fruits");
+    			//that.oVegetables = oContainer.getItemValue("vegetables");
+			});
+			//this._oTPC.setPersoService(that._oPersonalizationContainer);
+			
+		},
+		
+		onSaveAsVariant: function(oEvent) {
+			// get columns data: 
+			var aColumnsData = [];
+			this.getView().byId("TableItens").getColumns().forEach(function(oColumn, index) {
+				var aColumn = {};
+				aColumn.id = oColumn.getId();
+				aColumn.order = index;
+				aColumn.visible = oColumn.getVisible();
+				aColumnsData.push(aColumn);
+			});
+			
+			var oSelectedData = aColumnsData; //this._oPersonalizer.getValue();
+			//oSelectedFilterData is the json object with the data seleced in the filter bar
+	 		this.saveVariant(oEvent.getParameter('name'), oSelectedData, 
+		 		function(bSuccess) {
+		            //Do the required actions
+		        }.bind(this));
+		},
+
+		/**
+		 * This method is to save the variant
+		 * @param {String} sVariantName- Variant name
+		 * @param {Object} oFilterData- Filter data object-> consolidated filters in JSON
+		 * @param {Function} fnCallBack- the call back function with the array of variants
+		 */
+		saveVariant: function(sVariantName, oTableData, fnCallBack) {
+		    // save variants in personalization container
+		    this._oPersonalizationContainer.fail(function() {
+		        // call back function in case of fail
+		        fnCallBack(false);
+		    });
+		    this._oPersonalizationContainer.done(function(oPersonalizationContainer) {
+		        var oPersonalizationVariantSet ={},
+		            oVariant = {},
+		            sVariantKey = "";
+		         var oVariantSetAdapter = new sap.ushell.services.Personalization.VariantSetAdapter(oPersonalizationContainer);
+	            // get the variant set
+	            // check if the current variant set exists, If not, add the new variant set to the container
+	            oPersonalizationVariantSet = oVariantSetAdapter.getVariantSet('ordertrackS2');
+	            if (!oPersonalizationVariantSet) {
+	                oPersonalizationVariantSet = oVariantSetAdapter.addVariantSet('ordertrackS2');
+	            }
+		        
+		        //get if the variant exists or add new variant
+		        sVariantKey = oPersonalizationVariantSet.getVariantKeyByName(sVariantName);
+		        if (sVariantKey) {
+		               oVariant = oPersonalizationVariantSet.getVariant(sVariantKey);
+		        } else {
+		               oVariant = oPersonalizationVariantSet.addVariant(sVariantName);
+		        }
+		        if (oTableData) {
+		            oVariant.setItemValue('Table', JSON.stringify(oTableData));
+		        }
+		        oPersonalizationContainer.save().fail(function() {
+		           //call callback fn with false
+		            fnCallBack(false);
+		        }).done(function() {
+		           //call call back with true
+		            fnCallBack(true);
+		        }.bind(this));
+		    }.bind(this));
+		},
+		
+	
+		
+		onManageVariant: function() {}, 
+		
+		onSelectVariant: function(oEvent) {
+	        var sSelectedVariantKey = oEvent.getParameter('key');
+	        if (sSelectedVariantKey) {
+	        	 this.getVariantFromKey(sSelectedVariantKey, 
+	        	 function(oSelectedVariant){
+		            //this._oPersonalizer.setValue(oSelectedVariant.getItemValue('Table'));
+		            //this._oTPC.activate();
+		            this._setSelectedVariantToTable(oSelectedVariant.getItemValue('Table'), this.getView().byId('TableItens'));
+	            }.bind(this));
+	        }
+	    }, 
+	    
+	    getVariantFromKey: function(sVariantKey, fnCallback) {
+	        this._oPersonalizationContainer.fail(function() {
+	            // call back function in case of fail
+	            if (fnCallback) {
+	                fnCallback('');
+	            }
+	        });
+	        this._oPersonalizationContainer.done(function(oPersonalizationContainer) {
+	            var oPersonalizationVariantSet ={};
+	            var oVariantSetAdapter = new sap.ushell.services.Personalization.VariantSetAdapter(oPersonalizationContainer);
+	            // check if the current variant set exists, If not, add the new variant set to the container
+	            oPersonalizationVariantSet = oVariantSetAdapter.getVariantSet('ordertrackS2');
+	            if (!oPersonalizationVariantSet) {
+	                oPersonalizationVariantSet = oVariantSetAdapter.addVariantSet('ordertrackS2');
+	            }
+	            fnCallback(oPersonalizationVariantSet.getVariant(sVariantKey));
+	            //oPersonalizationVariantSet.setCurrentVariantKey(sVariantKey);
+	            //oPersonalizationContainer.save();
+	        });
+	    }, 
+		
+		_setSelectedVariantToTable: function(sData, oTable) {
+			if (sData) {
+				var oData = JSON.parse(sData);
+				var aColumns = oData; //.aColumns; 
+				
+				// Hide all columns first
+				oTable.getColumns().forEach(function(oColumn) {
+					oColumn.setVisible(false);
+				});
+				// re-arrange columns according to the saved variant
+
+				aColumns.forEach(function(aColumn) {
+					var aTableColumn = $.grep(oTable.getColumns(), function(el, id) {
+						//return el.getProperty("name") === aColumn.fieldName;
+						return el.getId() === aColumn.id;
+					});
+					if (aTableColumn.length > 0) {
+						aTableColumn[0].setVisible(aColumn.visible);
+						oTable.removeColumn(aTableColumn[0]);
+						oTable.insertColumn(aTableColumn[0], aColumn.order);
+					}
+				}.bind(this));
+			}
+			// null means the standard variant is selected or the variant which is not available, then show all columns
+			else {
+				oTable.getColumns().forEach(function(oColumn) {
+					oColumn.setVisible(true);
+				});
+			}
 		},
 		
 		_routeMatched: function(oEvent) {
@@ -61,14 +263,14 @@ sap.ui.define([
 					oVariantTable.setData(oResultData.results[0].toVariantTable.results);
 					oVariantId.setData(oResultData.results[0].toVariantId.results);
 					this._PersonTable(oVariantTable);
+					/**
 					if(!oFilters){
 						if(oVariantTable.getData()[0].Padrao == true){
 							this.getView().byId('variant').setDefaultVariantKey(oVariantTable.getData()[0].Variant);
 						}
 						this.getView().byId('variant').setInitialSelectionKey(oVariantTable.getData()[0].Variant);
-					}else {
-						oDialog.close();
 					}
+					**/
 			    }.bind(this),
 				error: function(oError) {
 					if (oError.responseText) {
@@ -122,15 +324,14 @@ sap.ui.define([
 			
 			var oModel		= new JSONModel(),
 				aSelected	= oModelVariant.getData(),
-				aColumns	= [],
-				aId			= this.getView().byId("TableItens").getId() + "-OrderTrack---s2MainScreen--";
+				aColumns	= [];
 				
 			for(var i = 0; i < oModelVariant.getData().length; i++){
 				aColumns[i] = {
-				    id:  /**aId + **/ aSelected[i].Varid, 
-				    order: aSelected[i].Varorder,
-					text:  aSelected[i].Vartext,
-				    visible: aSelected[i].Varvisible
+				    id: 		aSelected[i].Varid, 
+				    order:		aSelected[i].Varorder,
+					text:		aSelected[i].Vartext,
+				    visible:	aSelected[i].Varvisible
 				};
 			};
 
@@ -171,11 +372,9 @@ sap.ui.define([
         	});
 		},
 		
+		/**
 		variantOnSelect: function(oEvent) {
 			var filters = [];
-			
-			oDialog = this.getView().byId("BusyDialog");
-			oDialog.open();
 			
 			var selVariant = oEvent.getSource().getSelectionKey();
 			if(selVariant){
@@ -214,6 +413,38 @@ sap.ui.define([
 		variantOnManage: function(oEvent) {
 				
 		},
+		**/
+		
+		getAllVariants: function(fnCallBack) {
+	        var oPersonalizationVariantSet= {},
+	            aExistingVariants =[],
+	            aVariantKeysAndNames =[];
+	        //get the personalization service of shell
+	        this._oPersonalizationService = sap.ushell.Container.getService('Personalization');
+	        this._oPersonalizationContainer = this._oPersonalizationService.getPersonalizationContainer("MyVariantContainer");
+	        this._oPersonalizationContainer.fail(function() {
+	            // call back function in case of fail
+	            fnCallBack(aExistingVariants);
+	        });
+	        this._oPersonalizationContainer.done(function(oPersonalizationContainer) {
+	            // check if the current variant set exists, If not, add the new variant set to the container
+	            if (!(oPersonalizationContainer.containsVariantSet('MyApplicationVariants'))) {
+	                oPersonalizationContainer.addVariantSet('MyApplicationVariants');
+	            }
+	            // get the variant set
+	            oPersonalizationVariantSet = oPersonalizationContainer.getVariantSet('MyApplicationVariants');
+	            aVariantKeysAndNames = oPersonalizationVariantSet.getVariantNamesAndKeys();
+	            for(var key in aVariantKeysAndNames){
+	                if (aVariantKeysAndNames.hasOwnProperty(key)) {
+	                    var oVariantItemObject = {};
+	                    oVariantItemObject.VariantKey = aVariantKeysAndNames[key];
+	                    oVariantItemObject.VariantName = key;
+	                    aExistingVariants.push(oVariantItemObject);
+	                }
+	            }
+	            fnCallBack(aExistingVariants);
+	        }.bind(this));
+	    },
 
 		formatBlqToIcon: function(bCred) {
 			if (bCred == "X") {

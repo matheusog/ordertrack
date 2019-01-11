@@ -15,6 +15,10 @@ sap.ui.define([
 		oGenericModel: Models, 
 		aFiltersGlobal: null,
 		
+		onInit: function(){
+			alert('tfrftf');
+		},
+		
 		getRouter : function() {
 			return this.getOwnerComponent().getRouter();
 		}, 
