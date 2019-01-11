@@ -7,7 +7,7 @@
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
-		"title": "{{orderTracking}}",
+		"title": "{{orderTrack}}",
 		"description": "{{carteira}}",
 		"sourceTemplate": {
 			"id": "ui5template.basicSAPUI5ApplicationProject",
